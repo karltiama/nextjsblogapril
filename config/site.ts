@@ -5,7 +5,7 @@ export const siteConfig = {
   author: "Karl",
   links: {
     twitter:"",
-    github:"",
+    github:"https://github.com/karltiama",
     personalSite: "",
   },
 };
