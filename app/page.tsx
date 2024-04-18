@@ -38,9 +38,9 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="container max-w-4xl py-6 lg:lg:py-10 flex flex-col space-y-6 mt-20">
+			<section className="container max-w-4xl py-6 lg:lg:py-10 flex flex-col space-y-10 mt-60">
 				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
-					Learning By Teaching
+					Rebuild your mental model
 				</h2>
 				<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance text-center">
 					Breaking down front-end development will make learning more
