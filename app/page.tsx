@@ -16,8 +16,8 @@ export default function Home() {
 						Hello, I&apos;m Karl
 					</h1>
 					<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance">
-						Welcome to my blog. Built using tailwind, shadcn, velite and NextJS
-						14
+						I work with React Ecosystem, and write to teach people how to
+						rebuild and redefine fundamental concepts through mental models.
 					</p>
 					<div className="flex flex-col gap-4 justify-center sm:flex-row">
 						<Link
@@ -38,10 +38,16 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="container max-w-4xl py-6 lg:lg:py-10 flex flex-col space-y-6 mt-60">
+			<section className="container max-w-4xl py-6 lg:lg:py-10 flex flex-col space-y-6 mt-20">
 				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
-					Latest Posts
+					Learning By Teaching
 				</h2>
+				<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance text-center">
+					Breaking down front-end development will make learning more
+					predictable by seeing how they work fundamentally. In my blog, I share
+					how breakdown problems and how my mental model to learn a certain
+					topic.
+				</p>
 				<ul className="flex flex-col">
 					{latestPosts.map((post) => (
 						<li key={post.slug} className="first:border-t first:border-border">
