@@ -43,10 +43,10 @@ export default function Home() {
 					Rebuild your mental model
 				</h2>
 				<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance text-center">
-					Breaking down front-end development will make learning more
-					predictable by seeing how they work fundamentally. In my blog, I share
-					how breakdown problems and how my mental model to learn a certain
-					topic.
+					Breaking down front-end development can make learning more structured
+					and predictable by understanding the fundamental workings of its
+					components. In my blog, I share strategies for dissecting problems and
+					describe my mental model for learning specific topics.
 				</p>
 				<ul className="flex flex-col">
 					{latestPosts.map((post) => (
