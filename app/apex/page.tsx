@@ -1,4 +1,8 @@
+import { CardWithForm } from "@/components/form";
 import { ApexForm } from "@/components/playerstats";
+import ReactHookForm from "@/components/reacthookform";
+import TradForm from "@/components/traditionalform";
+import ZodReactHookForm from "@/components/zodform";
 
 export default function ApexPage() {
 	return (
@@ -11,8 +15,10 @@ export default function ApexPage() {
 				</div>
 			</div>
 			<hr className="my-8" />
-			<div>
-				<ApexForm />
+			<div className="flex flex-col">
+				<TradForm />
+				<ReactHookForm />
+				<ZodReactHookForm />
 			</div>
 		</div>
 	);

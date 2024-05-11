@@ -24,7 +24,47 @@ import {
 
 // "./ui/sheet"
 
+// Defining types for the player data state
+interface RankData {
+	rankName: string;
+}
+
 export function ApexForm() {
+	const [platform, setPlatform] = useState<string>("PC");
+	const [playerName, setPlayerName] = useState<string>("");
+	const [playerData, setPlayerData] = useState<PlayerData | null>(null);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [error, setError] = useState<string>("");
+
+	const fetchPlayerStats = async () => {
+		setLoading(true);
+		setError("");
+		try {
+			const response = await fetch(
+				`/api/player-stats?platform=${platform}&playerName=${encodeURIComponent(
+					playerName
+				)}`
+			);
+			if (!response.ok) throw new Error("Failed to fetch player data");
+			const data: PlayerData = await response.json();
+			console.log("API Data Recieved", data);
+			if (data.legends && data.legends.select && data.legends.selected.data) {
+				console.log("Selected Legends Data Array:", data.legends.selected.data);
+			}
+			setPlayerData(data);
+		} catch (err) {
+			// Check if the error is an instance of Error and has a message
+			if (err instanceof Error) {
+				setError(err.message);
+			} else {
+				// If not, you can set a default error message
+				setError("An unexpected error occurred");
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	const formSchema = z.object({
 		username: z.string().min(2).max(20),
 		platform: z.string({
@@ -41,7 +81,11 @@ export function ApexForm() {
 	});
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
+		if (!playerName) {
+			setError("Please enter a player name");
+			return;
+		}
+		fetchPlayerStats();
 	}
 
 	return (
