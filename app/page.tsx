@@ -10,7 +10,7 @@ export default function Home() {
 
 	return (
 		<>
-			<section className="space-y-6 pb-8 pt-6 md:pb-12 md:mt-10 lg:py-32">
+			<section className="min-h-screen space-y-6 pb-8 pt-6 md:pb-12 md:mt-10 lg:py-60">
 				<div className="container flex flex-col gap-4 text-center">
 					<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-balance">
 						Hello, I&apos;m Karl
@@ -61,6 +61,11 @@ export default function Home() {
 						</li>
 					))}
 				</ul>
+			</section>
+			<section className="container max-w-4xl py-6 lg:lg:py-10 flex flex-col space-y-10 mt-60">
+				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
+					My Projects
+				</h2>
 			</section>
 		</>
 	);
