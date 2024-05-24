@@ -10,26 +10,20 @@ const Dashboard = () => {
 		<>
 			{session ? (
 				<>
-					<h1>Welcome</h1>
+					<h1>{JSON.stringify(session)}</h1>
 				</>
 			) : (
-				<>
+				<div className="">
 					<h1 className="text-3xl text-red-500 font-bold">
 						You are not logged in!
 					</h1>
 					<button
-						onClick={() => signIn("google")}
+						onClick={() => signIn("strava")}
 						className="border border-black rounded-lg">
 						{" "}
-						Sign in with google
+						Sign in with strava
 					</button>
-					<button
-						onClick={() => signIn("github")}
-						className="border border-black rounded-lg">
-						{" "}
-						Sign in with github
-					</button>
-				</>
+				</div>
 			)}
 		</>
 	);
