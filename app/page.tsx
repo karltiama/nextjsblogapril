@@ -66,6 +66,10 @@ export default function Home() {
 				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
 					My Projects
 				</h2>
+				<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance text-center">
+					Here are some of the projects I have worked on. I am always looking
+					forward to new projects and collaborations.
+				</p>
 			</section>
 		</>
 	);

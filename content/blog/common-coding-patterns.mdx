@@ -1,0 +1,57 @@
+---
+title: Common Coding Practices
+description: Going thru the most common practices when designing with tailwind or CSS in that matter really.
+date: 2024-04-09
+published: true
+---
+
+Object Destructuring is a common practice in JavaScript. It allows you to extract multiple properties from an object and assign them to variables. This can make your code cleaner and more readable.
+
+```js
+const person = {
+	name: "John Doe",
+	age: 30,
+	location: "New York",
+};
+
+const { name, age, location } = person;
+
+console.log(name); // John Doe
+
+// With out Destructuring
+
+const name = person.name;
+const age = person.age;
+const location = person.location;
+
+console.log(name); // John Doe
+```
+
+Utility functions I use in my projects:
+
+```js
+export function cn(...inputs: ClassValue[]) {
+	return twMerge(clsx(inputs));
+}
+```
+
+This cn function is a utility function that I use in my projects.
+It takes an array of class names and merges them into a single string.
+This can be useful when you want to conditionally apply classes to an element.
+
+It takes a rest parameter ...inputs of type ClassValue[].
+
+Quick Knowledge Check:
+What is a rest parameter in JavaScript?
+
+It allows a function to accept an indefinite number of arguments as an array.
+
+Here is an example:
+
+```js
+function sum(...numbers) {
+	return numbers.reduce((a, b) => a + b, 0);
+}
+
+console.log(sum(1, 2, 3, 4)); // Outputs: 10
+```
