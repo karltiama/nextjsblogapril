@@ -2,6 +2,7 @@
 title: "Interacting with the Strava API: A Beginner's Guide"
 description: Learn how to interact with the Strava API to access your fitness data and build cool applications that enhance your workout experience.
 date: 2024-05-25
+tags: ["api", "strava", "fitness", "oauth", "web development"]
 published: true
 ---
 
@@ -69,14 +70,26 @@ npx create-next-app strava-api-app
 ```
 
 When first setting up Next.js, you will be prompted to choose a template for your project.
-We will be using
+```bash
+What is your project named? my-app
+Would you like to use TypeScript? No / Yes
+Would you like to use ESLint? No / Yes
+Would you like to use Tailwind CSS? No / Yes
+Would you like to use `src/` directory? No / Yes
+Would you like to use App Router? (recommended) No / Yes
+Would you like to customize the default import alias (@/*)? No / Yes
+What import alias would you like configured? @/*
+```
+
+We will be using TypeScript, ESLint, Tailwind, the source directory and App Router we will keeping the default import alias
+
+The doc for [Next.js](https://nextjs.org/docs/getting-started/installation) is great place to read about more configurations and 
 
 # Installing Required Libraries
 
 In this next.js project, we will be using the following libraries:
 
 - axios: A promise-based HTTP client for making API requests.
-- tailwindcss: A utility-first CSS framework for styling the application.
 - react-icons: A collection of popular icons for React applications.
 - react-toastify: A notification library for displaying toast messages.
 - next-auth: An authentication library for Next.js applications.
