@@ -1,0 +1,88 @@
+---
+title: "Interacting with the Strava API: A Beginner's Guide"
+description: Learn how to interact with the Strava API to access your fitness data and build cool applications that enhance your workout experience.
+date: 2024-05-25
+published: true
+---
+
+# Interacting with the Strava API
+
+Strava is a popular platform for tracking and sharing fitness activities, ranging from running and cycling to swimming and hiking.
+If you're a fitness enthusiast or a developer looking to integrate fitness data into your applications, the Strava API provides a wealth of information to explore.
+
+The Strava REST API includes data on athelete, segments, routes, clubs and gear.
+
+In this beginner's guide, we'll walk through the process of interacting with the Strava API using OAuth 2.0 authentication.
+By the end of this guide, you'll be able to access your fitness data and build cool applications that enhance your workout experience.
+
+## Prerequisites
+
+Before we dive into the Strava API, you'll need to have the following prerequisites in place:
+
+- A Strava account: Sign up for a Strava account if you don't have one already.
+- A Strava API application: Register a new application on the Strava developers portal to obtain your client ID and client secret.
+- A basic understanding of OAuth 2.0: Familiarize yourself with the OAuth 2.0 authorization framework, which is used to authenticate and authorize users in API requests.
+
+Here is a quick overview of the OAuth 2.0:
+
+OAuth is an authorization framework that allows 3rd party applications to obtain limmited access to an HTTP service on behalf of a
+
+Key Roles in OAuth 2.0:
+
+- Resource Owner: The user who owns the data and grants access to the client.
+- Client: The application requesting access to the user's data.
+- Authorization Server: The server that authenticates the user and issues access tokens.
+- Resource Server: The server hosting the protected resources that the client wants to access.
+
+Key Concepts in OAuth 2.0:
+
+- Authorization Grant: A credential representing the resource owner's authorization to access protected resources.
+- Access Token: A credential used by the client to access protected resources on behalf of the user.
+- Refresh Token: A credential used to obtain a new access token when the current one expires.
+
+OAuth 2.0 Flows:
+
+- Authorization Code Grant: Used by web applications to access user data on behalf of the user.
+
+- Implicit Grant: Used by single-page applications and mobile apps to access user data on behalf of the user.
+
+- Resource Owner Password Credentials Grant: Used by trusted applications to access user data with the user's username and password.
+
+- Client Credentials Grant: Used by applications to access their own resources, not on behalf of a user.
+
+# Getting Started with the Strava API
+
+Now that you have the prerequisites in place, let's get started with the Strava API.
+The first step is to create a new Strava API application on the Strava developers portal.
+
+Here are the steps to create a new Strava API application:
+Log in to the Strava developers portal using your Strava account credentials.
+Click on the "Create & Manage Your App" button to create a new application.
+Fill in the required details for your application, including the name, description, website, and authorization callback domain.
+Once you've created the application, you'll receive your client ID and client secret, which are required for authenticating with the Strava API.
+In this guide we will be using Next.js to build a simple web application that interacts with the Strava API.
+Next.js is a popular React framework that makes it easy to build server-side rendered applications with React.
+To get started, create a new Next.js project using the following command:
+
+```bash
+npx create-next-app strava-api-app
+```
+
+When first setting up Next.js, you will be prompted to choose a template for your project.
+We will be using
+
+# Installing Required Libraries
+
+In this next.js project, we will be using the following libraries:
+
+- axios: A promise-based HTTP client for making API requests.
+- tailwindcss: A utility-first CSS framework for styling the application.
+- react-icons: A collection of popular icons for React applications.
+- react-toastify: A notification library for displaying toast messages.
+- next-auth: An authentication library for Next.js applications.
+
+To install these libraries, run the following commands:
+
+```bash
+
+```
