@@ -51,25 +51,40 @@ OAuth 2.0 Flows:
 
 - Client Credentials Grant: Used by applications to access their own resources, not on behalf of a user.
 
+For more information on OAuth 2.0, check out the [OAuth 2.0 RFC](https://tools.ietf.org/html/rfc6749).
+
+When learning how to interact with the Strava API its important to understand the flow of the OAuth 2.0 authorization process.
+When I first started learning about OAuth 2.0, I found the concept of authorization flows to be a bit confusing.
+
+A quick over of the steps in the OAuth 2.0 Authorization Code Grant flow:
+
+1. Redirect the user to the authorization server.
+2. The user logs in and grants permission to the client.
+3. Strava Redirects the user back to the client with an authorization code.
+4. The client exchanges the authorization code for an access token.
+5. The client uses the access token to make API requests on behalf of the user.
+
 # Getting Started with the Strava API
 
 Now that you have the prerequisites in place, let's get started with the Strava API.
 The first step is to create a new Strava API application on the Strava developers portal.
 
 Here are the steps to create a new Strava API application:
-Log in to the Strava developers portal using your Strava account credentials.
-Click on the "Create & Manage Your App" button to create a new application.
-Fill in the required details for your application, including the name, description, website, and authorization callback domain.
-Once you've created the application, you'll receive your client ID and client secret, which are required for authenticating with the Strava API.
-In this guide we will be using Next.js to build a simple web application that interacts with the Strava API.
-Next.js is a popular React framework that makes it easy to build server-side rendered applications with React.
-To get started, create a new Next.js project using the following command:
+
+- Log in to the Strava developers portal using your Strava account credentials.
+- Click on the "Create & Manage Your App" button to create a new application.
+- Fill in the required details for your application, including the name, description, website, and authorization callback domain.
+- Once you've created the application, you'll receive your client ID and client secret, which are required for authenticating with the Strava API.
+- In this guide we will be using Next.js to build a simple web application that interacts with the Strava API.
+- Next.js is a popular React framework that makes it easy to build server-side rendered applications with React.
+- To get started, create a new Next.js project using the following command:
 
 ```bash
 npx create-next-app strava-api-app
 ```
 
 When first setting up Next.js, you will be prompted to choose a template for your project.
+
 ```bash
 What is your project named? my-app
 Would you like to use TypeScript? No / Yes
@@ -83,7 +98,7 @@ What import alias would you like configured? @/*
 
 We will be using TypeScript, ESLint, Tailwind, the source directory and App Router we will keeping the default import alias
 
-The doc for [Next.js](https://nextjs.org/docs/getting-started/installation) is great place to read about more configurations and 
+The doc for [Next.js](https://nextjs.org/docs/getting-started/installation) is great place to read about more configurations and
 
 # Installing Required Libraries
 
@@ -97,5 +112,26 @@ In this next.js project, we will be using the following libraries:
 To install these libraries, run the following commands:
 
 ```bash
+npm install axios react-icons react-toastify next-auth
+```
 
+# Setting Up NextAuth.js
+
+First we need to set up NextAuth.js to handle authentication with Strava.
+NextAuth.js is an authentication library for Next.js applications that supports various authentication providers, including OAuth 2.0.
+
+Create a new file called `route.ts` in a folder structure like so `app/api/auth/[...nextauth]` directory with the following content:
+
+```js
+import NextAuth from "next-auth";
+import StravaProviders from "next-auth/providers";
+
+export default NextAuth({
+	providers: [
+		Providers.Strava({
+			clientId: process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID,
+			clientSecret: process.env.STRAVA_CLIENT_SECRET,
+		}),
+	],
+});
 ```
