@@ -4,40 +4,81 @@ import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { posts } from "#site/content";
 import { PostItem } from "@/components/post-item";
+import Image from "next/image";
 
 export default function Home() {
 	const latestPosts = sortPosts(posts).slice(0, 3);
 
 	return (
 		<>
-			<section className="min-h-screen space-y-6 pb-8 pt-6 md:pb-12 md:mt-10 lg:py-60">
-				<div className="container flex flex-col gap-4 text-center">
-					<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-balance">
-						Hello, I&apos;m Karl
-					</h1>
-					<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance">
-						I work with React Ecosystem, and write to teach people how to
-						rebuild and redefine fundamental concepts through mental models.
-					</p>
-					<div className="flex flex-col gap-4 justify-center sm:flex-row">
-						<Link
-							href="/blog"
-							className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-fit")}>
-							View my Blog
-						</Link>
-						<Link
-							href={siteConfig.links.github}
-							target="_blank"
-							rel="noreferrer"
-							className={cn(
-								buttonVariants({ variant: "outline", size: "lg" }),
-								"w-full sm:w-fit"
-							)}>
-							Github
-						</Link>
+			<section className="min-h-screen pb-8 pt-6 md:pb-12 md:mt-10 lg:py-30">
+				<div className="container grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+					{/* Left Column */}
+					<div className="flex flex-col gap-4 items-center space-y-20">
+						<Image
+							width={200}
+							height={200}
+							src="/programming.svg"
+							alt="programming"
+						/>
+						<Image
+							width={200}
+							height={200}
+							src="/visual_data.svg"
+							alt="visual data"
+						/>
+						<Image width={200} height={200} src="/biking.svg" alt="biking" />
+					</div>
+					{/* Center Column */}
+					<div className="flex flex-col gap-4 items-center space-y-10">
+						<Image
+							width={200}
+							height={200}
+							src="/drink_coffee.svg"
+							alt="coffee"
+						/>
+						<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-balance">
+							Hello, I&apos;m Karl
+						</h1>
+						<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance">
+							I work with React Ecosystem, and write to teach people how to
+							rebuild and redefine fundamental concepts through mental models.
+						</p>
+						<div className="flex flex-col gap-4 justify-center sm:flex-row">
+							<Link
+								href="/blog"
+								className={cn(
+									buttonVariants({ size: "lg" }),
+									"w-full sm:w-fit"
+								)}>
+								View my Blog
+							</Link>
+							<Link
+								href={siteConfig.links.github}
+								target="_blank"
+								rel="noreferrer"
+								className={cn(
+									buttonVariants({ variant: "outline", size: "lg" }),
+									"w-full sm:w-fit"
+								)}>
+								Github
+							</Link>
+						</div>
+					</div>
+					{/* Right Column */}
+					<div className="flex flex-col gap-4 items-center space-y-20">
+						<Image
+							width={200}
+							height={200}
+							src="/building_website.svg"
+							alt="website"
+						/>
+						<Image width={200} height={200} src="/hacker_mind.svg" alt="hack" />
+						<Image width={200} height={200} src="/running.svg" alt="running" />
 					</div>
 				</div>
 			</section>
+
 			<section className="container max-w-4xl py-6 lg:lg:py-10 flex flex-col space-y-10 mt-60">
 				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
 					Rebuild your mental model
