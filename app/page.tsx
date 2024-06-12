@@ -11,10 +11,10 @@ export default function Home() {
 
 	return (
 		<>
-			<section className="min-h-screen pb-8 pt-6 md:pb-12 md:mt-10 lg:py-30">
-				<div className="container grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+			<section className="min-h-screen md:pb-12 md:mt-10 lg:py-28">
+				<div className="container grid grid-cols-1 lg:grid-cols-3 gap-4 text-center">
 					{/* Left Column */}
-					<div className="flex flex-col gap-4 items-center space-y-20">
+					<div className="hidden lg:flex flex-col gap-4 items-center justify-between">
 						<Image
 							width={200}
 							height={200}
@@ -30,7 +30,7 @@ export default function Home() {
 						<Image width={200} height={200} src="/biking.svg" alt="biking" />
 					</div>
 					{/* Center Column */}
-					<div className="flex flex-col gap-4 items-center space-y-10">
+					<div className="flex flex-col gap-4 items-center pt-20">
 						<Image
 							width={200}
 							height={200}
@@ -66,7 +66,7 @@ export default function Home() {
 						</div>
 					</div>
 					{/* Right Column */}
-					<div className="flex flex-col gap-4 items-center space-y-20">
+					<div className="hidden lg:flex flex-col gap-4 items-center justify-between">
 						<Image
 							width={200}
 							height={200}
@@ -79,13 +79,20 @@ export default function Home() {
 				</div>
 			</section>
 
-			<section className="container max-w-4xl py-6 lg:lg:py-10 flex flex-col space-y-10 mt-60">
+			<section className="container max-w-4xl py-6 lg:lg:py-10 flex flex-col space-y-10 mt-30 justify-between items-center">
+				<Image
+					className=""
+					width={200}
+					height={200}
+					src="/firmware.svg"
+					alt="firmware"
+				/>
 				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
 					Rebuild your mental model
 				</h2>
 				<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance text-center">
-					Breaking down front-end development can make learning more structured
-					and predictable by understanding the fundamental workings of its
+					Breaking down front-end development makes learning more structured and
+					predictable by understanding the fundamental workings of its
 					components. In my blog, I share strategies for dissecting problems and
 					describe my mental model for learning specific topics.
 				</p>
