@@ -2,8 +2,41 @@
 title: Fetching Data with Next.js
 description: Learn how to fetch data with Next.js
 date: 2024-06-13
-published: true
+published: false
 ---
 
 # Fetching Data with Next.js
 
+First lets cover the basics of an API call in Next.js using App based routing. We are going to be using fetch to make a call to an API and display the data on the page.
+
+The Fetch API provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline, such as requests and responses. It also provides a global fetch()
+method that provides an easy, logical way to fetch resources asynchronously across the network.
+
+## Basic Fetch Request
+
+```js
+fetch(url, options);
+```
+
+## Detailed Fetch Request Example
+
+```js
+fetch("https://example.com/api/data", {
+	method: "POST", // HTTP method (e.g., GET, POST, PUT, DELETE)
+	headers: {
+		"Content-Type": "application/json", // Specifies the media type of the resource
+		Authorization: "Bearer token", // Authorization token if required
+	},
+	body: JSON.stringify({ key: "value" }), // Body of the request (e.g., JSON, form data)
+	mode: "cors", // Request mode (e.g., cors, no-cors, same-origin)
+	cache: "no-cache", // Cache mode (e.g., default, no-cache, reload, force-cache, only-if-cached)
+	credentials: "include", // Credentials mode (e.g., omit, same-origin, include)
+	redirect: "follow", // Redirect mode (e.g., follow, manual, error)
+	referrer: "no-referrer", // Referrer policy (e.g., no-referrer, client)
+	integrity: "", // Subresource integrity value
+	keepalive: false, // Whether the request can outlive the page
+	signal: controller.signal, // AbortController to signal request cancellation
+});
+```
+
+When making a API request that requires Authorization, you can pass the token in the headers object. The Authorization header is used to provide authentication credentials to the server. In this example were going to interact with the Strava API to get the users activities.

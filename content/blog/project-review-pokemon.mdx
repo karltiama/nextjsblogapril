@@ -1,6 +1,6 @@
 ---
 title: Interacting with the Pokemon API
-description: Me documenting my learnings with API starting with the Pokemon API
+description: Documenting my learnings with API starting with the Pokemon API
 date: 2024-06-15
 published: true
 ---
@@ -13,26 +13,29 @@ Project Overview: Interact and Display information with the Pokemon API
 Objective: Get familiar with API and how to interact with them.
 
 ## Background
+
 Motivation: I have always been interested in APIs and how they work. I have always wanted to learn how to interact with them and how to display the information in a user-friendly way. I have decided to start with the Pokemon API as it is a simple API to start with.
 Prerequisites: Basic understanding of Next.js and React
 
 ## Planning and Set Up
+
 Tools: Next.js, React, Pokemon API
 Environment: Local
 
 ## Implementation
-Steps: Set up next.js project, create a new component, fetch data from the Pokemon API, display the data in the component
 
+Steps: Set up next.js project, create a new component, fetch data from the Pokemon API, display the data in the component
 
 ```bash
 npx create-next-app pokemon-api-app
 ```
 
 Depending on the use case, there are many different ways to interact with an API.
+We will start with the most basic way to interact with an API using the fetch API.
 In this case we will creating a lib folder and a file called pokemon.ts.
 This file will contain the logic to fetch the data from the Pokemon API.
 
-```js
+```js showLineNumbers {2} {10}
 export const getPokemonList = async () => {
 	const response = await fetch("https://pokeapi.co/api/v2/pokemon");
 	if (!response.ok) {
@@ -49,3 +52,23 @@ export const getPokemonDetails = async (name: string) => {
 	return response.json();
 };
 ```
+
+Breaking down the code:
+
+- We are using the fetch API to make a GET request to the Pokemon API.
+- Each function is responsible for fetching a different type of data from the API.
+- getPokemonList fetches a list of 20 Pokemon per the API documentation.
+- We will fetch all the pokemon later on in the project.
+- Marking the function as async allows us to use the await keyword to wait for the response.
+
+## TO-DO
+
+- Write about the PokeStats component
+- Talk about isLoading and isError states
+- Implementation of the PokemonList component
+- Implementation of the PokemonDetails component
+
+## Switching to Server-Side API routes
+
+Key Benefits: Server-side API routes are useful when you need to fetch data at build time or request time.
+This is useful when you need to fetch data that is not available at build time, such as user-specific data.
