@@ -2,6 +2,7 @@
 title: Interacting with the Pokemon API
 description: Documenting my learnings with API starting with the Pokemon API
 date: 2024-06-15
+tags: ["nextjs", "react", "api"]
 published: true
 ---
 
@@ -10,7 +11,7 @@ published: true
 ## Introduction
 
 Project Overview: Interact and Display information with the Pokemon API
-Objective: Get familiar with API and how to interact with them.
+Objective: Get familiar with Fetch API and how to interact with APIs.
 
 ## Background
 
@@ -24,7 +25,8 @@ Environment: Local
 
 ## Implementation
 
-Steps: Set up next.js project, create a new component, fetch data from the Pokemon API, display the data in the component
+Steps: Set up next.js project, create a new component, fetch data from the Pokemon API,
+display the data in the component.
 
 ```bash
 npx create-next-app pokemon-api-app
@@ -34,6 +36,7 @@ Depending on the use case, there are many different ways to interact with an API
 We will start with the most basic way to interact with an API using the fetch API.
 In this case we will creating a lib folder and a file called pokemon.ts.
 This file will contain the logic to fetch the data from the Pokemon API.
+In our pokemon component file, we will be implementating a click event to fetch the pokemon details from the specific pokemon.
 
 ```js showLineNumbers {2} {10}
 export const getPokemonList = async () => {
@@ -55,18 +58,163 @@ export const getPokemonDetails = async (name: string) => {
 
 Breaking down the code:
 
-- We are using the fetch API to make a GET request to the Pokemon API.
-- Each function is responsible for fetching a different type of data from the API.
-- getPokemonList fetches a list of 20 Pokemon per the API documentation.
-- We will fetch all the pokemon later on in the project.
-- Marking the function as async allows us to use the await keyword to wait for the response.
+Each function is responsible for fetching a different type of data from the API. `getPokemonList{:.entity.name.function}` fetches a list of 20 Pokemon per the API documentation.
+We will fetch all the pokemon later on in the project. Marking the function as async allows us to use the await keyword to wait for the response.
+The endpoints we are using is pokemon and pokemon/name to get the list of pokemon and the details of a specific pokemon.
 
-## TO-DO
+## Displaying the data
 
-- Write about the PokeStats component
-- Talk about isLoading and isError states
-- Implementation of the PokemonList component
-- Implementation of the PokemonDetails component
+To display the data were are going to create a new component called PokemonStats.tsx.
+
+I like to think what data we will need and what data we will displaying from both API calls.
+From getPokemonList we will need the name of the pokemon and the url to fetch the details of the pokemon.
+From getPokemonDetails we will need the name, height, weight, and a sprite of the pokemon.
+
+```tsx
+interface Pokemon {
+	name: string;
+	url: string;
+}
+
+interface PokemonDetails {
+	name: string;
+	sprites: {
+		front_default: string;
+	};
+	stats: {
+		stat: {
+			name: string;
+		};
+		base_stat: number;
+	}[];
+}
+```
+
+We will need 4 states to in our component.
+
+1. pokemonList - to store the list of pokemon
+
+```tsx
+const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+```
+
+2. pokemonDetails - to store the details of the pokemon
+
+```tsx
+const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails | null>(
+	null
+);
+```
+
+3. selectedPokemon - to store the name of the selected pokemon
+
+```tsx
+const [selectedPokemon, setSelectedPokemon] = useState<string>("");
+```
+
+4. loading - to store the loading state of the component
+
+```tsx
+const [loading, setLoading] = useState<boolean>(false);
+```
+
+Next we will create a useEffect hook to fetch the list of pokemon when the component mounts.
+
+```tsx
+useEffect(() => {
+	setIsLoading(true);
+	getPokemonList()
+		.then((data) => {
+			setPokemonList(data.results);
+			console.log("Pokemon list:", data.results);
+		})
+		.catch((error) => {
+			console.error("Failed to fetch Pokemon list:", error);
+		})
+		.finally(() => {
+			setIsLoading(false);
+		});
+}, []);
+```
+
+<Callout type="warning">
+	It is also good practice to handle the loading state of the component, this
+	will help the user know that the data is being fetched. To achive this we are
+	setting the loading state to true before fetching the data and setting it to
+	false after the data has been fetched. Another good practice is to handle the
+	error state of the component. This will help the user know that there was an
+	error fetching the data.
+</Callout>
+
+Next we will create a function to fetch the details of the pokemon when the user clicks on the pokemon name.
+
+```tsx {16}
+useEffect(() => {
+	if (selectedPokemon) {
+		setIsLoading(true);
+		getPokemonDetails(selectedPokemon)
+			.then((data) => {
+				setPokemonDetails(data);
+				console.log("Pokemon details:", data);
+			})
+			.catch((error) => {
+				console.error("Failed to fetch Pokemon details:", error);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	}
+}, [selectedPokemon]);
+```
+
+Notice how we are using the `selectedPokemon{:.variable.parameter}` as the dependency in the useEffect hook. This will ensure that the useEffect hook is called when the selectedPokemon changes.
+
+```tsx
+
+...
+return (
+	<div>
+		<h1>Pokemon Stats</h1>
+			<select
+				value={selectedPokemon}
+				onChange={(e) => setSelectedPokemon(e.target.value)}>
+				<option value="">Select a Pokemon</option>
+				{pokemonList.map((pokemon) => (
+					<option key={pokemon.name} value={pokemon.name}>
+						{pokemon.name}
+					</option>
+				))}
+			</select>
+			{isLoading ? (
+				<div>Loading...</div>
+			) : (
+				pokemonDetails && (
+					<div>
+						<h2>{pokemonDetails.name}</h2>
+						<img
+							src={pokemonDetails.sprites.front_default}
+							alt={pokemonDetails.name}
+						/>
+						<ul>
+							{pokemonDetails.stats.map((stat) => (
+								<li key={stat.stat.name}>
+									{stat.stat.name}: {stat.base_stat}
+								</li>
+							))}
+						</ul>
+					</div>
+				)
+			)}
+	</div>
+)
+```
+
+Here displaying a select dropdown to select the pokemon and displaying the details of the pokemon when the user selects a pokemon.
+We are creating a select element that maps over the pokemonList and creates an option element for each pokemon.
+When the user selects a pokemon, we are setting the selectedPokemon state to the name of the selected pokemon.
+We are displaying the loading state when the data is being fetched and displaying the pokemon details when the data has been fetched.
+
+The full code can be found [here](https://github.com/karltiama/oxleafnextjs). I also implemented shadcnUI to style the component.
 
 ## Switching to Server-Side API routes
 
