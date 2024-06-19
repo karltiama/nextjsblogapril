@@ -1,6 +1,6 @@
 ---
 title: Interacting with the Pokemon API
-description: Documenting my learnings with API starting with the Pokemon API
+description: Documenting my learnings with APIs starting with the Pokemon API
 date: 2024-06-15
 tags: ["nextjs", "react", "api"]
 published: true
@@ -8,6 +8,11 @@ published: true
 
 # Project Title: Pokemon API
 
+<Callout type="danger">
+	TO-DO: Add a section on how to interact with the API using Server-Side API
+	routes. Implement search functionality to search for a specific pokemon.
+	Format and spell check the document.
+</Callout>
 ## Introduction
 
 Project Overview: Interact and Display information with the Pokemon API
@@ -34,7 +39,7 @@ npx create-next-app pokemon-api-app
 
 Depending on the use case, there are many different ways to interact with an API.
 We will start with the most basic way to interact with an API using the fetch API.
-In this case we will creating a lib folder and a file called pokemon.ts.
+In this case we will creating a library folder and a file called pokemon.ts.
 This file will contain the logic to fetch the data from the Pokemon API.
 In our pokemon component file, we will be implementating a click event to fetch the pokemon details from the specific pokemon.
 
@@ -66,9 +71,11 @@ The endpoints we are using is pokemon and pokemon/name to get the list of pokemo
 
 To display the data were are going to create a new component called PokemonStats.tsx.
 
-I like to think what data we will need and what data we will displaying from both API calls.
+Here is my thought process when trying to display the data, what data will we need and what data will we be displaying.
 From getPokemonList we will need the name of the pokemon and the url to fetch the details of the pokemon.
 From getPokemonDetails we will need the name, height, weight, and a sprite of the pokemon.
+
+Creating the types for the data we will be fetching:
 
 ```tsx
 interface Pokemon {
@@ -92,13 +99,13 @@ interface PokemonDetails {
 
 We will need 4 states to in our component.
 
-1. pokemonList - to store the list of pokemon
+1. `pokemonList{:.variable.parameter}` - to store the list of pokemon
 
 ```tsx
 const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
 ```
 
-2. pokemonDetails - to store the details of the pokemon
+2. `pokemonDetails{:.variable.parameter}` - to store the details of the pokemon
 
 ```tsx
 const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails | null>(
@@ -106,13 +113,13 @@ const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails | null>(
 );
 ```
 
-3. selectedPokemon - to store the name of the selected pokemon
+3. `selectedPokemon{:.variable.parameter}` - to store the name of the selected pokemon
 
 ```tsx
 const [selectedPokemon, setSelectedPokemon] = useState<string>("");
 ```
 
-4. loading - to store the loading state of the component
+4. `loading{:.variable.parameter}` - to store the loading state of the component
 
 ```tsx
 const [loading, setLoading] = useState<boolean>(false);
@@ -139,7 +146,7 @@ useEffect(() => {
 
 <Callout type="warning">
 	It is also good practice to handle the loading state of the component, this
-	will help the user know that the data is being fetched. To achive this we are
+	will help the user know that the data is being fetched. To achieve this we are
 	setting the loading state to true before fetching the data and setting it to
 	false after the data has been fetched. Another good practice is to handle the
 	error state of the component. This will help the user know that there was an
@@ -215,8 +222,11 @@ When the user selects a pokemon, we are setting the selectedPokemon state to the
 We are displaying the loading state when the data is being fetched and displaying the pokemon details when the data has been fetched.
 
 The full code can be found [here](https://github.com/karltiama/oxleafnextjs). I also implemented shadcnUI to style the component.
+This was the first way I learned to interact with an API. Next we will be looking at how to interact with an API using Server-Side API routes.
 
 ## Switching to Server-Side API routes
 
-Key Benefits: Server-side API routes are useful when you need to fetch data at build time or request time.
-This is useful when you need to fetch data that is not available at build time, such as user-specific data.
+Server-Side API routes are a great way to interact with an API. They allow you to fetch data from an API and return it to the client. They are also a great way to interact with an API that requires authentication.
+I made the mistake of trying to interact with an API that required authentication with out learning the basics first.
+
+Server-Side API routes are recommended for more complex or larger projects. Also they allow for catch-all routes and dynamic routes.
