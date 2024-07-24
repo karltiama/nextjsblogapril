@@ -14,3 +14,9 @@ export default async function ProjectsPage() {
 		</div>
 	);
 }
+
+// each project will be anchor tag that links to the project page
+// size lg and up will have 3 projects per row and md and down will have 2 projects per row
+// the project with have a title, description, technologies used (icons), and photo
+
+// styled possibly using shadcn ui cards
