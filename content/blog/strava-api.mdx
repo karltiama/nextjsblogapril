@@ -100,38 +100,7 @@ We will be using TypeScript, ESLint, Tailwind, the source directory and App Rout
 
 The doc for [Next.js](https://nextjs.org/docs/getting-started/installation) is great place to read about more configurations and
 
-# Installing Required Libraries
+## Background in Routing with Next.js
 
-In this next.js project, we will be using the following libraries:
-
-- axios: A promise-based HTTP client for making API requests.
-- react-icons: A collection of popular icons for React applications.
-- react-toastify: A notification library for displaying toast messages.
-- next-auth: An authentication library for Next.js applications.
-
-To install these libraries, run the following commands:
-
-```bash
-npm install axios react-icons react-toastify next-auth
-```
-
-# Setting Up NextAuth.js
-
-First we need to set up NextAuth.js to handle authentication with Strava.
-NextAuth.js is an authentication library for Next.js applications that supports various authentication providers, including OAuth 2.0.
-
-Create a new file called `route.ts` in a folder structure like so `app/api/auth/[...nextauth]` directory with the following content:
-
-```js
-import NextAuth from "next-auth";
-import StravaProviders from "next-auth/providers";
-
-export default NextAuth({
-	providers: [
-		Providers.Strava({
-			clientId: process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID,
-			clientSecret: process.env.STRAVA_CLIENT_SECRET,
-		}),
-	],
-});
-```
+Next.js uses a file-system based routing system, we will be using App Router which is a recommended routing system for Next.js.
+Each subdirectory of the app directory becomes a route when having a page.tsx file associated with it.

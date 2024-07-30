@@ -55,3 +55,46 @@ function sum(...numbers) {
 
 console.log(sum(1, 2, 3, 4)); // Outputs: 10
 ```
+
+The cn function allows you to conditionally apply class names based on certain conditions.
+It combines the clsx and twMerge functions to merge the class names into a single string.
+
+Here is a breakdown of the function:
+
+1. Base Class: The base class is the default class that you want to apply to an element.
+2. Conditional Classes: The conditional classes are additional classes that you want to apply based on certain conditions.
+
+Example Usage:
+
+```js
+import React from "react";
+import { cn } from "./utils";
+
+const MyButton: React.FC<{ isActive: boolean, isDisabled: boolean }> = ({
+	isActive,
+	isDisabled,
+}) => {
+	return (
+		<button
+			className={cn(
+				"base-class", // Always applied
+				isActive && "active-class", // Applied if isActive is true
+				isDisabled && "disabled-class" // Applied if isDisabled is true
+			)}
+			disabled={isDisabled}>
+			Click Me
+		</button>
+	);
+};
+
+export default MyButton;
+```
+
+Explanation:
+
+- Base class: 'base-class' is always applied to the button element.
+- Conditional Classes: 'active-class' is applied if isActive is true, and 'disabled-class' is applied if isDisabled is true.
+
+The cn function uses clsx to conditional combine these class names and twMerge to handle any potential conflicts or dupilications specific to Tailwind CSS.
+
+This is a simple example of how you can use the cn function to conditionally apply classes to an element in a React component.
