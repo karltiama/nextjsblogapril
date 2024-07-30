@@ -10,7 +10,7 @@ published: true
 
 Regardless of what CSS framework you use, understanding the core concepts of CSS is essential
 for building robust and maintainable web pages. In this article, we'll review the foundational
-building blocks of CSS: the box model, display property, and positioning. By mastering these 
+building blocks of CSS: the box model, display property, and positioning. By mastering these
 concepts, you'll be better equipped to create beautiful and responsive designs for your web projects.
 
 ## The Box Model
@@ -18,20 +18,92 @@ concepts, you'll be better equipped to create beautiful and responsive designs f
 The foundation of CSS styling is the box model, which defines how elements are rendered on the page.
 Each element is treated as a rectangular box with four distinct areas: content, padding, border, and margin.
 
-# Display Property
+## Display Property
 
-## Block and inline boxes
+The outer display values control the layout of the element itself. The most common outer display values are
+`block`, `inline`, `inline-block`, and `none`.
 
-Block boxes and inline boxes are the two main types of boxes in CSS. To set the display property of an element to block or inline, you can use the `display` property.
+- Block boxes and inline boxes are the two main types of boxes in CSS. To set the display
+  property of an element to block or inline, you can use the `display` property.
+- Think block elements as taking up the full width of the page and starting on a new line,
+  while inline elements only take up as much width as necessary and do not start on a new line.
+- I like to think Block elements as paragraphs and inline elements as words.
+- Block elements can have width, height, margin, padding, and border properties applied to them.
+- Inline elements can only have margin, padding, and border applied to them.
+- Inline-block elements are similar to inline elements, but they can have width, height, margin, padding, and border applied to them.
+- None hides the element from the page and used with assitive technologies like screen readers.
 
-## Outer display values
+## Logical properties
 
-The outer display values control the layout of the element itself. The most common outer display values are `block`, `inline`, `inline-block`, and `none`.
+Logical properties are a way to write CSS that is independent of the direction of the text. Instead of using
+`top`, `right`, `bottom`, and `left`, you can use `block-start`, `block-end`, `inline-start`, and `inline-end`.
 
-## Inner display values
+## Formatting Contexts
 
-Inner display dictates how elements inside that box are laid out. The most common inner display values are `flow`, `flow-root`, `table`, `flex`, and `grid`.
+Applying display: flex or display: grid to a container creates a new formatting context.
+This means that the container and its children are laid out according to the rules of the flexbox or
+grid layout, rather than the normal flow of the document. It continues to behave as a block-level element, but
+the children are laid out as flex items or grid items.
 
-## Flexbox
+Without intervention it is the contents of an element that determines its size and shape. Inline conent will
+grow hozizontally and block content will grow vertically.
 
-## Grid
+## The Box-Sizing Property
+
+Default box-sizing is the content-box, which means that the dimensions of the box's content plus its padding
+and border values. The border-box value includes the padding and border values in the box's dimensions.
+
+Generally, its considered best practice to use the border-box value for the box-sizing property, as it makes
+it easier to calculate the size of elements and ensures that the padding and border values do not affect the
+overall dimensions of the box.
+
+Some exceptions
+Dimensions of elements should be largely derived from their inner and outer context. Instead of telling browsers
+what to do, we allow them to make their own decisions, to best suit the user, their screen and device.
+
+## Composition and Layout
+
+Combining simple independent parts gives you more flexibility and control over the layout of your page.
+We need to identify and document which each of these smaller layouts are, and call them primitives.
+
+## Units
+
+## Global and local styling
+
+## The Stack
+
+- Problem: flow elements require white space, to physically and conceptually separate them. This is the purpose of
+  margin property. In design systems we dont know wheather there will be surrounding content or what nature of that
+  context will be. Margin is the relationship between the element and its context. Adding margin to a global element
+  may not be the right thing to do.
+- Solution: Style the context, not the individual elements. Inject margins between elements via the common parent.
+
+## The Box
+
+- Box's role within the layout system is to take care of any styles that can be considered intrinsic to individual
+  elements, styles which are not dictaed inherited or inferred form the meta-layouts to which an individual elemennt
+  may be subjected.
+
+If you don't have anything to put in a a box you, dont need a box. I fyou do have somethign in a box, the best box
+is the one with just enough room and no more. Padding should be a box styling option. The box element should have
+all padding on all sides or no sides at all.
+
+The visible box, the box should you either border or a background.
+
+Use cases for the box element:
+
+- group and demarcate content
+
+Examples
+
+- A box within a Stack
+- box with a header
+
+## The Cluster
+
+Use cases for Cluster components:
+
+- Any group of elements that differ in length and are liable to wrap.
+- Buttons that appear together at the end of form, as well as tags, keywords or other metadata.
+- Align any groups of horizaontally laid out elements to the left, right or center.
+- List of items that need to be separated by a small amount of space.
