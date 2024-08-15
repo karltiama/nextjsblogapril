@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site";
 import { posts } from "#site/content";
 import { PostItem } from "@/components/post-item";
 import Image from "next/image";
+import ProjectList from "@/components/project-list";
 
 export default function Home() {
 	const latestPosts = sortPosts(posts).slice(0, 3);
@@ -118,6 +119,7 @@ export default function Home() {
 					Here are some of the projects I have worked on. I am always looking
 					forward to new projects and collaborations.
 				</p>
+				<ProjectList />
 			</section>
 		</>
 	);

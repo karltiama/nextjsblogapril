@@ -1,34 +1,53 @@
+import { Codepen, WindIcon, ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
-import { Tag } from "./tag";
 
-export function ProjectCard({ project }: { project: Project }) {
-  return (
-    <article className="flex flex-col gap-2 border-border border-b py-3">
-      <div>
-        <h2 className="text-2xl font-bold">
-          <Link href={"/projects/" + project.slug}>{project.title}</Link>
-        </h2>
-      </div>
-      <div className="flex gap-2">
-        {project.tags?.map((tag) => (
-          <Tag tag={tag} key={tag} />
-        ))}
-      </div>
-      <div className="max-w-none text-muted-foreground">{project.description}</div>
-      <div className="flex justify-between items-center">
-        <dl>
-          <dt className="sr-only">Published on</dt>
-          <dd className="text-sm sm:text-base font-medium flex items-center gap-1">
-            <Calendar className="h-4 w-4" />
-            <time dateTime={project.date}>{formatDate(project.date)}</time>
-          </dd>
-        </dl>
-        <Link
-          href={"/projects/" + project.slug}
-          className={cn(buttonVariants({ variant: "link" }), "py-0")}>
-          Read More →
-        </Link>
-      </div>
-    </article>
-  );
+interface ProjectProps {
+	title: string;
+	description: string;
+	imageSrc: string;
+	altText: string;
+	projectLink: string;
 }
+
+function Project({
+	title,
+	description,
+	imageSrc,
+	altText,
+	projectLink,
+}: ProjectProps) {
+	return (
+		<div className="bg-background rounded-lg shadow-lg overflow-hidden group">
+			<Link href={projectLink} className="block" prefetch={false}>
+				<img
+					src={imageSrc}
+					alt={altText}
+					width={600}
+					height={400}
+					className="w-full h-64 object-cover group-hover:opacity-80 transition-opacity"
+					style={{ aspectRatio: "600/400", objectFit: "cover" }}
+				/>
+			</Link>
+			<div className="p-6">
+				<h3 className="text-xl font-bold">{title}</h3>
+				<p className="text-muted-foreground mt-2">{description}</p>
+				<div className="flex items-center gap-2 mt-4">
+					<Codepen className="w-6 h-6" />
+					<WindIcon className="w-6 h-6" />
+					<Codepen className="w-6 h-6" />
+				</div>
+				<div className="mt-4">
+					<Link
+						href={projectLink}
+						className="inline-flex items-center gap-2 font-medium text-primary hover:underline underline-offset-4"
+						prefetch={false}>
+						View Project
+						<ArrowRightIcon className="w-4 h-4" />
+					</Link>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export default Project;
