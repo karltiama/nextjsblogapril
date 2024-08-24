@@ -1,0 +1,37 @@
+---
+title: Creating a Movie App with Next.js
+description: Learn how to create a movie app with Next.js and The Movie Database API.
+date: 2024-080-15
+tags: ["next.js", "api", "movie"]
+published: false
+---
+
+- install Next.js and Supabase
+- create lib folder to create client for Supabase
+
+```
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+```
+
+- add Enviorment Variables
+
+## Front End
+
+- header design for dashboard
+- implement search bar for movies
+- needs debouncing
+
+## Back End
+
+- session based authentication
+
+## 1st Attempt
+
+- First attempt went ok, I am going to re attempt the project with server actions instead of however I did it last time
+- Trying to do separations of concerns, server actions for the backend and client actions for the front end
