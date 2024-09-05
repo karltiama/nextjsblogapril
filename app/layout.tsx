@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { SiteHeader } from "@/components/site-header";
 import { Providers } from "@/components/providers";
 import { SiteFooter } from "@/components/site-footer";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
 						<SiteHeader />
 						<main className="flex-1">{children}</main>
 						<SiteFooter />
+						<SpeedInsights />
 					</div>
 				</Providers>
 			</body>
