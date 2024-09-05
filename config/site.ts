@@ -5,6 +5,7 @@ export const siteConfig = {
 	author: "Karl",
 	links: {
 		twitter: "",
+		enduroStats: "https://endurostats.vercel.app",
 		github: "https://github.com/karltiama",
 		personalSite: "",
 	},

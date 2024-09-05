@@ -41,7 +41,7 @@ export function SiteHeader() {
 							</div>
 						</Link>
 						<Link
-							href={siteConfig.links.twitter}
+							href={siteConfig.links.enduroStats}
 							target="_blank"
 							rel="noreferrer">
 							<div
