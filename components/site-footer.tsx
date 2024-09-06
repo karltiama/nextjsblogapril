@@ -1,10 +1,12 @@
 import { siteConfig } from "@/config/site";
 import { Mail } from "lucide-react";
 import { Icons } from "./icons";
+import { Separator } from "./ui/separator";
 
 export function SiteFooter() {
 	return (
 		<footer>
+			<Separator />
 			<div className="mb-6 mt-14 flex flex-col items-center">
 				<div className="mb-3 flex space-x-4">
 					<a target="_blank" rel="noreferrer" href="mailto:karltiama@gmail.com">
