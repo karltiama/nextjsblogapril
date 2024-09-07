@@ -1,13 +1,13 @@
 export const siteConfig = {
 	name: "Karl's Dev Blog",
-	url: "https://example.com",
+	url: "karltiama.dev",
 	description: "Nextjs 14 blog using velite, tailwind and shadcn",
 	author: "Karl",
 	links: {
 		twitter: "https://x.com/KodeWithKarl",
 		enduroStats: "https://endurostats.vercel.app",
 		github: "https://github.com/karltiama",
-		personalSite: "",
+		personalSite: "karltiama.dev",
 	},
 };
 
