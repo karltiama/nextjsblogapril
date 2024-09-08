@@ -1,5 +1,11 @@
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
+import {
+	Tooltip,
+	TooltipProvider,
+	TooltipTrigger,
+	TooltipContent,
+} from "@/components/ui/tooltip"; // Adjust path as needed
 import { SiNextdotjs, SiTailwindcss } from "react-icons/si";
 
 interface ProjectProps {
@@ -35,17 +41,24 @@ function Project({
 				<h3 className="text-xl font-bold">{title}</h3>
 				<p className="text-muted-foreground mt-2">{description}</p>
 				<div className="flex items-center gap-2 mt-4">
-					{/* Dynamically render technology icons */}
-					{technologies.map((tech, index) => {
-						const IconComponent = tech.icon; // Dynamically assign the icon component
-						return (
-							<span key={index} className="flex items-center gap-2">
-								<IconComponent className="w-6 h-6" />
-								<span className="sr-only">{tech.name}</span>{" "}
-								{/* For accessibility */}
-							</span>
-						);
-					})}
+					<TooltipProvider>
+						{/* Dynamically render technology icons with tooltips */}
+						{technologies.map((tech, index) => {
+							const IconComponent = tech.icon; // Dynamically assign the icon component
+							return (
+								<Tooltip key={index} delayDuration={0}>
+									{" "}
+									{/* Set delay to 0 */}
+									<TooltipTrigger>
+										<IconComponent className="w-6 h-6" />
+									</TooltipTrigger>
+									<TooltipContent>
+										<p>{tech.name}</p>
+									</TooltipContent>
+								</Tooltip>
+							);
+						})}
+					</TooltipProvider>
 				</div>
 				<div className="mt-4">
 					<Link
