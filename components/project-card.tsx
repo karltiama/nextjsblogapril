@@ -1,5 +1,6 @@
-import { Codepen, WindIcon, ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
+import { SiNextdotjs, SiTailwindcss } from "react-icons/si";
 
 interface ProjectProps {
 	title: string;
@@ -7,6 +8,7 @@ interface ProjectProps {
 	imageSrc: string;
 	altText: string;
 	projectLink: string;
+	technologies: Array<{ icon: React.ElementType; name: string }>;
 }
 
 function Project({
@@ -15,6 +17,7 @@ function Project({
 	imageSrc,
 	altText,
 	projectLink,
+	technologies,
 }: ProjectProps) {
 	return (
 		<div className="bg-background rounded-lg shadow-lg overflow-hidden group">
@@ -32,9 +35,17 @@ function Project({
 				<h3 className="text-xl font-bold">{title}</h3>
 				<p className="text-muted-foreground mt-2">{description}</p>
 				<div className="flex items-center gap-2 mt-4">
-					<Codepen className="w-6 h-6" />
-					<WindIcon className="w-6 h-6" />
-					<Codepen className="w-6 h-6" />
+					{/* Dynamically render technology icons */}
+					{technologies.map((tech, index) => {
+						const IconComponent = tech.icon; // Dynamically assign the icon component
+						return (
+							<span key={index} className="flex items-center gap-2">
+								<IconComponent className="w-6 h-6" />
+								<span className="sr-only">{tech.name}</span>{" "}
+								{/* For accessibility */}
+							</span>
+						);
+					})}
 				</div>
 				<div className="mt-4">
 					<Link
