@@ -26,15 +26,15 @@ function Project({
 	technologies,
 }: ProjectProps) {
 	return (
-		<div className="bg-background rounded-lg shadow-lg overflow-hidden group">
+		<div className="group bg-background rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
 			<Link href={projectLink} className="block" prefetch={false}>
 				<img
 					src={imageSrc}
 					alt={altText}
 					width={600}
 					height={400}
-					className="w-full h-64 object-cover group-hover:opacity-80 transition-opacity"
-					style={{ aspectRatio: "600/400", objectFit: "cover" }}
+					className="w-full h-64 object-contain group-hover:opacity-80 transition-opacity"
+					style={{ aspectRatio: "600/400" }}
 				/>
 			</Link>
 			<div className="p-6">
@@ -44,11 +44,9 @@ function Project({
 					<TooltipProvider>
 						{/* Dynamically render technology icons with tooltips */}
 						{technologies.map((tech, index) => {
-							const IconComponent = tech.icon; // Dynamically assign the icon component
+							const IconComponent = tech.icon;
 							return (
 								<Tooltip key={index} delayDuration={0}>
-									{" "}
-									{/* Set delay to 0 */}
 									<TooltipTrigger>
 										<IconComponent className="w-6 h-6" />
 									</TooltipTrigger>
@@ -63,11 +61,15 @@ function Project({
 				<div className="mt-4">
 					<Link
 						href={projectLink}
-						className="inline-flex items-center gap-2 font-medium text-primary hover:underline underline-offset-4"
+						className="inline-flex items-center gap-2 font-medium text-primary"
 						prefetch={false}>
 						View Project
 						<ArrowRightIcon className="w-4 h-4" />
 					</Link>
+					{/* Line Animation */}
+					<span className="block relative mt-1">
+						<span className="block w-0 h-1 bg-primary transition-all duration-300 group-hover:w-full" />
+					</span>
 				</div>
 			</div>
 		</div>
