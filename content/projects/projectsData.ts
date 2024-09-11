@@ -1,4 +1,9 @@
-import { SiNextdotjs, SiTailwindcss, SiTypescript } from "react-icons/si";
+import {
+	SiNextdotjs,
+	SiSupabase,
+	SiTailwindcss,
+	SiTypescript,
+} from "react-icons/si";
 import { FaStrava } from "react-icons/fa";
 
 export const projects = [
@@ -17,14 +22,17 @@ export const projects = [
 		],
 	},
 	{
-		title: "Project 2",
-		description: "A detailed description of the second project.",
-		imageSrc: "/placeholder.svg",
+		title: "Reel Ratings",
+		description:
+			"Reel Ratings is a movie rating app that allows users to rate and review movies.",
+		imageSrc: "/reelratings.png",
 		altText: "Project 2",
 		projectLink: "#",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
+			{ icon: SiTypescript, name: "TypeScript" },
+			{ icon: SiSupabase, name: "Supabase" },
 		],
 	},
 	{
