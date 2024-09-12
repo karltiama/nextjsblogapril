@@ -33,7 +33,7 @@ export default function RootLayout({
 		<html lang="en" className="scroll-pt-[3.5rem]">
 			{/* Umami Tracking Script */}
 			<Script
-				src="https://umami-production-fad8.up.railway.app"
+				src="https://umami-production-4b9f.up.railway.app/umami.js"
 				data-website-id="3d15d7a9-0fe1-4f42-9846-8e817013dd3d"
 				defer
 			/>
