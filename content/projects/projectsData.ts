@@ -2,6 +2,7 @@ import {
 	SiNextdotjs,
 	SiSupabase,
 	SiTailwindcss,
+	SiThemoviedatabase,
 	SiTypescript,
 } from "react-icons/si";
 import { FaStrava } from "react-icons/fa";
@@ -33,6 +34,7 @@ export const projects = [
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
 			{ icon: SiTypescript, name: "TypeScript" },
 			{ icon: SiSupabase, name: "Supabase" },
+			{ icon: SiThemoviedatabase, name: "TMDB API" },
 		],
 	},
 	{

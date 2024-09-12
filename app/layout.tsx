@@ -7,6 +7,7 @@ import { Providers } from "@/components/providers";
 import { SiteFooter } from "@/components/site-footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "@/config/site";
+import Head from "next/head"; // Import Head
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -30,6 +31,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className="scroll-pt-[3.5rem]">
+			<Head>
+				{/* Umami Tracking Script */}
+				<script
+					defer
+					src="https://cloud.umami.is/script.js"
+					data-website-id="3d15d7a9-0fe1-4f42-9846-8e817013dd3d"></script>
+			</Head>
 			<body
 				className={cn(
 					"min-h-screen bg-background font-sans antialiased",

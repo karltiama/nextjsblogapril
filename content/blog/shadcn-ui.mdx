@@ -1,0 +1,62 @@
+---
+title: A Deep Dive into shadcn UI
+description: Exploring the features of shadcn UI, its integration with Radix UI, and why these libraries are ideal for building accessible and customizable UIs.
+date: 2024-09-12
+tags: ["UI", "shadcn UI", "Radix UI", "web development", "React"]
+published: false
+---
+
+# A Deep Dive into shadcn UI
+
+In the ever-evolving world of web development, tools and libraries are constantly being developed
+to make the process easier and more efficient. With the growing demand for highly customizable
+and accessible user interfaces, libraries like **shadcn UI** have emerged as standouts in the field.
+
+**shadcn UI** is a collection of React components designed with customization and accessibility
+in mind. Before we dive into the features of shadcn UI, let's first explore the library that powers it:
+**Radix UI**.
+
+# Radix UI: The Foundation of shadcn UI
+
+Radix UI is a collection of low-level UI components that are designed to be highly composable and accessible.
+These components serve as the foundation for shadcn UI, providing a solid base for building complex user interfaces.
+
+### Key Features of Radix UI
+
+1. **Accessible by Default**: Radix UI primitives come with built-in accessibility features,
+   ensuring that your components meet web standards right out of the box.
+2. **Unstyled Primitives**: Unlike other UI libraries that come pre-styled, Radix UI focuses
+   on providing unstyled components, allowing you to apply your own design system.
+3. **Highly Customizable**: With unstyled components, Radix UI gives you the flexibility to
+   create complex, custom interfaces while handling the accessibility and interaction logic for you.
+
+### Example: Creating a Dialog with Radix UI
+
+One of the most common components in web apps is the **dialog** (or modal). Here's a simple
+example of how to implement a dialog using Radix UI:
+
+```tsx
+import * as Dialog from "@radix-ui/react-dialog";
+
+function App() {
+	return (
+		<Dialog.Root>
+			<Dialog.Trigger asChild>
+				<button>Open Dialog</button>
+			</Dialog.Trigger>
+			<Dialog.Portal>
+				<Dialog.Overlay />
+				<Dialog.Content>
+					<Dialog.Title>Radix Dialog</Dialog.Title>
+					<Dialog.Description>
+						This is an accessible dialog component.
+					</Dialog.Description>
+					<Dialog.Close asChild>
+						<button>Close</button>
+					</Dialog.Close>
+				</Dialog.Content>
+			</Dialog.Portal>
+		</Dialog.Root>
+	);
+}
+```
