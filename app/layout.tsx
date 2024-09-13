@@ -31,12 +31,14 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className="scroll-pt-[3.5rem]">
-			{/* Umami Tracking Script */}
-			<Script
-				src="https://umami-production-4b9f.up.railway.app/umami.js"
-				data-website-id="aa2856c5-83d5-4abc-b6c9-65047dee4678"
-				defer
-			/>
+			<head>
+				{/* Umami Tracking Script in Head */}
+				<Script
+					src="https://umami-production-4b9f.up.railway.app/umami.js"
+					data-website-id="aa2856c5-83d5-4abc-b6c9-65047dee4678"
+					defer
+				/>
+			</head>
 			<body
 				className={cn(
 					"min-h-screen bg-background font-sans antialiased",
