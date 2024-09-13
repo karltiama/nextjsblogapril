@@ -1,3 +1,5 @@
+import ProjectList from "@/components/project-list"; // Adjust the path as needed
+
 export default async function ProjectsPage() {
 	return (
 		<div className="container max-w-4xl py-6 lg:py-10">
@@ -11,12 +13,11 @@ export default async function ProjectsPage() {
 					</p>
 				</div>
 			</div>
+
+			{/* Pass the projects array to the ProjectList component */}
+			<div className="mt-8">
+				<ProjectList />
+			</div>
 		</div>
 	);
 }
-
-// each project will be anchor tag that links to the project page
-// size lg and up will have 3 projects per row and md and down will have 2 projects per row
-// the project with have a title, description, technologies used (icons), and photo
-
-// styled possibly using shadcn ui cards
