@@ -35,8 +35,8 @@ export default function RootLayout({
 				{/* Umami Tracking Script in Head */}
 				<Script
 					defer
-					src="https://umami-production-4b9f.up.railway.app/umami.js"
-					data-website-id="aa2856c5-83d5-4abc-b6c9-65047dee4678"
+					src="https://cloud.umami.is/script.js"
+					data-website-id="3d15d7a9-0fe1-4f42-9846-8e817013dd3d"
 				/>
 			</head>
 			<body
