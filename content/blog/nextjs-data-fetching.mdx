@@ -2,41 +2,176 @@
 title: Fetching Data with Next.js
 description: Learn how to fetch data with Next.js
 date: 2024-06-13
-published: false
+published: true
 ---
 
 # Fetching Data with Next.js
 
-First lets cover the basics of an API call in Next.js using App based routing. We are going to be using fetch to make a call to an API and display the data on the page.
+Next.js offers a variety of powerful data fetching methods, each tailored to specific use cases and performance requirements. Whether you're building a dynamic web application, a static website, or something in between, understanding these methods is crucial for creating efficient and scalable React applications.
 
-The Fetch API provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline, such as requests and responses. It also provides a global fetch()
-method that provides an easy, logical way to fetch resources asynchronously across the network.
+In this comprehensive guide, we'll explore six key approaches to data fetching in Next.js: Server-Side Rendering (SSR), Static Site Generation (SSG), Incremental Static Regeneration (ISR), Client-Side Rendering (CSR), Route Handlers (API Routes), and using TanStack React Query. We'll dive into the strengths of each method, provide code examples, and discuss ideal use cases to help you make informed decisions for your Next.js projects.
 
-## Basic Fetch Request
+Let's begin our journey through the world of data fetching in Next.js!
 
-```js
-fetch(url, options);
+## 1. Server-Side Rendering (SSR)
+
+SSR is great for dynamic content that needs to be fresh on every request.
+
+```tsx
+async function Page() {
+	const res = await fetch('https://api.example.com/data')
+	const data = await res.json()
+	return <main>{/* Render data */}</main>
+}
 ```
 
-## Detailed Fetch Request Example
+Best for:
+- Pages with frequently changing data
+- Content that needs to be personalized for each user
+- Pages where SEO is crucial and content must be up-to-date
+- Scenarios where you need access to request-specific information (e.g., cookies, headers)
 
-```js
-fetch("https://example.com/api/data", {
-	method: "POST", // HTTP method (e.g., GET, POST, PUT, DELETE)
-	headers: {
-		"Content-Type": "application/json", // Specifies the media type of the resource
-		Authorization: "Bearer token", // Authorization token if required
-	},
-	body: JSON.stringify({ key: "value" }), // Body of the request (e.g., JSON, form data)
-	mode: "cors", // Request mode (e.g., cors, no-cors, same-origin)
-	cache: "no-cache", // Cache mode (e.g., default, no-cache, reload, force-cache, only-if-cached)
-	credentials: "include", // Credentials mode (e.g., omit, same-origin, include)
-	redirect: "follow", // Redirect mode (e.g., follow, manual, error)
-	referrer: "no-referrer", // Referrer policy (e.g., no-referrer, client)
-	integrity: "", // Subresource integrity value
-	keepalive: false, // Whether the request can outlive the page
-	signal: controller.signal, // AbortController to signal request cancellation
-});
+Examples:
+- Social media feeds
+- Real-time dashboards
+- E-commerce product pages with dynamic pricing or inventory
+
+## 2. Static Site Generation (SSG)
+
+SSG is perfect for static content that doesn't change often.
+
+```tsx
+export async function generateStaticParams() {
+	// Generate or fetch array of page params
+	return [{ id: '1' }, { id: '2' }, ...]
+	}
+	async function Page({ params }: { params: { id: string } }) {
+		const res = await fetch(https://api.example.com/data/${params.id})
+		const data = await res.json()
+		return <main>{/* Render data */}</main>
+}
 ```
 
-When making a API request that requires Authorization, you can pass the token in the headers object. The Authorization header is used to provide authentication credentials to the server. In this example were going to interact with the Strava API to get the users activities.
+Best for:
+- Content that doesn't change often
+- Pages that are the same for all users
+- Scenarios where performance and scalability are top priorities
+
+Examples:
+- Marketing pages
+- Blog posts
+- Documentation sites
+- Product catalogs with infrequent updates
+
+
+## 3. Incremental Static Regeneration (ISR)
+
+ISR is a combination of SSG and SSR. It allows you to update static pages at specified intervals.
+
+```tsx
+async function Page() {
+	const res = await fetch('https://api.example.com/data', { next: { revalidate: 60 } })
+	const data = await res.json()
+	return <main>{/* Render data */}</main>
+}
+```
+Best for:
+- Pages with content that changes periodically but not in real-time
+- High-traffic pages where you want to balance performance with data freshness
+- Large sites with many pages that would be impractical to rebuild entirely
+
+Examples:
+- News websites
+- E-commerce category pages
+- Event listings that update daily or weekly
+
+## 4. Client-Side Rendering (CSR)
+
+CSR is useful for highly interactive components or when data is user-specific.
+```tsx
+'use client'
+import { useEffect, useState } from 'react'
+function ClientComponent() {
+	const [data, setData] = useState(null)
+	useEffect(() => {
+		fetch('https://api.example.com/data')
+		.then(res => res.json())
+		.then(setData)
+		}, [])
+		if (!data) return <div>Loading...</div>
+		return <div>{/* Render data */}</div>
+}
+```
+Best for:
+- Highly interactive components
+- Data that is specific to the user and not needed for SEO
+- Sections of a page that require frequent updates
+
+Examples:
+- User profiles
+- Interactive data visualizations
+- Real-time chat interfaces
+- Complex form interactions
+
+## 5. Route Handlers (API Routes)
+
+Route Handlers are ideal for creating API endpoints within your Next.js app.
+```tsx
+import { NextResponse } from 'next/server'
+export async function GET() {
+	const res = await fetch('https://api.example.com/data')
+	const data = await res.json()
+	return NextResponse.json(data)
+}
+```
+Best for:
+- Creating backend API endpoints within your Next.js app
+- Handling form submissions
+- Integrating with external APIs securely
+
+Examples:
+- Authentication endpoints
+- Webhook receivers
+- Custom API endpoints for your frontend
+
+
+## 6. TanStack React Query
+
+For complex data fetching scenarios, TanStack React Query is recommended.
+```tsx
+'use client'
+import { useQuery } from '@tanstack/react-query'
+function QueryComponent() {
+	const { data, isLoading, error } = useQuery({
+		queryKey: ['data'],
+		queryFn: () =>
+			fetch('https://api.example.com/data')
+				.then((res) => res.json())
+		})
+	if (isLoading) return <div>Loading...</div>
+	if (error) return <div>Error: {error.message}</div>
+	return <div>{/* Render data */}</div>
+}
+```
+Best for:
+- Complex data fetching scenarios
+- Managing server state on the client side
+- Optimistic updates and real-time synchronization
+
+Examples:
+- Infinite scrolling lists
+- Real-time collaborative features
+- Caching and synchronizing data across multiple components
+
+## Choosing the Right Method
+
+When deciding which method to use, consider:
+
+- **Data freshness**: How often does the data change?
+- **Performance**: Do you need instant loading or is some delay acceptable?
+- **User specificity**: Is the data the same for all users or personalized?
+- **SEO requirements**: Does the content need to be indexed by search engines?
+
+By understanding these factors and the strengths of each method, you can choose the most appropriate data fetching strategy for your Next.js application.
+
+Remember, you can mix and match these methods within your app to optimize for different use cases. Happy coding!

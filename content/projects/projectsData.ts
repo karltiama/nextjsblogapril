@@ -38,17 +38,17 @@ export const projects = [
 		],
 	},
 	{
-		title: "Enduro Stats",
+		title: "Memory Mapper",
 		description:
-			"EnduroStats is a fitness app that helps users track activities, set goals, and monitor progress with a sleek, responsive design.",
+			"Memory Mapper is a tool that helps users map out their memories and experiences.",
 		imageSrc: "/strava3.png", // Reference the image path directly from the public folder
-		altText: "Enduro Stats project screenshot",
+		altText: "Memory Mapper project screenshot",
 		projectLink: "#",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTypescript, name: "TypeScript" },
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
-			{ icon: FaStrava, name: "Strava API" },
+			{ icon: SiSupabase, name: "Supabase" },
 		],
 	},
 	{
