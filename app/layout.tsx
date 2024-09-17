@@ -30,7 +30,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className="scroll-pt-[3.5rem]">
+		<html lang="en" className="scroll-pt-[3.5rem]" suppressHydrationWarning>
 			<head>
 				{/* Umami Tracking Script in Head */}
 				<Script
