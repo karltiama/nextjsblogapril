@@ -41,7 +41,7 @@ export function SiteHeader() {
 							</div>
 						</Link>
 						<Link
-							href={siteConfig.links.enduroStats}
+							href={siteConfig.links.strava}
 							target="_blank"
 							rel="noreferrer">
 							<div

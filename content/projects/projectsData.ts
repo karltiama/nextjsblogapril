@@ -15,12 +15,23 @@ export const projects = [
 		imageSrc: "/strava3.png", // Reference the image path directly from the public folder
 		altText: "Enduro Stats project screenshot",
 		projectLink: "#",
+		
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTypescript, name: "TypeScript" },
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
 			{ icon: FaStrava, name: "Strava API" },
+		],challenges: [
+			"The app was built with a focus on performance and scalability, which required careful consideration of data structures and API design.",
+			"Implementing real-time updates and integrating external APIs like Strava presented significant technical challenges.",
+			"Ensuring a responsive design that works well on both desktop and mobile devices was a challenging task.",
 		],
+		learnings: [
+			"Gained a deeper understanding of React and Next.js, including server-side rendering and client-side navigation.",
+			"Learned how to effectively use Tailwind CSS for styling and responsive design.",
+			"Acquired skills in API development and integration, including authentication and data handling.",
+		],
+		implementation: "The app was built with a focus on performance and scalability, which required careful consideration of data structures and API design.",
 	},
 	{
 		title: "Reel Ratings",

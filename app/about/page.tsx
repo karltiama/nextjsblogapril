@@ -31,15 +31,27 @@ export default async function AboutPage() {
 						Software Developer
 					</p>
 				</div>
-				<p className="text-muted-foreground text-lg py-4">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-					eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-					minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-					aliquip ex ea commodo consequat. Duis aute irure dolor in
-					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-					culpa qui officia deserunt mollit anim id est laborum
-				</p>
+				<div className="flex flex-col gap-4">
+					<p className="text-lg">
+						As a passionate Software Developer, I specialize in building robust and scalable applications using modern web technologies. With a strong foundation in TypeScript, React, and Next.js, I strive to create efficient and user-friendly solutions.
+					</p>
+					<h3 className="text-xl font-semibold mt-4">Professional Journey</h3>
+					<p>
+						My career in software development has been marked by continuous learning and growth. I've had the opportunity to work on diverse projects, from e-commerce platforms to data-intensive applications, honing my skills in full-stack development.
+					</p>
+					<h3 className="text-xl font-semibold mt-4">Skills & Expertise</h3>
+					<ul className="list-disc list-inside">
+						<li>Frontend: React, Next.js, Tailwind CSS</li>
+						<li>Backend: Node.js, Express, Supabase</li>
+						<li>Mobile: React Native, Expo</li>
+						<li>State Management: Zustand, TanStack Query</li>
+						<li>DevOps: Git, CI/CD, Docker</li>
+					</ul>
+					<h3 className="text-xl font-semibold mt-4">Beyond Coding</h3>
+					<p>
+						When I'm not coding, you can find me exploring new hiking trails, experimenting with photography, or contributing to open-source projects. I'm also passionate about mentoring junior developers and sharing knowledge within the tech community.
+					</p>
+				</div>
 			</div>
 		</div>
 	);

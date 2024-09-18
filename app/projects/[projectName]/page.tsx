@@ -20,16 +20,45 @@ export default function ProjectPage({ params }: { params: { projectName: string 
 
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
-      <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
-      <img src={project.imageSrc} alt={project.altText} className="w-full mb-4" />
-      <p className="text-lg mb-4">{project.description}</p>
+      <h1 className="font-black text-3xl md:text-4xl lg:text-5xl mb-4">{project.title}</h1>
+      <img src={project.imageSrc} alt={project.altText} className="w-full mb-6" />
+      <p className="text-xl text-muted-foreground mb-8">{project.description}</p>
+      
       <h2 className="text-2xl font-semibold mb-2">Technologies Used:</h2>
       <ul className="list-disc list-inside mb-4">
         {project.technologies.map((tech, index) => (
           <li key={index}>{tech.name}</li>
         ))}
       </ul>
-      {/* Add more detailed content about the project here */}
+
+      {project.challenges && (
+        <>
+          <h2 className="text-2xl font-semibold mb-2">Challenges:</h2>
+          <ul className="list-disc list-inside mb-4">
+            {project.challenges.map((challenge, index) => (
+              <li key={index}>{challenge}</li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      {project.learnings && (
+        <>
+          <h2 className="text-2xl font-semibold mb-2">What I Learned:</h2>
+          <ul className="list-disc list-inside mb-4">
+            {project.learnings.map((learning, index) => (
+              <li key={index}>{learning}</li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      {project.implementation && (
+        <>
+          <h2 className="text-2xl font-semibold mb-2">Implementation Details:</h2>
+          <p className="text-lg mb-4">{project.implementation}</p>
+        </>
+      )}
     </div>
   );
 }
