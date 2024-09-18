@@ -37,7 +37,7 @@ export default async function AboutPage() {
 					</p>
 					<h3 className="text-xl font-semibold mt-4">Professional Journey</h3>
 					<p>
-						My career in software development has been marked by continuous learning and growth. I've had the opportunity to work on diverse projects, from e-commerce platforms to data-intensive applications, honing my skills in full-stack development.
+						My career in software development has been marked by continuous learning and growth. I&apos;ve had the opportunity to work on diverse projects, from e-commerce platforms to data-intensive applications, honing my skills in full-stack development.
 					</p>
 					<h3 className="text-xl font-semibold mt-4">Skills & Expertise</h3>
 					<ul className="list-disc list-inside">
@@ -49,7 +49,7 @@ export default async function AboutPage() {
 					</ul>
 					<h3 className="text-xl font-semibold mt-4">Beyond Coding</h3>
 					<p>
-						When I'm not coding, you can find me exploring new hiking trails, experimenting with photography, or contributing to open-source projects. I'm also passionate about mentoring junior developers and sharing knowledge within the tech community.
+						When I&apos;m not coding, you can find me exploring new hiking trails, experimenting with photography, or contributing to open-source projects. I&apos;m also passionate about mentoring junior developers and sharing knowledge within the tech community.
 					</p>
 				</div>
 			</div>
