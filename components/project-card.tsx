@@ -8,6 +8,10 @@ import {
 } from "@/components/ui/tooltip"; // Make sure this path is correct
 import { SiNextdotjs, SiTailwindcss } from "react-icons/si";
 
+function generateSlug(title: string) {
+  return title.toLowerCase().replace(/\s+/g, '-');
+}
+
 interface ProjectProps {
 	title: string;
 	description: string;
@@ -30,7 +34,7 @@ function Project({
 			{" "}
 			{/* Wrap the whole card or at least the icons in TooltipProvider */}
 			<div className="group bg-background rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
-				<Link href={projectLink} className="block" prefetch={false}>
+				<Link href={`/projects/${generateSlug(title)}`} className="block">
 					<img
 						src={imageSrc}
 						alt={altText}
