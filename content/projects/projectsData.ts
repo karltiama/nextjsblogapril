@@ -32,6 +32,15 @@ export const projects = [
 			"Acquired skills in API development and integration, including authentication and data handling.",
 		],
 		implementation: "The app was built with a focus on performance and scalability, which required careful consideration of data structures and API design.",
+		changes: [
+			"The app was built with a focus on performance and scalability, which required careful consideration of data structures and API design.",
+			"Implementing real-time updates and integrating external APIs like Strava presented significant technical challenges.",
+			"Ensuring a responsive design that works well on both desktop and mobile devices was a challenging task.",
+		],
+		screenshots: [
+			{ src: "/enduro.png", alt: "Enduro Stats project screenshot" },
+			{ src: "/enduro2.png", alt: "Enduro Stats project screenshot" },
+		],
 	},
 	{
 		title: "Reel Ratings",
@@ -63,10 +72,10 @@ export const projects = [
 		],
 	},
 	{
-		title: "Enduro Stats",
+		title: "Karl's Dev Blog",
 		description:
-			"EnduroStats is a fitness app that helps users track activities, set goals, and monitor progress with a sleek, responsive design.",
-		imageSrc: "/strava3.png", // Reference the image path directly from the public folder
+			"This my personal blog where I write about my experiences and thoughts on software development.",
+		imageSrc: "/devblog2.png", // Reference the image path directly from the public folder
 		altText: "Enduro Stats project screenshot",
 		projectLink: "#",
 		technologies: [

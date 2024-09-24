@@ -13,9 +13,7 @@ export default async function ProjectsPage() {
 			</div>
 
 			{/* Pass the projects array to the ProjectList component */}
-			<div className="mt-8">
-				<ProjectList />
-			</div>
+			<ProjectList />
 		</div>
 	);
 }

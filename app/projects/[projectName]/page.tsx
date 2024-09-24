@@ -1,5 +1,6 @@
 import { projects } from "@/content/projects/projectsData";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 function generateSlug(title: string) {
   return title.toLowerCase().replace(/\s+/g, '-');
@@ -57,6 +58,31 @@ export default function ProjectPage({ params }: { params: { projectName: string 
         <>
           <h2 className="text-2xl font-semibold mb-2">Implementation Details:</h2>
           <p className="text-lg mb-4">{project.implementation}</p>
+        </>
+      )}
+
+      {project.changes && (
+        <>
+          <h2 className="text-2xl font-semibold mb-2">Changes:</h2>
+          <p className="text-lg mb-4">{project.changes}</p>
+        </>
+      )}
+
+      {project.screenshots && project.screenshots.length > 0 && (
+        <>
+          <h2 className="text-2xl font-semibold mb-4">Screenshots:</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            {project.screenshots.map((screenshot, index) => (
+              <div key={index} className="relative aspect-video">
+                <Image
+                  src={screenshot.src}
+                  alt={screenshot.alt}
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
+            ))}
+          </div>
         </>
       )}
     </div>

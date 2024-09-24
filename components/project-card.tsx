@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import {
 	Tooltip,
 	TooltipProvider,
@@ -9,7 +10,7 @@ import {
 import { SiNextdotjs, SiTailwindcss } from "react-icons/si";
 
 function generateSlug(title: string) {
-  return title.toLowerCase().replace(/\s+/g, '-');
+	return title.toLowerCase().replace(/\s+/g, '-');
 }
 
 interface ProjectProps {
@@ -33,14 +34,15 @@ function Project({
 		<TooltipProvider>
 			<Link href={`/projects/${generateSlug(title)}`} className="block group">
 				<div className="bg-background rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
-					<img
-						src={imageSrc}
-						alt={altText}
-						width={600}
-						height={400}
-						className="w-full h-64 object-contain group-hover:opacity-80 transition-opacity"
-						style={{ aspectRatio: "600/400" }}
-					/>
+					<div className="relative w-full h-64">
+						<Image
+							src={imageSrc}
+							alt={altText}
+							layout="fill"
+							objectFit="cover"
+							className="group-hover:opacity-80 transition-opacity"
+						/>
+					</div>
 					<div className="p-6">
 						<h3 className="text-xl font-bold">{title}</h3>
 						<p className="text-muted-foreground mt-2">{description}</p>

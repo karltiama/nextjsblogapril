@@ -3,9 +3,9 @@ import { projects } from "../content/projects/projectsData";
 
 export default function ProjectList() {
 	return (
-		<section className="w-full py-12 md:py-24 lg:py-32">
+		<section className="w-full py-12">
 			<div className="container px-4 md:px-6">
-				<div className="grid gap-8 mt-12 md:grid-cols-2 lg:grid-cols-3">
+				<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 					{projects.map((project, index) => (
 						<Project
 							key={index}
