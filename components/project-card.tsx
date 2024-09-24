@@ -27,25 +27,23 @@ function Project({
 	description,
 	imageSrc,
 	altText,
-	projectLink,
 	technologies,
 }: ProjectProps) {
 	return (
 		<TooltipProvider>
 			<Link href={`/projects/${generateSlug(title)}`} className="block group">
-				<div className="bg-background rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+				<div className="bg-background rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 h-full flex flex-col">
 					<div className="relative w-full h-64">
 						<Image
 							src={imageSrc}
 							alt={altText}
-							layout="fill"
-							objectFit="cover"
-							className="group-hover:opacity-80 transition-opacity"
+							fill
+							className="object-cover group-hover:opacity-80 transition-opacity"
 						/>
 					</div>
-					<div className="p-6">
+					<div className="p-6 flex-1 flex flex-col">
 						<h3 className="text-xl font-bold">{title}</h3>
-						<p className="text-muted-foreground mt-2">{description}</p>
+						<p className="text-muted-foreground mt-2 flex-1">{description}</p>
 						<div className="flex items-center gap-2 mt-4">
 							{/* Dynamically render technology icons with tooltips */}
 							{technologies.map((tech, index) => {

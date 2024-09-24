@@ -1,10 +1,15 @@
 import { projects } from "@/content/projects/projectsData";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip"; // Make sure this path is correct
 
 function generateSlug(title: string) {
   return title.toLowerCase().replace(/\s+/g, '-');
@@ -32,11 +37,25 @@ export default function ProjectPage({ params }: { params: { projectName: string 
       <div className="flex flex-col md:flex-row gap-8 mb-8">
         <div className="flex-1">
           <h2 className="text-2xl font-semibold mb-2">Technologies Used:</h2>
-          <ul className="list-disc list-inside">
-            {project.technologies.map((tech, index) => (
-              <li key={index}>{tech.name}</li>
-            ))}
-          </ul>
+          <div className="flex items-center gap-4">
+            <TooltipProvider>
+              {project.technologies.map((tech, index) => {
+                const IconComponent = tech.icon;
+                return (
+                  <Tooltip key={index} delayDuration={0}>
+                    <TooltipTrigger asChild>
+                      <span className="flex items-center">
+                        <IconComponent className="w-8 h-8" />
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{tech.name}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                );
+              })}
+            </TooltipProvider>
+          </div>
         </div>
         <div className="flex-1">
           <h2 className="text-2xl font-semibold mb-2">Project Links:</h2>
@@ -70,7 +89,12 @@ export default function ProjectPage({ params }: { params: { projectName: string 
           </div>
         </div>
       </div>
-
+      {project.situation && (
+        <>
+          <h2 className="text-2xl font-semibold mb-2">Explanation:</h2>
+          <p className="text-lg mb-4">{project.situation}</p>
+        </>
+      )}
       {project.challenges && (
         <>
           <h2 className="text-2xl font-semibold mb-2">Challenges:</h2>
@@ -79,6 +103,12 @@ export default function ProjectPage({ params }: { params: { projectName: string 
               <li key={index}>{challenge}</li>
             ))}
           </ul>
+        </>
+      )}
+      {project.implementation && (
+        <>
+          <h2 className="text-2xl font-semibold mb-2">Implementation Details:</h2>
+          <p className="text-lg mb-4">{project.implementation}</p>
         </>
       )}
 
@@ -90,13 +120,6 @@ export default function ProjectPage({ params }: { params: { projectName: string 
               <li key={index}>{learning}</li>
             ))}
           </ul>
-        </>
-      )}
-
-      {project.implementation && (
-        <>
-          <h2 className="text-2xl font-semibold mb-2">Implementation Details:</h2>
-          <p className="text-lg mb-4">{project.implementation}</p>
         </>
       )}
 
