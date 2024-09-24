@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 
 function generateSlug(title: string) {
   return title.toLowerCase().replace(/\s+/g, '-');
@@ -28,12 +29,47 @@ export default function ProjectPage({ params }: { params: { projectName: string 
       <img src={project.imageSrc} alt={project.altText} className="w-full mb-6" />
       <p className="text-xl text-muted-foreground mb-8">{project.description}</p>
       
-      <h2 className="text-2xl font-semibold mb-2">Technologies Used:</h2>
-      <ul className="list-disc list-inside mb-4">
-        {project.technologies.map((tech, index) => (
-          <li key={index}>{tech.name}</li>
-        ))}
-      </ul>
+      <div className="flex flex-col md:flex-row gap-8 mb-8">
+        <div className="flex-1">
+          <h2 className="text-2xl font-semibold mb-2">Technologies Used:</h2>
+          <ul className="list-disc list-inside">
+            {project.technologies.map((tech, index) => (
+              <li key={index}>{tech.name}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex-1">
+          <h2 className="text-2xl font-semibold mb-2">Project Links:</h2>
+          <div className="space-y-2">
+            {project.liveLink ? (
+              <a 
+                href={project.liveLink} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-primary hover:underline flex items-center gap-2"
+              >
+                <FaExternalLinkAlt className="w-4 h-4" />
+                <span>View Live Project</span>
+              </a>
+            ) : (
+              <p className="text-muted-foreground">Live link not available</p>
+            )}
+            {project.githubRepo ? (
+              <a 
+                href={project.githubRepo} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-primary hover:underline flex items-center gap-2"
+              >
+                <FaGithub className="w-4 h-4" />
+                <span>GitHub Repository</span>
+              </a>
+            ) : (
+              <p className="text-muted-foreground">GitHub repository not available</p>
+            )}
+          </div>
+        </div>
+      </div>
 
       {project.challenges && (
         <>

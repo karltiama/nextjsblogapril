@@ -21,7 +21,10 @@ export const projects = [
 			{ icon: SiTypescript, name: "TypeScript" },
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
 			{ icon: FaStrava, name: "Strava API" },
-		],challenges: [
+		],
+		liveLink: "https://endurostats.vercel.app",
+		githubRepo: "https://github.com/karltiama/junestravaapp",
+		challenges: [
 			"The app was built with a focus on performance and scalability, which required careful consideration of data structures and API design.",
 			"Implementing real-time updates and integrating external APIs like Strava presented significant technical challenges.",
 			"Ensuring a responsive design that works well on both desktop and mobile devices was a challenging task.",
