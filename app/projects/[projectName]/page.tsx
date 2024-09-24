@@ -1,6 +1,9 @@
 import { projects } from "@/content/projects/projectsData";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { useState } from "react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 function generateSlug(title: string) {
   return title.toLowerCase().replace(/\s+/g, '-');
@@ -73,14 +76,34 @@ export default function ProjectPage({ params }: { params: { projectName: string 
           <h2 className="text-2xl font-semibold mb-4">Screenshots:</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             {project.screenshots.map((screenshot, index) => (
-              <div key={index} className="relative aspect-video">
-                <Image
-                  src={screenshot.src}
-                  alt={screenshot.alt}
-                  fill
-                  className="object-cover rounded-lg"
-                />
-              </div>
+              <Dialog key={index}>
+                <DialogTrigger asChild>
+                  <div className="relative w-full aspect-[16/9] cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <Image
+                      src={screenshot.src}
+                      alt={screenshot.alt}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                      <Button variant="ghost" className="text-white">
+                        View Full Screenshot
+                      </Button>
+                    </div>
+                  </div>
+                </DialogTrigger>
+                <DialogContent className="lg:max-w-screen-lg overflow-y-auto max-h-screen p-0">
+                  <div className="w-full bg-background p-4">
+                    <Image
+                      src={screenshot.src}
+                      alt={screenshot.alt}
+                      width={1920}
+                      height={1080}
+                      className="w-full h-auto"
+                    />
+                  </div>
+                </DialogContent>
+              </Dialog>
             ))}
           </div>
         </>

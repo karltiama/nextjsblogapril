@@ -38,8 +38,7 @@ export const projects = [
 			"Ensuring a responsive design that works well on both desktop and mobile devices was a challenging task.",
 		],
 		screenshots: [
-			{ src: "/enduro.png", alt: "Enduro Stats project screenshot" },
-			{ src: "/enduro2.png", alt: "Enduro Stats project screenshot" },
+			{ src: "/endurofull.png", alt: "Enduro Stats project screenshot" },
 		],
 	},
 	{
