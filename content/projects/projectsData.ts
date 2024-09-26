@@ -4,6 +4,7 @@ import {
 	SiTailwindcss,
 	SiThemoviedatabase,
 	SiTypescript,
+	SiMapbox,
 } from "react-icons/si";
 import { FaStrava } from "react-icons/fa";
 
@@ -15,7 +16,6 @@ export const projects = [
 		imageSrc: "/strava3.png", // Reference the image path directly from the public folder
 		altText: "Enduro Stats project screenshot",
 		projectLink: "#",
-		
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTypescript, name: "TypeScript" },
@@ -78,7 +78,25 @@ export const projects = [
 			{ icon: SiTypescript, name: "TypeScript" },
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
 			{ icon: SiSupabase, name: "Supabase" },
+			{ icon: SiMapbox, name: "Mapbox" },
 		],
+		liveLink: "https://memorymapper.vercel.app",
+		githubRepo: "https://github.com/karltiama/memorymap",
+		situation:"During my recent trip to Canada, I struggled to find an app that effectively combined mapping, photo integration, and journaling to document my journey. This inspired me to create my own travel mapping app – a digital companion that plots routes and serves as an interactive journal. The app I envision would feature custom map markers, seamless photo integration, and detailed location notes, allowing travelers to capture the essence of their experiences. By developing it myself, I can tailor it to specific needs and include sharing capabilities for friends and family. This project not only allows me to expand my skills in web development and mapping technologies but could also evolve into a versatile tool for other travelers. Ultimately, it aims to transform how we remember and share travel experiences, turning each journey into a vivid, digital story.",
+		challenges: [
+			"Integrating Mapbox for interactive maps and custom markers.",
+			"Creating a seamless photo integration system.",
+			"Designing an intuitive interface for location notes and journal entries."
+		],
+		task:[
+			"Develop a user-friendly interface for adding and managing trips, locations, and photos.",
+			"Implement media management to allow users to add, edit, and delete memories and photos.",
+			"Create a sharing features that allow users to easily share their trips and memories with friends and family."
+		],
+		implementation:"My first step was to research on my options for mapping, I was looking for a solution that was React friendly and cost effective.",
+		learnings:[],
+		changes:[],
+		screenshots:[],
 	},
 	{
 		title: "Karl's Dev Blog",
