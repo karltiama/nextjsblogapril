@@ -32,13 +32,13 @@ function Project({
 	return (
 		<TooltipProvider>
 			<Link href={`/projects/${generateSlug(title)}`} className="block group">
-				<div className="bg-background rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 h-full flex flex-col">
-					<div className="relative w-full h-64">
+				<div className="bg-background rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 h-full flex flex-col w-full max-w-md mx-auto">
+					<div className="relative w-full pb-[56.25%]"> {/* 16:9 Aspect Ratio */}
 						<Image
 							src={imageSrc}
 							alt={altText}
 							fill
-							className="object-cover group-hover:opacity-80 transition-opacity"
+							className="absolute top-0 left-0 w-full h-full object-cover group-hover:opacity-80 transition-opacity"
 						/>
 					</div>
 					<div className="p-6 flex-1 flex flex-col">
