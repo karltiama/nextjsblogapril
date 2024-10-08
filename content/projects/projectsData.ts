@@ -91,6 +91,8 @@ export const projects = [
 			"Creating a seamless photo integration system.",
 			"Designing an intuitive interface for location notes and journal entries.",
 			"Developing a system for secure user authentication and data storage.",
+			"Implementing a media management system to allow users to add, edit, and delete memories and photos.",
+			"Allowing users to edit their trips and memories after they submit them."
 		],
 		task:[
 			"Develop a user-friendly interface for adding and managing trips, locations, and photos.",
@@ -98,8 +100,15 @@ export const projects = [
 			"Create a sharing features that allow users to easily share their trips and memories with friends and family."
 		],
 		implementation:"My first step was to research on my options for mapping, I was looking for a solution that was React friendly and cost effective. I found many options such as Google Maps, Mapbox and Leaflet. After evaluating the pros and cons of each option, I decided to use Mapbox as it has a generous free tier and is well documented.",
-		learnings:[],
-		changes:[],
+		learnings:[
+			"Learned how to use Mapbox and how to implement custom markers and interactivity into the map.",
+			"Gained experience in using Supabase for authentication and data storage, and Resend for sending emails.",
+			"Enhanced my skills in media management and how to store and retrieve media from a database.",
+			"Learned how to implement a rich text editor that allows users to add and edit memories and photos."
+		],
+		changes:[
+			"I would take a different approach in the system design of the website, I would create a more modular and scalable architecture. I would also spend more time on the frontend design of the website to make it more aesthetically pleasing."
+		],
 		screenshots:[],
 	},
 	{
