@@ -17,7 +17,6 @@ export const projects = [
 			"EnduroStats is a fitness app that helps users track activities, set goals, and monitor progress with a sleek, responsive design.",
 		imageSrc: "/strava3.png", // Reference the image path directly from the public folder
 		altText: "Enduro Stats project screenshot",
-		projectLink: "#",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTypescript, name: "TypeScript" },
@@ -59,7 +58,6 @@ export const projects = [
 			"Reel Ratings is a movie rating app that allows users to rate and review movies.",
 		imageSrc: "/reelratings.png",
 		altText: "Project 2",
-		projectLink: "#",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
@@ -74,7 +72,6 @@ export const projects = [
 			"Memory Mapper is a tool that helps users map out their memories and experiences.",
 		imageSrc: "/memorymapperss.png", // Reference the image path directly from the public folder
 		altText: "Memory Mapper project screenshot",
-		projectLink: "#",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTypescript, name: "TypeScript" },
@@ -117,7 +114,8 @@ export const projects = [
 			"This my personal blog where I write about my experiences and thoughts on software development.",
 		imageSrc: "/devblog2.png", // Reference the image path directly from the public folder
 		altText: "Enduro Stats project screenshot",
-		projectLink: "#",
+		liveLink: "https://karltiama.dev",
+		githubRepo: "https://github.com/karltiama/nextjsblogapril",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTypescript, name: "TypeScript" },
