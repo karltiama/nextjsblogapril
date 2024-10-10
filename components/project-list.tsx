@@ -13,7 +13,6 @@ export default function ProjectList() {
 							description={project.description}
 							imageSrc={project.imageSrc}
 							altText={project.altText}
-							projectLink={project.projectLink}
 							technologies={project.technologies}
 						/>
 					))}

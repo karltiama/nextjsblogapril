@@ -18,7 +18,6 @@ interface ProjectProps {
 	description: string;
 	imageSrc: string;
 	altText: string;
-	projectLink: string;
 	technologies: Array<{ icon: React.ElementType; name: string }>;
 }
 
