@@ -5,36 +5,87 @@ date: 2024-10-10
 published: true
 ---
 
+## Callout
+
+Callouts are great for getting a user's attention. They can be used to display important information, warnings, or just to get the user's attention.
+
+<Callout>
+  Default
+</Callout>
+
+<Callout type="warning">
+  Warning
+</Callout>
+
+<Callout type="danger">
+  Danger
+</Callout>
+
+```tsx
+import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
+
+interface CalloutProps {
+	children?: ReactNode;
+	type?: "default" | "warning" | "danger";
+}
+
+export function Callout({
+	children,
+	type = "default",
+	...props
+}: CalloutProps) {
+	return (
+		<div
+			className={cn(
+				"my-6 items-start rounded-md border border-l-8 p-4 w-full dark:max-w-none",
+				{
+					"border-red-900 bg-red-50 dark:prose": type === "danger",
+					"border-yellow-600 bg-yellow-50 dark:prose": type === "warning",
+				}
+			)}
+			{...props}>
+			<div>{children}</div>
+		</div>
+	);
+}
+
+```
+
+
+
+Questions that arose when implementing this component:
+
+- Why is the '...props' necessary?
+The '...props' is necessary to pass any additional props to the component. This is useful if you want to add additional styling to the component.
+It allows for any additional props to be passed to the component, in a way future-proofing the component.
+
+
+
+
+
 
 ## Card with photo carousel
 
 Inspired by airbnb, I used this pattern when developing the memory mapper project. Each card represents a memory location and contains a carousel of photos associated with that memory location. I am going to use shadcn/ui for the carousel and the card.
 
 ```tsx
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import Image from "next/image"
 
 interface MemoryCardProps {
-  title?: string
-  date?: string
+  title: string
+  date: string
   photos?: string[]
 }
 
-export default function MemoryCard({ 
-  title = "Summer Beach Trip", 
-  date = "August 15, 2023", 
-  photos = [
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600"
-  ]
-}: MemoryCardProps) {
+export default function MemoryCard({ title, date, photos = [] }: MemoryCardProps) {
   return (
     <Card className="w-full max-w-md mx-auto overflow-hidden">
       <CardContent className="p-0">
         <div className="relative aspect-video">
-          {photos.length > 0 ? (
+          {photos && photos.length > 0 ? (
             <Carousel>
               <CarouselContent>
                 {photos.map((photo, index) => (
@@ -45,13 +96,18 @@ export default function MemoryCard({
                         alt={`Memory photo ${index + 1}`}
                         fill
                         className="object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "/placeholder.svg?height=400&width=600";
+                          target.alt = "Error loading image";
+                        }}
                       />
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2" />
-              <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2" />
+              <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2" aria-label="Previous slide" />
+              <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2" aria-label="Next slide" />
             </Carousel>
           ) : (
             <div className="flex items-center justify-center h-full bg-gray-200">
