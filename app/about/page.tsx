@@ -37,7 +37,10 @@ export default async function AboutPage() {
 					</p>
 					<h3 className="text-xl font-semibold mt-4">Professional Journey</h3>
 					<p>
-						My career in software development has been marked by continuous learning and growth. I&apos;ve had the opportunity to work on diverse projects, from e-commerce platforms to data-intensive applications, honing my skills in full-stack development.
+						My career in software development has been marked by continuous learning and growth. In 2020, I began my journey as a Web Developer. With an engineering degree in Computer Engineering and a passion for technology, the transition was natural. 
+						I&apos;ve had the opportunity to work on diverse projects, ranging from e-commerce platforms to data-intensive applications, which has honed my skills in full-stack development.
+
+						In this website I will be writing about my journey as a developer and my experiences. I will also be sharing some of the projects I have worked on and the technologies I have used. I believe that sharing knowledge is one of the best ways to grow as a developer, and I am always looking to share my knowledge with the community, So contact me if you want to work together or just want to chat about web development.
 					</p>
 					<h3 className="text-xl font-semibold mt-4">Skills & Expertise</h3>
 					<ul className="list-disc list-inside">
