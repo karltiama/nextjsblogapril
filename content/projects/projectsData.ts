@@ -25,7 +25,7 @@ export const projects = [
 		],
 		liveLink: "https://endurostats.vercel.app",
 		githubRepo: "https://github.com/karltiama/junestravaapp",
-		situation: "As an avid runner, I wanted to create a personal dashboard to track my running statistics and visualize my progress as I trained for the Toronto Waterfront Marathon in 2024. The goal was to learn how to interact with an external API and enhance my skills in frontend and backend development.",
+		situation: "As an avid runner, I wanted to create a personal dashboard to track my running statistics and visualize my progress as I trained for the Toronto Waterfront Marathon in 2024. The goal was to learn how to interact with an external API and enhance my skills in frontend and backend development. Effective data visualization was crucial in helping users quickly grasp their performance trends and make informed decisions about their training regimen.",
 		challenges: [
 			"Understanding and implementing OAuth authentication to securely access the Strava API.",
 			"Handling and visualizing complex datasets effectively to provide meaningful insights.",
