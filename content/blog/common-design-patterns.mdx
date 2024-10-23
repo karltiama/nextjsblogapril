@@ -7,7 +7,8 @@ published: true
 
 ## Callout
 
-Callouts are great for getting a user's attention. They can be used to display important information, warnings, or just to get the user's attention.
+Callouts are effective tools for capturing a user's attention. They can be utilized to convey important information, warnings, or simply to engage the user's interest.
+I use callouts in my blog post to highlight key points.
 
 <Callout>
   Default
@@ -21,7 +22,7 @@ Callouts are great for getting a user's attention. They can be used to display i
   Danger
 </Callout>
 
-```tsx
+```tsx showLineNumbers {17-20}
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
@@ -52,13 +53,15 @@ export function Callout({
 
 ```
 
-
+Above we see the cn function being used to merge default styles with the styles passed as props. Allowing for easy overriding of styles.
 
 Questions that arose when implementing this component:
 
 - Why is the '...props' necessary?
 The '...props' is necessary to pass any additional props to the component. This is useful if you want to add additional styling to the component.
 It allows for any additional props to be passed to the component, in a way future-proofing the component.
+
+
 
 
 
