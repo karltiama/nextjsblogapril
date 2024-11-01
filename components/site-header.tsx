@@ -1,5 +1,5 @@
 import { siteConfig } from "@/config/site";
-import { cn } from "@/lib/utils";
+import { cn } from "@/components/lib/utils";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import { Icons } from "./icons";

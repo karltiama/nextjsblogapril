@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 import Link from "next/link";
 import { Icons } from "./icons";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { cn } from "@/components/lib/utils";
 
 export function MainNav() {
 	const pathname = usePathname();

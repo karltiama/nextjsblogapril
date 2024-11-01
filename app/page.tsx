@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cn, sortPosts } from "@/lib/utils";
+import { cn, sortPosts } from "@/components/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { posts } from "#site/content";

@@ -1,4 +1,4 @@
-import { getAllTags, sortTagsByCount } from "@/lib/utils";
+import { getAllTags, sortTagsByCount } from "@/components/lib/utils";
 import { Metadata } from "next";
 import { posts } from "#site/content";
 import { Tag } from "@/components/tag";

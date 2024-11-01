@@ -18,11 +18,10 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
-  SidebarMenuButton,
   SidebarProvider,
-  SidebarRail,
-  SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { cn } from "@/components/lib/utils"
+import { Badge } from "@/components/ui/badge"
 
 const components = [
   { name: 'Button', component: <Button>Click me</Button> },
@@ -60,45 +59,67 @@ export default function ComponentSection() {
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen">
-        <Sidebar className="w-64">
-          <SidebarHeader>
-            <h2 className="text-xl font-bold p-4">Components</h2>
+      <div className="flex min-h-[calc(100vh-3.5rem)]">
+        {/* Sidebar - adjusted positioning */}
+        <Sidebar className="w-64 border-r fixed top-[3.5rem] bottom-0">
+          <SidebarHeader className="p-4">
+            <h2 className="text-lg font-semibold">Components</h2>
           </SidebarHeader>
           <SidebarContent>
             <SidebarMenu>
               {components.map((comp) => (
-                <SidebarMenuItem key={comp.name}>
-                  <SidebarMenuButton
-                    onClick={() => setSelectedComponent(comp)}
-                    isActive={selectedComponent.name === comp.name}
-                  >
-                    {comp.name}
-                  </SidebarMenuButton>
+                <SidebarMenuItem
+                  key={comp.name}
+                  onClick={() => setSelectedComponent(comp)}
+                  className={cn(
+                    "flex w-full items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                    selectedComponent.name === comp.name ? "bg-accent text-accent-foreground" : "transparent"
+                  )}
+                >
+                  {comp.name}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
           </SidebarContent>
-          <SidebarRail />
         </Sidebar>
-        <main className="flex-1 p-6 bg-gray-100 dark:bg-gray-900">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">{selectedComponent.name}</h1>
-            <Card className="p-6">
-              <div className="mb-4">
-                <Label>Preview:</Label>
-                <div className="mt-2 p-4 border rounded-md bg-white dark:bg-gray-800">
-                  {selectedComponent.component}
-                </div>
+
+        {/* Main Content - added margin to account for fixed sidebar */}
+        <main className="flex-1 ml-64">
+          <div className="container max-w-4xl py-6 lg:py-10">
+            {/* Hero Section */}
+            <div className="flex flex-col space-y-4 mb-10">
+              <h1 className="text-4xl font-bold tracking-tight">Enhanced UI Components</h1>
+              <p className="text-lg text-muted-foreground">
+                Explore these custom-crafted components built with shadcn/ui, designed to elevate your application's user interface.
+              </p>
+            </div>
+
+            {/* Component Display */}
+            <div className="space-y-8">
+              <div className="flex items-center gap-2">
+                <h2 className="text-2xl font-semibold tracking-tight">{selectedComponent.name}</h2>
+                <Badge variant="secondary">Component</Badge>
               </div>
-              <div>
-                <Label>Description:</Label>
-                <p className="mt-2 text-gray-600 dark:text-gray-300">
-                  This is a {selectedComponent.name.toLowerCase()} component from the shadcn/ui library.
-                  It can be customized and used in various contexts within your application.
-                </p>
-              </div>
-            </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Preview</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="p-4 border rounded-md bg-background">
+                    {selectedComponent.component}
+                  </div>
+                </CardContent>
+                <CardFooter className="flex flex-col items-start gap-4">
+                  <div>
+                    <h3 className="font-semibold mb-2">Description</h3>
+                    <p className="text-muted-foreground">
+                      This is a {selectedComponent.name.toLowerCase()} component from the shadcn/ui library.
+                      It can be customized and used in various contexts within your application.
+                    </p>
+                  </div>
+                </CardFooter>
+              </Card>
+            </div>
           </div>
         </main>
       </div>
