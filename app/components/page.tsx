@@ -83,14 +83,14 @@ export default function ComponentSection() {
           </SidebarContent>
         </Sidebar>
 
-        {/* Main Content - added margin to account for fixed sidebar */}
-        <main className="flex-1 ml-64">
+        {/* Main Content */}
+        <main className="flex-1">
           <div className="container max-w-4xl py-6 lg:py-10">
             {/* Hero Section */}
             <div className="flex flex-col space-y-4 mb-10">
               <h1 className="text-4xl font-bold tracking-tight">Enhanced UI Components</h1>
               <p className="text-lg text-muted-foreground">
-                Explore these custom-crafted components built with shadcn/ui, designed to elevate your application's user interface.
+                Explore these custom-crafted components built with shadcn/ui, designed to elevate your application&apos;s user interface.
               </p>
             </div>
 
