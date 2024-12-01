@@ -18,6 +18,18 @@ I am glad that modern React has added hooks to make functional components more p
 Also Next.js projects are easy to deploy via vercel. Now it is immportant to mention that not one of these technologies is the best, it really depends on the project you are working on.
 There are many other frameworks and libraries that I could mention, but these are the ones I use the most.
 
+Some Patters and Practices I utilize:
+
+- Server Components to fetch data
+Say we wanted to fetch post from a database we have set up. Generally I like to start with a server components and only switch to a client component when you need interactivity or client side state.
+In this example we will fetch posts from a database and display them on the page.
+
+Our page would looke like this:
+
+```tsx
+import { PostLists } from "@/";
+```
+
 ## Front End
 
 - CSS
