@@ -1,11 +1,19 @@
 import Link from "next/link";
+import Image from "next/image";
+import { Suspense } from "react";
 import { cn, sortPosts } from "@/components/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { posts } from "#site/content";
 import { PostItem } from "@/components/post-item";
-import Image from "next/image";
+import { Metadata } from "next";
 import ProjectList from "@/components/project-list";
+
+export const metadata: Metadata = {
+	title: "Karl's Portfolio - React Dev and Technical Writer",
+	description: "Karl's portfolio showcasing React projects and technical writing on front-end development concepts.",
+};
+	
 
 export default function Home() {
 	const latestPosts = sortPosts(posts).slice(0, 3);
@@ -20,15 +28,23 @@ export default function Home() {
 							width={200}
 							height={200}
 							src="/programming.svg"
-							alt="programming"
+							alt="Illustration of a person programming"
+							loading="lazy"
 						/>
 						<Image
 							width={200}
 							height={200}
 							src="/visual_data.svg"
-							alt="visual data"
+							alt="Illustration of a person visualizing data"
+							loading="lazy"
 						/>
-						<Image width={200} height={200} src="/biking.svg" alt="biking" />
+						<Image
+							width={200}
+							height={200}
+							src="/biking.svg"
+							alt="Illustration of a person biking"
+							loading="lazy"
+						/>
 					</div>
 					{/* Center Column */}
 					<div className="flex flex-col gap-4 items-center pt-20">
@@ -36,7 +52,7 @@ export default function Home() {
 							width={200}
 							height={200}
 							src="/drink_coffee.svg"
-							alt="coffee"
+							alt="Illustration of a person drinking coffee"
 						/>
 						<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-balance">
 							Hello, I&apos;m Karl
@@ -72,10 +88,23 @@ export default function Home() {
 							width={200}
 							height={200}
 							src="/building_website.svg"
-							alt="website"
+							alt="Illustration of a person building a website"
+							loading="lazy"
 						/>
-						<Image width={200} height={200} src="/hacker_mind.svg" alt="hack" />
-						<Image width={200} height={200} src="/running.svg" alt="running" />
+						<Image
+							width={200}
+							height={200}
+							src="/hacker_mind.svg"
+							alt="Illustration of a person hacking"
+							loading="lazy"
+						/>
+						<Image
+							width={200}
+							height={200}
+							src="/running.svg"
+							alt="Illustration of a person running"
+							loading="lazy"
+						/>
 					</div>
 				</div>
 			</section>
@@ -86,7 +115,8 @@ export default function Home() {
 					width={200}
 					height={200}
 					src="/firmware.svg"
-					alt="firmware"
+					alt="Illustration of a person working on firmware"
+					loading="lazy"
 				/>
 				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
 					Rebuild your mental model
@@ -119,7 +149,9 @@ export default function Home() {
 					Here are some of the projects I have worked on. I am always looking
 					forward to new projects and collaborations.
 				</p>
-				<ProjectList />
+				<Suspense fallback={<div>Loading projects...</div>}>
+					<ProjectList />
+				</Suspense>
 			</section>
 		</>
 	);
