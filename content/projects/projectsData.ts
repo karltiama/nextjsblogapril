@@ -65,6 +65,18 @@ export const projects = [
 			{ icon: SiSupabase, name: "Supabase" },
 			{ icon: SiThemoviedatabase, name: "TMDB API" },
 		],
+		githubRepo: "https://github.com/karltiama/movieapp",
+		situation:"I created this project to further improve my skills with API integration and backend development. I wanted to create a movie rating app that pulled data from an External API and allow uses to rate and review movies.",
+		challenges:[
+			"Creating user authentication and authorization",
+			"Handling backend data and storing it in a backend database",
+			"Designing the schema for the database and how to store the likes and reviews",
+		],
+		task:[],
+		implementation:"",
+		learnings:[],
+		changes:[],
+		screenshots:[],
 	},
 	{
 		title: "Memory Mapper",
@@ -122,5 +134,20 @@ export const projects = [
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
 			{ icon: SiMdx, name: "MDX" },
 		],
+		situation:"I wanted to create a portfolio websites that showcases my projects and skills as a software developer. I also wanted to share my thoughts and ideas on software development. I've learned the best way to learn is to teach and talk about what topics that peak my interest, this blog is my way of sharing my knowledge and experiences with the world.",
+		challenges:[
+			"Finding the right balance between showcasing my projects and sharing my thoughts on software development.",
+			"Creating a system that allows me to share and manage my blog post and projects in a way that is easy to use and maintain.",
+			"Make the website look and feel professional and aesthetically pleasing."
+		],
+		task:[],
+		implementation:"I will start of by saying that creating this website was a journey, There are many ways to go about creating a blog website, from using a CMS to using a static site generator. I decided to use Next.js with Velite to create the site. I was searching for a good library to fetch my blog post from MDX and JSON/YAML files to present it in a type-safe format. I found contentlayer, however I found it to be unmaintained. Thus leading me to find Velite. It allowed me to validate my content using Zod and generate typesafe queries to fetch my blog post. It also has built-in files and images processing. ",
+		learnings:[
+			"I learned how to use Next.js with Velite to create a static site generator that allows me to fetch my blog post from MDX and JSON/YAML files to present it in a type-safe format.",
+		],
+		changes:[
+			"In the future I may add a backend to the website to further enhnace the user experience, and add features to leave comments on my blog posts."
+		],
+		screenshots:[],
 	},
 ];
