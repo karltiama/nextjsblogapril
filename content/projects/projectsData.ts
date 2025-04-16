@@ -25,11 +25,12 @@ export const projects = [
 		],
 		liveLink: "https://endurostats.vercel.app",
 		githubRepo: "https://github.com/karltiama/junestravaapp",
-		situation: "As an avid runner, I wanted to create a personal dashboard to track my running statistics and visualize my progress as I trained for the Toronto Waterfront Marathon in 2024. The goal was to learn how to interact with an external API and enhance my skills in frontend and backend development. Effective data visualization was crucial in helping users quickly grasp their performance trends and make informed decisions about their training regimen.",
+		situation: "A personalized fitness dashboard built to track my running progress and visualize activity data from Strava as I trained for the 2024 Toronto Waterfront Marathon. This project started as a personal tool for myself and evolved into a public-facing web app designed to help other runners easily track performance trends and gain insight into their training.",
 		challenges: [
-			"Understanding and implementing OAuth authentication to securely access the Strava API.",
-			"Handling and visualizing complex datasets effectively to provide meaningful insights.",
-			"Ensuring the application is responsive and user-friendly, providing a seamless experience for users.",
+			"Implemented secure OAuth 2.0 authentication flow with Strava using Next.js API routes for user connection and activity fetching.",
+			"Developed backend API logic for token handling, caching, and pagination to optimize API requests and stay within rate limits.",
+			"Built an interactive, data-driven dashboard that visualizes complex datasets — making performance trends easy to understand at a glance.",
+			"Designed a fully responsive UI focused on clarity and usability across devices."
 		],
 		task: [
 			"Integrate with the Strava API to fetch and display workout data, in my case running and cycling.",

@@ -97,7 +97,7 @@ export default function ProjectPage({ params }: { params: { projectName: string 
       )}
       {project.challenges && (
         <>
-          <h2 className="text-2xl font-semibold mb-2">Challenges:</h2>
+          <h2 className="text-2xl font-semibold mb-2">Challenges and Key Features:</h2>
           <ul className="list-disc list-inside mb-4">
             {project.challenges.map((challenge, index) => (
               <li key={index}>{challenge}</li>
