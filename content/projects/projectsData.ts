@@ -45,7 +45,7 @@ export const projects = [
 			"Learned best practices fro data visualization and handling large datasets."
 		],
 		changes: [
-			"The website was built to be a personal dashboard for me to track my running statistics and visualize my progress, but as I got more comfortable with interacting with the Strava API, I decided to make it a public website to help other runners. In the future I plan to add more features to the website to help runners in their training journey. Also I would like to add the ability to add friends and compare runs and rides. Much of the features I would like to add are more dependent on an actual database and backend, which I am working on learning.",
+			"This project began as a personal dashboard to visualize my running stats using the Strava API. As I grew more comfortable with API integration and data transformation, I decided to open it up to help other runners analyze their activities. I'm currently implementing API caching (using techniques like revalidation and stale-while-revalidate) to reduce redundant requests to Strava and improve load performance. Looking ahead, I want to expand the platform with features like friend tracking and activity comparisons, which will require adding a persistent backend with a real database (likely using Supabase or PostgreSQL). These improvements will enable richer social and analytical features for users — and give me more experience with backend development, data modeling, and authentication.",
 		],
 		screenshots: [
 			{ src: "/endurofull.png", alt: "Enduro Stats project screenshot" },
