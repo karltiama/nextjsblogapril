@@ -45,7 +45,10 @@ export const projects = [
 			"Learned best practices fro data visualization and handling large datasets."
 		],
 		changes: [
-			"This project began as a personal dashboard to visualize my running stats using the Strava API. As I grew more comfortable with API integration and data transformation, I decided to open it up to help other runners analyze their activities. I'm currently implementing API caching (using techniques like revalidation and stale-while-revalidate) to reduce redundant requests to Strava and improve load performance. Looking ahead, I want to expand the platform with features like friend tracking and activity comparisons, which will require adding a persistent backend with a real database (likely using Supabase or PostgreSQL). These improvements will enable richer social and analytical features for users — and give me more experience with backend development, data modeling, and authentication.",
+			"Implementing API caching with revalidation and stale-while-revalidate to reduce Strava API requests",
+			"Planning to add friend tracking and activity comparison features",
+			"Need to implement a persistent backend using Supabase/PostgreSQL for social features",
+			"Looking to expand backend development experience through user data management and authentication"
 		],
 		screenshots: [
 			{ src: "/endurofull.png", alt: "Enduro Stats project screenshot" },

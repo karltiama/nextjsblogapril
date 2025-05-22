@@ -125,8 +125,12 @@ export default function ProjectPage({ params }: { params: { projectName: string 
 
       {project.changes && (
         <>
-          <h2 className="text-2xl font-semibold mb-2">Changes:</h2>
-          <p className="text-lg mb-4">{project.changes}</p>
+          <h2 className="text-2xl font-semibold mb-2">Future Improvements:</h2>
+          <ul className="list-disc list-inside mb-4">
+            {project.changes.map((change, index) => (
+              <li key={index} className="text-lg">{change}</li>
+            ))}
+          </ul>
         </>
       )}
 
