@@ -125,12 +125,12 @@ export default async function AboutPage() {
 								into web development in 2020 was driven by a passion for creating solutions that make a real impact.
 							</p>
 							<p>
-								I've successfully delivered projects ranging from <strong>fitness tracking applications</strong> integrating 
+								I&apos;ve successfully delivered projects ranging from <strong>fitness tracking applications</strong> integrating 
 								complex APIs like Strava, to <strong>full-stack applications</strong> with authentication, database management, 
 								and real-time features. My approach combines technical excellence with user-centered design principles.
 							</p>
 							<p>
-								Beyond coding, I'm passionate about <strong>knowledge sharing</strong> through technical writing, 
+								Beyond coding, I&apos;m passionate about <strong>knowledge sharing</strong> through technical writing, 
 								having published <strong>28+ articles</strong> that help other developers understand complex concepts 
 								through practical examples and mental models.
 							</p>
@@ -199,7 +199,7 @@ export default async function AboutPage() {
 					<div>
 						<h3 className="text-2xl font-semibold mb-4">Beyond Coding</h3>
 						<p className="text-muted-foreground">
-							When I'm not coding, you'll find me running (training for marathons), exploring new hiking trails, 
+							When I&apos;m not coding, you&apos;ll find me running (training for marathons), exploring new hiking trails, 
 							or experimenting with the latest web technologies. I believe in maintaining a healthy work-life balance 
 							and find that physical activities often lead to creative solutions for coding challenges.
 						</p>
@@ -208,9 +208,9 @@ export default async function AboutPage() {
 					{/* Call to Action */}
 					<Card className="bg-muted/50">
 						<CardContent className="p-6 text-center">
-							<h3 className="text-xl font-semibold mb-2">Let's Work Together</h3>
+							<h3 className="text-xl font-semibold mb-2">Let&apos;s Work Together</h3>
 							<p className="text-muted-foreground mb-4">
-								I'm always interested in discussing new opportunities and innovative projects
+								I&apos;m always interested in discussing new opportunities and innovative projects
 							</p>
 							<div className="flex gap-4 justify-center">
 								<Button asChild>
