@@ -8,18 +8,24 @@ import { posts } from "#site/content";
 import { PostItem } from "@/components/post-item";
 import { Metadata } from "next";
 import ProjectList from "@/components/project-list";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
-	title: "Karl's Portfolio - React Dev and Technical Writer",
-	description: "Karl's portfolio showcasing React projects and technical writing on front-end development concepts.",
+	title: "Karl Tiama - Full-Stack Developer & Technical Writer",
+	description: "Experienced React developer specializing in Next.js, TypeScript, and API integrations. Building scalable web applications and sharing knowledge through technical writing.",
 };
-	
+
+const techStack = [
+	"React", "Next.js", "TypeScript", "Node.js", "Tailwind CSS", 
+	"Supabase", "PostgreSQL", "REST APIs", "Git", "Docker"
+];
 
 export default function Home() {
 	const latestPosts = sortPosts(posts).slice(0, 3);
 
 	return (
 		<>
+			{/* Hero Section - More Employer Focused */}
 			<section className="min-h-screen md:pb-12 md:mt-10 lg:py-28">
 				<div className="container grid grid-cols-1 lg:grid-cols-3 gap-4 text-center">
 					{/* Left Column */}
@@ -47,28 +53,52 @@ export default function Home() {
 						/>
 					</div>
 					{/* Center Column */}
-					<div className="flex flex-col gap-4 items-center pt-20">
+					<div className="flex flex-col gap-6 items-center pt-20">
 						<Image
 							width={200}
 							height={200}
 							src="/drink_coffee.svg"
 							alt="Illustration of a person drinking coffee"
 						/>
-						<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-balance">
-							Hello, I&apos;m Karl
-						</h1>
+						<div className="space-y-2">
+							<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-balance">
+								Full-Stack Developer
+							</h1>
+							<p className="text-lg text-muted-foreground">
+								Building Scalable Web Applications
+							</p>
+						</div>
 						<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance">
-							I work with React Ecosystem, and write to teach people how to
-							rebuild and redefine fundamental concepts through mental models.
+							I specialize in the React ecosystem and modern web technologies, 
+							with a passion for creating user-focused applications and sharing 
+							knowledge through technical writing.
 						</p>
+						
+						{/* Tech Stack Display */}
+						<div className="flex flex-wrap gap-2 justify-center max-w-md">
+							{techStack.map((tech) => (
+								<Badge key={tech} variant="secondary" className="text-sm">
+									{tech}
+								</Badge>
+							))}
+						</div>
+
 						<div className="flex flex-col gap-4 justify-center sm:flex-row">
 							<Link
-								href="/blog"
+								href="/projects"
 								className={cn(
 									buttonVariants({ size: "lg" }),
 									"w-full sm:w-fit"
 								)}>
-								View my Blog
+								View My Projects
+							</Link>
+							<Link
+								href="/about"
+								className={cn(
+									buttonVariants({ variant: "outline", size: "lg" }),
+									"w-full sm:w-fit"
+								)}>
+								About Me
 							</Link>
 							<Link
 								href={siteConfig.links.github}
@@ -78,7 +108,7 @@ export default function Home() {
 									buttonVariants({ variant: "outline", size: "lg" }),
 									"w-full sm:w-fit"
 								)}>
-								Github
+								GitHub
 							</Link>
 						</div>
 					</div>
