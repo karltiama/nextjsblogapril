@@ -22,19 +22,24 @@ const skills = {
 
 const achievements = [
 	{
-		metric: "4+",
-		label: "Years of Development Experience",
-		description: "Since transitioning to web development in 2020"
+		metric: "500+",
+		label: "Monthly Blog Visitors",
+		description: "SEO-optimized content reaching developers globally"
 	},
 	{
 		metric: "28+",
 		label: "Technical Articles Published",
-		description: "Sharing knowledge and insights on modern web development"
+		description: "Covering React, Next.js, and modern web development"
 	},
 	{
-		metric: "15+",
-		label: "Projects Completed",
-		description: "From personal projects to client solutions"
+		metric: "95+",
+		label: "Lighthouse Performance Score",
+		description: "Optimized applications with superior user experience"
+	},
+	{
+		metric: "5+",
+		label: "External API Integrations",
+		description: "Including Strava, Mapbox, Supabase, and more"
 	}
 ];
 
@@ -125,14 +130,15 @@ export default async function AboutPage() {
 								into web development in 2020 was driven by a passion for creating solutions that make a real impact.
 							</p>
 							<p>
-								I&apos;ve successfully delivered projects ranging from <strong>fitness tracking applications</strong> integrating 
-								complex APIs like Strava, to <strong>full-stack applications</strong> with authentication, database management, 
-								and real-time features. My approach combines technical excellence with user-centered design principles.
+								I&apos;ve successfully delivered projects with measurable results: <strong>built a fitness tracking application</strong> 
+								that processes 100+ secure API requests through OAuth 2.0 integration, <strong>developed a mapping platform</strong> 
+								handling 50+ image formats with real-time data visualization, and <strong>created full-stack applications</strong> 
+								achieving 95+ Lighthouse performance scores with optimized user experiences.
 							</p>
 							<p>
-								Beyond coding, I&apos;m passionate about <strong>knowledge sharing</strong> through technical writing, 
-								having published <strong>28+ articles</strong> that help other developers understand complex concepts 
-								through practical examples and mental models.
+								Beyond coding, I&apos;ve established myself as a <strong>technical thought leader</strong> by publishing 
+								<strong>28+ in-depth articles</strong> that reach 500+ developers monthly, helping the community 
+								understand complex concepts through practical examples and clear mental models.
 							</p>
 						</div>
 					</div>
