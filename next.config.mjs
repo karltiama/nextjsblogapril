@@ -2,9 +2,39 @@ import { build } from 'velite'
 
 /** @type {import('next').NextConfig} */
 export default {
-  // othor next config here...
-  webpack: config => {
+  // other next config here...
+  experimental: {
+    // Helps with chunk loading issues
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-avatar', '@radix-ui/react-dialog']
+  },
+  webpack: (config, { dev, isServer }) => {
+    // Add Velite plugin
     config.plugins.push(new VeliteWebpackPlugin())
+    
+    // Optimize chunk loading in development
+    if (dev && !isServer) {
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          ...config.optimization.splitChunks,
+          cacheGroups: {
+            ...config.optimization.splitChunks?.cacheGroups,
+            default: {
+              minChunks: 1,
+              priority: -20,
+              reuseExistingChunk: true,
+            },
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              priority: -10,
+              chunks: 'all',
+            },
+          },
+        },
+      }
+    }
+    
     return config
   }
 }

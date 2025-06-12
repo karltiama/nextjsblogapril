@@ -23,7 +23,7 @@ interface ProjectProps {
 	liveLink?: string;
 	githubRepo?: string;
 	featured?: boolean;
-	status?: "Live" | "In Development" | "Completed";
+	status?: "Live" | "In Development" | "Completed" | "Refactoring v2";
 }
 
 function Project({
@@ -40,7 +40,8 @@ function Project({
 	const statusColors = {
 		"Live": "bg-green-500/10 text-green-700 border-green-200",
 		"In Development": "bg-yellow-500/10 text-yellow-700 border-yellow-200",
-		"Completed": "bg-blue-500/10 text-blue-700 border-blue-200"
+		"Completed": "bg-blue-500/10 text-blue-700 border-blue-200",
+		"Refactoring v2": "bg-purple-500/10 text-purple-700 border-purple-200"
 	};
 
 	return (

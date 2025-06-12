@@ -14,6 +14,10 @@ export default function ProjectList() {
 							imageSrc={project.imageSrc}
 							altText={project.altText}
 							technologies={project.technologies}
+							liveLink={project.liveLink}
+							githubRepo={project.githubRepo}
+							status={project.status}
+							featured={project.featured}
 						/>
 					))}
 				</div>

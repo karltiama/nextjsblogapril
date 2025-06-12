@@ -14,7 +14,7 @@ export const projects = [
 	{
 		title: "Enduro Stats",
 		description:
-			"EnduroStats is a fitness app that helps users track activities, set goals, and monitor progress with a sleek, responsive design.",
+			"EnduroStats is a fitness app that helps users track activities, set goals, and monitor progress with a sleek, responsive design. Currently undergoing a complete ground-up refactor with improved architecture.",
 		imageSrc: "/strava3.png", // Reference the image path directly from the public folder
 		altText: "Enduro Stats project screenshot",
 		technologies: [
@@ -25,6 +25,8 @@ export const projects = [
 		],
 		liveLink: "https://endurostats.vercel.app",
 		githubRepo: "https://github.com/karltiama/junestravaapp",
+		status: "Refactoring v2" as const,
+		featured: true,
 		situation: "A personalized fitness dashboard built to track my running progress and visualize activity data from Strava as I trained for the 2024 Toronto Waterfront Marathon. This project started as a personal tool for myself and evolved into a public-facing web app designed to help other runners easily track performance trends and gain insight into their training.",
 		challenges: [
 			"Implemented secure OAuth 2.0 authentication flow with Strava using Next.js API routes for user connection and activity fetching.",
@@ -70,6 +72,8 @@ export const projects = [
 			{ icon: SiThemoviedatabase, name: "TMDB API" },
 		],
 		githubRepo: "https://github.com/karltiama/movieapp",
+		status: "Completed" as const,
+		featured: false,
 		situation:"I created this project to further improve my skills with API integration and backend development. I wanted to create a movie rating app that pulled data from an External API and allow uses to rate and review movies.",
 		challenges:[
 			"Creating user authentication and authorization",
@@ -98,6 +102,8 @@ export const projects = [
 		],
 		liveLink: "https://memorymapper.vercel.app",
 		githubRepo: "https://github.com/karltiama/memorymap",
+		status: "Live" as const,
+		featured: false,
 		situation:"During my recent trip to Canada, I struggled to find an app that effectively combined mapping, photo integration, and journaling to document my journey. This inspired me to create my own travel mapping app – a digital companion that plots routes and serves as an interactive journal. The app I envision would feature custom map markers, seamless photo integration, and detailed location notes, allowing travelers to capture the essence of their experiences. By developing it myself, I can tailor it to specific needs and include sharing capabilities for friends and family. This project not only allows me to expand my skills in web development and mapping technologies but could also evolve into a versatile tool for other travelers. Ultimately, it aims to transform how we remember and share travel experiences, turning each journey into a vivid, digital story.",
 		challenges: [
 			"Integrating Mapbox for interactive maps and custom markers.",
@@ -138,6 +144,8 @@ export const projects = [
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
 			{ icon: SiMdx, name: "MDX" },
 		],
+		status: "Live" as const,
+		featured: false,
 		situation:"I wanted to create a portfolio websites that showcases my projects and skills as a software developer. I also wanted to share my thoughts and ideas on software development. I've learned the best way to learn is to teach and talk about what topics that peak my interest, this blog is my way of sharing my knowledge and experiences with the world.",
 		challenges:[
 			"Finding the right balance between showcasing my projects and sharing my thoughts on software development.",
