@@ -1,0 +1,190 @@
+---
+title: What I learned from refactoring Enduro Stats
+description: A look at the challenges and lessons learned from refactoring Enduro Stats
+tags: ["API", "refactoring", "React Query"]
+date: 2025-06-11
+published: true
+---
+
+# Introduction
+
+Every developer has that one project that teaches them more than they bargained for. For me, that was Enduro Stats – a running analytics app that 
+started as a simple Strava API wrapper and became a masterclass in the gap between "working" and "working well."
+
+My first iteration was straightforward: pull data from Strava's API, display some basic stats, and deploy it to the web.
+It was primarily a learning exercise to understand OAuth flows, API integration, and token management. 
+I was proud of what I'd built – it worked, it was live, and I'd gained valuable experience with the Strava API.
+
+But as many developers learn the hard way, there's a world of difference between a working application and one that's truly 
+ready for real users and real-world usage. After coming back to the project months later, I realized that it was time to develop it into a more robust application.
+
+## The Limitations Became Clear
+
+When I revisited Enduro Stats after a few months away, the limitations of my original approach became glaringly obvious. 
+The biggest issue? There was no way to add meaningful analytics to the app – which was ironic, considering that was the whole point of building it.
+
+My original architecture was painfully simple: basic API routes that fetched data from Strava on every request, displayed it, and forgot about it. 
+No persistence, no historical tracking, no ability to analyze trends over time. I was essentially building a very expensive API proxy.
+
+The core question that drove my refactoring decision was: *How can I utilize the data I'm already collecting to add real value?*  But answering 
+that question required solving a fundamental architectural problem – I needed to persist data in a database.
+
+## The Technical Challenge
+
+The features I wanted to implement required a completely different approach:
+
+- **Persistent historical data**: Users needed access to their running history over time, not just their most recent activities
+- **Performance zones calculation**: Automatically calculate training zones based on recent runs and heart rate data
+- **TRIMP score tracking**: Implement Training Impulse calculations to help users understand training load
+- **Trend analysis**: Show progress over weeks and months, not just individual workout snapshots
+
+Each of these features required storing and processing data over time – something my original "fetch and display" architecture simply couldn't handle.
+
+## The Rebuild Decision
+
+After evaluating my options, I decided to rebuild from scratch rather than trying to retrofit the existing codebase. The original app was missing too many fundamental pieces:
+
+- **User authentication**: The original version had no concept of individual users
+- **Data persistence**: Everything was ephemeral API calls
+- **Proper Strava integration**: I needed a more robust OAuth flow that could handle user accounts
+
+For the new architecture, I chose:
+- **Supabase** for the database and authentication backend
+- **React Query** for client-side data management and caching
+- **Proper user flow**: Users now create an account, then link their Strava profile to unlock the analytics features
+
+This approach gave me the foundation I needed to build the analytical features that were the whole point of the project in the first place.
+
+## The Technical Hurdles
+
+Looking back at my first version, I can see several architectural mistakes that made the codebase difficult to maintain and scale:
+
+### OAuth & Authentication Woes
+
+My initial OAuth implementation was naive at best. I was using cookies without proper session handling, which led to all sorts of edge cases and security concerns. The authentication flow was tightly coupled to specific components, making it nearly impossible to reuse or test.
+
+### API Call Chaos
+
+The original app suffered from what I now call "API call chaos":
+- Multiple redundant API calls triggering constant re-renders
+- No caching strategy whatsoever
+- API logic scattered across components
+- Custom hooks that were tightly coupled to specific components
+
+I had violated the "keep components simple" rule, and it showed. My callback logic was embedded in a custom hook that was essentially married to one component, making it impossible to reuse or test in isolation.
+
+### Enter React Query
+
+Learning and implementing React Query was a game-changer. It forced me to:
+- Think about data fetching as a separate concern from UI
+- Implement proper caching strategies
+- Handle loading and error states consistently
+- Separate my API logic from my components
+
+The difference was night and day. Instead of components managing their own data fetching (and often fetching the same data multiple times), I now had a centralized way to handle API calls, caching, and state management.
+
+## Lessons Learned
+
+This refactoring journey taught me some valuable lessons about building modern web applications:
+
+1. **Authentication is a first-class concern**: Don't treat it as an afterthought. Proper session handling and OAuth flows are crucial.
+
+2. **Separate your concerns**: API logic, data fetching, and UI should be distinct layers that can evolve independently.
+
+3. **Embrace modern tools**: React Query isn't just a nice-to-have – it's essential for building performant, maintainable applications.
+
+4. **Keep components focused**: Each component should do one thing well. If it's handling API calls, managing state, AND rendering UI, it's probably doing too much.
+
+These lessons have fundamentally changed how I approach new features and components in the ongoing refactor.
+
+## Deep Dive: Authentication Implementation
+
+Authentication was one of the biggest challenges in my refactoring journey. Let me walk through how my approach evolved from the naive first attempt to a more robust solution.
+
+### The First Attempt: Naive OAuth
+
+My original authentication flow was embarrassingly simple:
+
+```javascript
+// Old approach - don't do this!
+const handleStravaCallback = async (code) => {
+  const response = await fetch('/api/auth/strava', {
+    method: 'POST',
+    body: JSON.stringify({ code })
+  });
+  const data = await response.json();
+  
+  // Store token in localStorage (yikes!)
+  localStorage.setItem('strava_token', data.access_token);
+  
+  // Set a basic cookie without proper session handling
+  document.cookie = `user_authenticated=true; path=/`;
+}
+```
+
+This approach had several critical flaws:
+- **No session management**: Users could lose authentication on page refresh
+- **Insecure token storage**: Tokens in localStorage are vulnerable to XSS attacks
+- **No refresh token handling**: When tokens expired, users had to re-authenticate
+- **Tight coupling**: The auth logic was embedded directly in components
+
+### The Refactored Approach: Proper Session Management
+
+For the new version, I implemented a more robust authentication system using Supabase:
+
+```javascript
+// New approach with proper session handling
+const handleStravaCallback = async (code) => {
+  try {
+    // Exchange code for tokens via secure backend
+    const response = await fetch('/api/auth/strava/callback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code })
+    });
+    
+    if (!response.ok) throw new Error('Authentication failed');
+    
+    const { user, session } = await response.json();
+    
+    // Supabase handles secure session storage
+    await supabase.auth.setSession(session);
+    
+    // Store Strava tokens securely in database
+    await supabase
+      .from('user_strava_tokens')
+      .upsert({
+        user_id: user.id,
+        access_token: session.access_token,
+        refresh_token: session.refresh_token,
+        expires_at: new Date(session.expires_at)
+      });
+      
+  } catch (error) {
+    console.error('Authentication error:', error);
+    // Handle error appropriately
+  }
+};
+```
+
+### Key Improvements
+
+1. **Secure Token Storage**: Tokens are now stored in the database, not client-side
+2. **Session Management**: Supabase handles session persistence and security
+3. **Refresh Token Logic**: Automatic token refresh when they expire
+4. **Error Handling**: Proper error boundaries and user feedback
+5. **Separation of Concerns**: Auth logic is separated from UI components
+
+### The User Flow
+
+The new authentication flow is much more user-friendly:
+
+1. **User Registration**: Users create an account with email/password
+2. **Strava Linking**: After login, they can link their Strava account
+3. **OAuth Flow**: Secure callback handling with proper error states
+4. **Token Management**: Automatic refresh and secure storage
+5. **Session Persistence**: Users stay logged in across browser sessions
+
+This approach not only solved the technical problems but also improved the user experience significantly. Users no longer lose their authentication state unexpectedly, and the app feels much more stable and professional.
+
+The authentication refactor was a perfect example of how addressing fundamental architectural issues can have ripple effects throughout the entire application.
