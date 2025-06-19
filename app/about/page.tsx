@@ -125,19 +125,19 @@ export default async function AboutPage() {
 						<h3 className="text-2xl font-semibold mb-4">Professional Journey</h3>
 						<div className="prose prose-neutral dark:prose-invert max-w-none">
 							<p className="text-lg leading-relaxed">
-								With a <strong>Computer Engineering background</strong> and <strong>4+ years of web development experience</strong>, 
-								I specialize in building robust, scalable applications using modern technologies. My transition 
+								With a <strong>Computer Engineering background</strong> and <strong>4+ years of web development experience</strong>,{' '}
+								I specialize in building robust, scalable applications using modern technologies. My transition{' '}
 								into web development in 2020 was driven by a passion for creating solutions that make a real impact.
 							</p>
 							<p>
-								I&apos;ve successfully delivered projects with measurable results: <strong>built a fitness tracking application</strong> 
-								that processes 100+ secure API requests through OAuth 2.0 integration, <strong>developed a mapping platform</strong> 
-								handling 50+ image formats with real-time data visualization, and <strong>created full-stack applications</strong> 
+								I&apos;ve successfully delivered projects with measurable results: <strong>built a fitness tracking application</strong>{' '}
+								that processes 100+ secure API requests through OAuth 2.0 integration, <strong>developed a mapping platform</strong>{' '}
+								handling 50+ image formats with real-time data visualization, and <strong>created full-stack applications</strong>{' '}
 								achieving 95+ Lighthouse performance scores with optimized user experiences.
 							</p>
 							<p>
-								Beyond coding, I&apos;ve established myself as a <strong>technical thought leader</strong> by publishing 
-								<strong>28+ in-depth articles</strong> that reach 500+ developers monthly, helping the community 
+								Beyond coding, I&apos;ve established myself as a <strong>technical thought leader</strong> by publishing{' '}
+								<strong>28+ in-depth articles</strong> that reach 500+ developers monthly, helping the community{' '}
 								understand complex concepts through practical examples and clear mental models.
 							</p>
 						</div>
@@ -162,78 +162,81 @@ export default async function AboutPage() {
 						</div>
 					</div>
 
-					{/* What I Bring */}
-					<div>
-						<h3 className="text-2xl font-semibold mb-4">What I Bring to Teams</h3>
-						<div className="grid gap-4 sm:grid-cols-2">
-							<Card>
-								<CardContent className="p-4">
-									<h4 className="font-semibold mb-2">🚀 Full-Stack Expertise</h4>
-									<p className="text-sm text-muted-foreground">
-										End-to-end development from UI/UX to database design and API development
-									</p>
-								</CardContent>
-							</Card>
-							<Card>
-								<CardContent className="p-4">
-									<h4 className="font-semibold mb-2">📊 Data-Driven Approach</h4>
-									<p className="text-sm text-muted-foreground">
-										Experience with API integrations, data visualization, and performance optimization
-									</p>
-								</CardContent>
-							</Card>
-							<Card>
-								<CardContent className="p-4">
-									<h4 className="font-semibold mb-2">✍️ Communication Skills</h4>
-									<p className="text-sm text-muted-foreground">
-										Strong technical writing and documentation skills, proven through published articles
-									</p>
-								</CardContent>
-							</Card>
-							<Card>
-								<CardContent className="p-4">
-									<h4 className="font-semibold mb-2">🔄 Continuous Learning</h4>
-									<p className="text-sm text-muted-foreground">
-										Staying current with modern web technologies and best practices
-									</p>
-								</CardContent>
-							</Card>
-						</div>
-					</div>
+				</div>
+			</div>
 
-					{/* Personal Interests */}
-					<div>
-						<h3 className="text-2xl font-semibold mb-4">Beyond Coding</h3>
-						<p className="text-muted-foreground">
-							When I&apos;m not coding, you&apos;ll find me running (training for marathons), exploring new hiking trails, 
-							or experimenting with the latest web technologies. I believe in maintaining a healthy work-life balance 
-							and find that physical activities often lead to creative solutions for coding challenges.
-						</p>
-					</div>
-
-					{/* Call to Action */}
-					<Card className="bg-muted/50">
-						<CardContent className="p-6 text-center">
-							<h3 className="text-xl font-semibold mb-2">Let&apos;s Work Together</h3>
-							<p className="text-muted-foreground mb-4">
-								I&apos;m always interested in discussing new opportunities and innovative projects
+			{/* What I Bring - Full Width Section */}
+			<div className="mt-12">
+				<h3 className="text-2xl font-semibold mb-6 text-center">What I Bring to Teams</h3>
+				<div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+					<Card className="h-full">
+						<CardContent className="p-4 h-full flex flex-col">
+							<h4 className="font-semibold mb-2">🚀 Full-Stack Expertise</h4>
+							<p className="text-sm text-muted-foreground flex-1">
+								End-to-end development from UI/UX to database design and API development
 							</p>
-							<div className="flex gap-4 justify-center">
-								<Button asChild>
-									<Link href="/projects">
-										View My Projects
-										<ExternalLink className="w-4 h-4 ml-2" />
-									</Link>
-								</Button>
-								<Button asChild variant="outline">
-									<Link href="mailto:karl@karltiama.dev">
-										Get In Touch
-									</Link>
-								</Button>
-							</div>
+						</CardContent>
+					</Card>
+					<Card className="h-full">
+						<CardContent className="p-4 h-full flex flex-col">
+							<h4 className="font-semibold mb-2">📊 Data-Driven Approach</h4>
+							<p className="text-sm text-muted-foreground flex-1">
+								Experience with API integrations, data visualization, and performance optimization
+							</p>
+						</CardContent>
+					</Card>
+					<Card className="h-full">
+						<CardContent className="p-4 h-full flex flex-col">
+							<h4 className="font-semibold mb-2">✍️ Communication Skills</h4>
+							<p className="text-sm text-muted-foreground flex-1">
+								Strong technical writing and documentation skills, proven through published articles
+							</p>
+						</CardContent>
+					</Card>
+					<Card className="h-full">
+						<CardContent className="p-4 h-full flex flex-col">
+							<h4 className="font-semibold mb-2">🔄 Continuous Learning</h4>
+							<p className="text-sm text-muted-foreground flex-1">
+								Staying current with modern web technologies and best practices
+							</p>
 						</CardContent>
 					</Card>
 				</div>
+			</div>
+
+			{/* Personal Interests - Full Width */}
+			<div className="mt-12">
+				<h3 className="text-2xl font-semibold mb-4">Beyond Coding</h3>
+				<p className="text-muted-foreground">
+					When I&apos;m not coding, you&apos;ll find me running (training for marathons), exploring new hiking trails,{' '}
+					or experimenting with the latest web technologies. I believe in maintaining a healthy work-life balance{' '}
+					and find that physical activities often lead to creative solutions for coding challenges.
+				</p>
+			</div>
+
+			{/* Call to Action - Full Width */}
+			<div className="mt-8">
+				<Card className="bg-muted/50">
+					<CardContent className="p-6 text-center">
+						<h3 className="text-xl font-semibold mb-2">Let&apos;s Work Together</h3>
+						<p className="text-muted-foreground mb-4">
+							I&apos;m always interested in discussing new opportunities and innovative projects
+						</p>
+						<div className="flex gap-4 justify-center">
+							<Button asChild>
+								<Link href="/projects">
+									View My Projects
+									<ExternalLink className="w-4 h-4 ml-2" />
+								</Link>
+							</Button>
+							<Button asChild variant="outline">
+								<Link href="mailto:karl@karltiama.dev">
+									Get In Touch
+								</Link>
+							</Button>
+						</div>
+					</CardContent>
+				</Card>
 			</div>
 		</div>
 	);
