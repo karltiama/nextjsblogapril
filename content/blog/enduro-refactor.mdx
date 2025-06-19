@@ -10,6 +10,8 @@ published: true
 
 "It works" and "it works well" are two very different things. This is the story of how I transformed a simple Strava API wrapper into a full-fledged analytics platform, and the valuable lessons learned along the way.
 
+> **📱 [View the live application](https://enduro-stats.vercel.app)** | **⚡ [Explore the source code on GitHub](https://github.com/karltiama/endurorevamp)**
+
 ## The Journey from Simple to Sophisticated
 
 Every developer has that one project that teaches them more than they bargained for. For me, that was Enduro Stats — a running analytics app that started as a simple Strava API wrapper and became a masterclass in the gap between "working" and "working well."
@@ -37,6 +39,8 @@ async function getAthleteStats(athleteId: string): Promise<AthleteStats> {
   };
 }
 ```
+
+*[See the improved implementation on GitHub →](https://github.com/karltiama/endurorevamp/blob/main/lib/analytics.ts)*
 
 This code represented everything wrong with my initial approach:
 - No data persistence
@@ -433,6 +437,8 @@ function ActivityList({ userId }: { userId: string }) {
 }
 ```
 
+*[View the complete React Query implementation →](https://github.com/karltiama/endurorevamp/blob/main/hooks/useActivities.ts)*
+
 ## Looking Back and Forward
 
 This refactoring journey transformed not just Enduro Stats, but my approach to development. What started as a simple API wrapper became a lesson in:
@@ -470,3 +476,19 @@ While the refactoring journey has significantly improved Enduro Stats, there are
    - Group challenges
 
 The foundation we've built through this refactoring makes these features possible, proving that sometimes taking a step back to rebuild is the fastest way forward.
+
+---
+
+## Explore the Code
+
+Interested in diving deeper into the implementation? The complete source code for both the original and refactored versions of Enduro Stats is available on GitHub:
+
+**🔗 [View the full project on GitHub](https://github.com/karltiama/endurorevamp)**
+
+Key files to explore:
+- **[Authentication implementation](https://github.com/karltiama/endurorevamp/blob/main/lib/auth.ts)** - OAuth flow and session management
+- **[Data synchronization logic](https://github.com/karltiama/endurorevamp/blob/main/lib/sync.ts)** - Strava API integration and conflict resolution
+- **[React Query hooks](https://github.com/karltiama/endurorevamp/tree/main/hooks)** - Data fetching and state management
+- **[Database schema](https://github.com/karltiama/endurorevamp/blob/main/supabase/sql)** - Supabase table definitions and relationships
+
+*The project is actively being refactored, so you might see work-in-progress improvements and experiments as I continue to enhance the platform.*
