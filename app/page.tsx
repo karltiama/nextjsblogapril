@@ -157,7 +157,7 @@ export default function Home() {
 					components. In my blog, I share strategies for dissecting problems and
 					describe my mental model for learning specific topics.
 				</p>
-				<ul className="flex flex-col">
+				<ul className="flex flex-col w-full max-w-3xl">
 					{latestPosts.map((post) => (
 						<li key={post.slug} className="first:border-t first:border-border">
 							<PostItem
