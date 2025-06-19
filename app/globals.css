@@ -73,3 +73,36 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+/* Mermaid diagram styles */
+.mermaid {
+	background: transparent !important;
+}
+
+.mermaid .label {
+	font-family: inherit !important;
+	color: inherit !important;
+}
+
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon,
+.mermaid .node path {
+	fill: hsl(var(--background));
+	stroke: hsl(var(--border));
+}
+
+.mermaid .edgePath .path {
+	stroke: hsl(var(--foreground)) !important;
+}
+
+.mermaid .edgeLabel {
+	background-color: hsl(var(--background)) !important;
+	color: hsl(var(--foreground)) !important;
+}
+
+.mermaid .cluster rect {
+	fill: hsl(var(--muted)) !important;
+	stroke: hsl(var(--border)) !important;
+}

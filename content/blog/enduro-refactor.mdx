@@ -1,22 +1,56 @@
 ---
-title: What I learned from refactoring Enduro Stats
-description: A look at the challenges and lessons learned from refactoring Enduro Stats
-tags: ["API", "refactoring", "React Query"]
+title: What I Learned from Refactoring Enduro Stats
+description: A deep dive into transforming a simple Strava API wrapper into a robust analytics platform
+tags: ["API", "refactoring", "React Query", "TypeScript", "Strava", "OAuth", "Data Sync"]
 date: 2025-06-11
 published: true
 ---
 
-# Introduction
+# What I Learned from Refactoring Enduro Stats
 
-Every developer has that one project that teaches them more than they bargained for. For me, that was Enduro Stats – a running analytics app that 
-started as a simple Strava API wrapper and became a masterclass in the gap between "working" and "working well."
+"It works" and "it works well" are two very different things. This is the story of how I transformed a simple Strava API wrapper into a full-fledged analytics platform, and the valuable lessons learned along the way.
 
-My first iteration was straightforward: pull data from Strava's API, display some basic stats, and deploy it to the web.
-It was primarily a learning exercise to understand OAuth flows, API integration, and token management. 
-I was proud of what I'd built – it worked, it was live, and I'd gained valuable experience with the Strava API.
+## The Journey from Simple to Sophisticated
 
-But as many developers learn the hard way, there's a world of difference between a working application and one that's truly 
-ready for real users and real-world usage. After coming back to the project months later, I realized that it was time to develop it into a more robust application.
+Every developer has that one project that teaches them more than they bargained for. For me, that was Enduro Stats — a running analytics app that started as a simple Strava API wrapper and became a masterclass in the gap between "working" and "working well."
+
+My first iteration was straightforward: a learning exercise to pull data from Strava's API, display some basic stats, and deploy it to the web. I gained valuable experience with OAuth flows and API integration, and I was proud of what I'd built — it worked, it was live, and users could see their running data.
+
+But as many developers learn the hard way, there's a world of difference between a working application and one that's truly ready for real users and real-world usage. After coming back to the project months later, I realized that it needed to evolve into something more robust and valuable.
+
+## The Wake-Up Call
+
+The limitations of my original approach became glaringly obvious when I tried to add meaningful analytics – which was ironic, considering analytics was the whole point. Here's what I found:
+
+```typescript
+// Initial implementation with poor data management
+async function getAthleteStats(athleteId: string): Promise<AthleteStats> {
+  // Fetch from Strava API on every request - inefficient and slow
+  const activities = await stravaApi.getActivities();
+  
+  // Calculate everything on the fly without caching
+  return {
+    totalDistance: activities.reduce((sum, a) => sum + a.distance, 0),
+    // No historical data to compare against
+    // No way to track improvements
+    // Everything recalculated on every request
+  };
+}
+```
+
+This code represented everything wrong with my initial approach:
+- No data persistence
+- Repeated API calls
+- No historical tracking
+- No way to analyze trends
+
+It was time for a complete rethink. The journey from this naive implementation to a proper analytics platform taught me valuable lessons about:
+- Authentication and security
+- Data modeling and persistence
+- State management and caching
+- Professional development practices
+
+Here's how I transformed Enduro Stats from a simple API wrapper into a robust analytics platform...
 
 ## The Limitations Became Clear
 
@@ -28,6 +62,8 @@ No persistence, no historical tracking, no ability to analyze trends over time. 
 
 The core question that drove my refactoring decision was: *How can I utilize the data I'm already collecting to add real value?*  But answering 
 that question required solving a fundamental architectural problem – I needed to persist data in a database.
+
+With these limitations in mind, it was time to rebuild. The first crucial step? Proper authentication.
 
 ## The Technical Challenge
 
@@ -83,6 +119,227 @@ Learning and implementing React Query was a game-changer. It forced me to:
 
 The difference was night and day. Instead of components managing their own data fetching (and often fetching the same data multiple times), I now had a centralized way to handle API calls, caching, and state management.
 
+## The Data Synchronization Challenge
+
+While React Query solved many of our data fetching problems, it exposed a deeper architectural challenge: data synchronization. As the application grew, managing the flow of data between Strava's API, our database, and the UI became increasingly complex.
+
+### Understanding the Data Flow
+
+Here's how data moves through the application:
+
+<Mermaid chart={`
+graph TD
+    A[Strava API] -->|OAuth + API Calls| B[API Routes]
+    B -->|Store Raw Data| C[Database]
+    B -->|Cache + State| D[React Query Cache]
+    D -->|Render Data| E[UI Components]
+    C -->|Background Sync| B
+    
+    subgraph DataSyncChallenges
+    F[Strava Activity Data] -->|Conflicts?| G[Local Activity Records]
+    H[User Preferences] -->|Must Merge| I[Cached Settings]
+    end
+`} />
+
+### The Synchronization Problem
+
+My initial approach was naive. I assumed I could simply:
+1. Fetch data from Strava
+2. Store it in the database
+3. Display it to the user
+
+Reality was more complicated:
+
+```typescript
+// Improved sync implementation with proper error handling and types
+interface SyncResult {
+  success: boolean;
+  updatedActivities: number;
+  errors?: Error[];
+}
+
+async function syncActivities(userId: string): Promise<SyncResult> {
+  try {
+    // Get last synced activity for incremental sync
+    const lastSync = await db.activities
+      .findFirst({ 
+        where: { userId },
+        orderBy: { start_date: 'desc' }
+      });
+
+    // Fetch only new activities from Strava
+    const newActivities = await stravaApi.getActivities({
+      after: lastSync?.start_date ?? 'beginning of time',
+      per_page: 100
+    });
+
+    // Process and store new activities with conflict resolution
+    const results = await Promise.allSettled(
+      newActivities.map(activity => 
+        syncActivity(activity, userId)
+      )
+    );
+
+    // Track sync results
+    const succeeded = results.filter(r => r.status === 'fulfilled');
+    const failed = results.filter(r => r.status === 'rejected');
+
+    return {
+      success: failed.length === 0,
+      updatedActivities: succeeded.length,
+      errors: failed.map(f => (f as PromiseRejectedResult).reason)
+    };
+  } catch (error) {
+    logger.error('Sync failed', { userId, error });
+    throw error;
+  }
+}
+```
+
+This led to several problems:
+
+1. **Data Conflicts**:
+   ```typescript
+   // What happens when both sources have different data?
+   const stravaActivity = {
+     id: '123',
+     name: 'Morning Run',
+     distance: 5000
+   };
+   
+   const localActivity = {
+     id: '123',
+     name: 'Morning Run', // Same
+     distance: 5100,      // Different!
+     userNotes: 'Felt great!' // Local only data
+   };
+   ```
+
+2. **Partial Updates**:
+   ```typescript
+   // How do we handle partial data updates?
+   interface Activity {
+     id: string;
+     name: string;
+     distance: number;
+     userNotes?: string;    // Local only
+     stravaKudos?: number;  // Strava only
+     localRating?: number;  // Local only
+   }
+   ```
+
+### The Solution: Clear Data Ownership
+
+The solution was to clearly define data ownership and synchronization rules:
+
+```typescript
+interface ActivityBase {
+  id: string;
+  strava_id: string;
+  name: string;
+  distance: number;
+  start_date: Date;
+}
+
+interface StravaActivity extends ActivityBase {
+  kudos: number;
+  athlete_id: string;
+  // Strava-specific fields
+}
+
+interface LocalActivity extends ActivityBase {
+  user_notes?: string;
+  personal_rating?: number;
+  // Local-specific fields
+  
+  // Reference to source data
+  strava_last_sync: Date;
+}
+
+// Clear sync logic
+async function syncActivity(stravaActivity: StravaActivity): Promise<LocalActivity> {
+  const existing = await db.activities.findUnique({
+    where: { strava_id: stravaActivity.id }
+  });
+
+  if (!existing) {
+    // New activity - simple create
+    return db.activities.create({
+      data: {
+        ...mapStravaToLocal(stravaActivity),
+        strava_last_sync: new Date()
+      }
+    });
+  }
+
+  // Update existing - preserve local data
+  return db.activities.update({
+    where: { id: existing.id },
+    data: {
+      ...mapStravaToLocal(stravaActivity),
+      // Preserve local-only fields
+      user_notes: existing.user_notes,
+      personal_rating: existing.personal_rating,
+      strava_last_sync: new Date()
+    }
+  });
+}
+```
+
+### Lessons Learned About Data Management
+
+1. **Start with a Clear MVP**:
+   - Define core data requirements
+   - Identify data sources
+   - Plan for data ownership
+   - Document sync requirements
+
+2. **Schema Design is Critical**:
+   ```typescript
+   // Good schema design makes sync logic clear
+   interface SyncableEntity {
+     id: string;           // Our ID
+     external_id: string;  // API ID
+     last_synced: Date;    // Sync tracking
+     local_version: number; // Version control
+   }
+   ```
+
+3. **Handle Edge Cases Early**:
+   - Network failures during sync
+   - Conflict resolution
+   - Partial updates
+   - Data validation
+
+4. **Monitor and Log**:
+   ```typescript
+   async function syncWithLogging(activity: StravaActivity) {
+     try {
+       const result = await syncActivity(activity);
+       logger.info('Sync successful', {
+         activity_id: activity.id,
+         changes: computeChanges(activity, result)
+       });
+       return result;
+     } catch (error) {
+       logger.error('Sync failed', {
+         activity_id: activity.id,
+         error: error.message
+       });
+       throw error;
+     }
+   }
+   ```
+
+This experience taught me that data synchronization isn't just about moving data - it's about:
+- Understanding data ownership
+- Planning for conflicts
+- Preserving user modifications
+- Maintaining data integrity
+- Tracking sync state
+
+Starting with a clear MVP and well-thought-out schemas would have prevented many of these challenges. Now, in new projects, I always begin with a detailed data flow diagram and clear ownership rules before writing any code.
+
 ## Lessons Learned
 
 This refactoring journey taught me some valuable lessons about building modern web applications:
@@ -99,92 +356,117 @@ These lessons have fundamentally changed how I approach new features and compone
 
 ## Deep Dive: Authentication Implementation
 
-Authentication was one of the biggest challenges in my refactoring journey. Let me walk through how my approach evolved from the naive first attempt to a more robust solution.
+The first step in transforming Enduro Stats was implementing proper authentication. Without it, we couldn't safely store user data or provide personalized analytics. Here's how we tackled it:
 
-### The First Attempt: Naive OAuth
+1. **User Authentication Flow**:
+   - Implemented email/password authentication using Supabase Auth
+   - Added social login options for better user experience
+   - Set up proper session management with refresh tokens
 
-My original authentication flow was embarrassingly simple:
+2. **Strava OAuth Integration**:
+   - Implemented the full OAuth 2.0 flow with PKCE
+   - Securely stored refresh tokens for background syncs
+   - Added token rotation and automatic refresh handling
 
-```javascript
-// Old approach - don't do this!
-const handleStravaCallback = async (code) => {
-  const response = await fetch('/api/auth/strava', {
-    method: 'POST',
-    body: JSON.stringify({ code })
+3. **Security Considerations**:
+   - Implemented proper CSRF protection
+   - Added rate limiting on authentication endpoints
+   - Set up secure session cookie handling
+
+## Building the Foundation: Data Layer
+
+With secure authentication in place, we focused on the core challenge: data persistence and management. Our data layer needed to handle:
+
+1. **Activity Data**:
+   - Raw activity data from Strava
+   - Derived metrics and analytics
+   - User-specific customizations and notes
+
+2. **User Preferences**:
+   - Training zones and thresholds
+   - Display preferences
+   - Notification settings
+
+3. **Analytics Data**:
+   - Historical performance metrics
+   - Training load calculations
+   - Progress tracking
+
+## Optimizing the User Experience: React Query
+
+React Query transformed how we handle data on the frontend:
+
+```typescript
+// Custom hook for activity data with React Query
+function useAthleteActivities(userId: string) {
+  return useQuery({
+    queryKey: ['activities', userId],
+    queryFn: async () => {
+      const response = await fetch(`/api/activities/${userId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch activities');
+      }
+      return response.json();
+    },
+    staleTime: 5 * 60 * 1000, // Consider data stale after 5 minutes
+    cacheTime: 30 * 60 * 1000, // Keep in cache for 30 minutes
   });
-  const data = await response.json();
-  
-  // Store token in localStorage (yikes!)
-  localStorage.setItem('strava_token', data.access_token);
-  
-  // Set a basic cookie without proper session handling
-  document.cookie = `user_authenticated=true; path=/`;
+}
+
+// Component using the hook
+function ActivityList({ userId }: { userId: string }) {
+  const { data, isLoading, error } = useAthleteActivities(userId);
+
+  if (isLoading) return <ActivitySkeleton />;
+  if (error) return <ErrorBoundary error={error} />;
+
+  return (
+    <div>
+      {data.activities.map(activity => (
+        <ActivityCard 
+          key={activity.id} 
+          activity={activity}
+        />
+      ))}
+    </div>
+  );
 }
 ```
 
-This approach had several critical flaws:
-- **No session management**: Users could lose authentication on page refresh
-- **Insecure token storage**: Tokens in localStorage are vulnerable to XSS attacks
-- **No refresh token handling**: When tokens expired, users had to re-authenticate
-- **Tight coupling**: The auth logic was embedded directly in components
+## Looking Back and Forward
 
-### The Refactored Approach: Proper Session Management
+This refactoring journey transformed not just Enduro Stats, but my approach to development. What started as a simple API wrapper became a lesson in:
 
-For the new version, I implemented a more robust authentication system using Supabase:
+- The importance of proper authentication and data security
+- The value of well-designed data models and persistence
+- The power of modern data management tools like React Query
+- The necessity of professional development practices
 
-```javascript
-// New approach with proper session handling
-const handleStravaCallback = async (code) => {
-  try {
-    // Exchange code for tokens via secure backend
-    const response = await fetch('/api/auth/strava/callback', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code })
-    });
-    
-    if (!response.ok) throw new Error('Authentication failed');
-    
-    const { user, session } = await response.json();
-    
-    // Supabase handles secure session storage
-    await supabase.auth.setSession(session);
-    
-    // Store Strava tokens securely in database
-    await supabase
-      .from('user_strava_tokens')
-      .upsert({
-        user_id: user.id,
-        access_token: session.access_token,
-        refresh_token: session.refresh_token,
-        expires_at: new Date(session.expires_at)
-      });
-      
-  } catch (error) {
-    console.error('Authentication error:', error);
-    // Handle error appropriately
-  }
-};
-```
+Most importantly, it taught me that "making it work" is just the beginning. Real-world applications require careful thought about:
+- Data synchronization and integrity
+- User experience and performance
+- Code maintainability and testing
+- Professional development workflows
 
-### Key Improvements
+These lessons continue to influence how I approach new projects, always starting with a solid foundation rather than just making it work.
 
-1. **Secure Token Storage**: Tokens are now stored in the database, not client-side
-2. **Session Management**: Supabase handles session persistence and security
-3. **Refresh Token Logic**: Automatic token refresh when they expire
-4. **Error Handling**: Proper error boundaries and user feedback
-5. **Separation of Concerns**: Auth logic is separated from UI components
+## The Road Ahead
 
-### The User Flow
+While the refactoring journey has significantly improved Enduro Stats, there are still exciting possibilities ahead:
 
-The new authentication flow is much more user-friendly:
+1. **Advanced Analytics**:
+   - Machine learning for performance prediction
+   - Training load optimization
+   - Race pace recommendations
 
-1. **User Registration**: Users create an account with email/password
-2. **Strava Linking**: After login, they can link their Strava account
-3. **OAuth Flow**: Secure callback handling with proper error states
-4. **Token Management**: Automatic refresh and secure storage
-5. **Session Persistence**: Users stay logged in across browser sessions
+2. **Enhanced Sync**:
+   - Real-time activity updates
+   - Multi-device synchronization
+   - Offline support
 
-This approach not only solved the technical problems but also improved the user experience significantly. Users no longer lose their authentication state unexpectedly, and the app feels much more stable and professional.
+3. **Community Features**:
+   - Activity sharing
+   - Training plan collaboration
+   - Group challenges
 
-The authentication refactor was a perfect example of how addressing fundamental architectural issues can have ripple effects throughout the entire application.
+The foundation we've built through this refactoring makes these features possible, proving that sometimes taking a step back to rebuild is the fastest way forward.
