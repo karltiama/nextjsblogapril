@@ -1,11 +1,14 @@
 import { posts } from "#site/content";
 import { MDXContent } from "@/components/mdx-components";
 import { notFound } from "next/navigation";
+import { TableOfContents } from "@/components/toc";
+import { MobileToc } from "@/components/mobile-toc";
 
 import "@/styles/mdx.css";
 import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Tag } from "@/components/tag";
+
 interface PostPageProps {
 	params: {
 		slug: string[];
@@ -72,18 +75,34 @@ export default async function PostPage({ params }: PostPageProps) {
 	}
 
 	return (
-		<article className="container py-6 prose dark:prose-invert max-w-4xl mx-auto">
-			<h1 className="mb-2">{post.title}</h1>
-			<div className="flex gap-2 mb-2">
-				{post.tags?.map((tag) => (
-					<Tag tag={tag} key={tag} />
-				))}
+		<div className="container py-6 max-w-7xl mx-auto">
+			<div className="flex gap-8">
+				{/* Main Content */}
+				<article className="flex-1 prose dark:prose-invert max-w-4xl">
+					<h1 className="mb-2">{post.title}</h1>
+					<div className="flex gap-2 mb-2">
+						{post.tags?.map((tag) => (
+							<Tag tag={tag} key={tag} />
+						))}
+					</div>
+					{post.description ? (
+						<p className="text-xl mt-0 text-muted-foreground">{post.description}</p>
+					) : null}
+					
+					{/* Mobile TOC */}
+					<MobileToc />
+					
+					<hr className="my-4" />
+					<MDXContent code={post.body} />
+				</article>
+
+				{/* Sidebar - Table of Contents */}
+				<aside className="hidden lg:block w-64 shrink-0">
+					<div className="sticky top-20 max-h-[calc(100vh-5rem)] overflow-y-auto">
+						<TableOfContents />
+					</div>
+				</aside>
 			</div>
-			{post.description ? (
-				<p className="text-xl mt-0 text-muted-foreground">{post.description}</p>
-			) : null}
-			<hr className="my-4" />
-			<MDXContent code={post.body} />
-		</article>
+		</div>
 	);
 }
