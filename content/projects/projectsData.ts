@@ -57,6 +57,18 @@ export const projects = [
 			{ src: "/strava.png", alt: "Enduro Stats project screenshot" },
 			{ src: "/recentactivities.png", alt: "Enduro Stats project screenshot" },
 		],
+		relatedBlogPosts: [
+			{
+				title: "Strava API Integration",
+				slug: "strava-api",
+				description: "Learn how I integrated the Strava API into my fitness tracking app"
+			},
+			{
+				title: "Enduro Stats Refactor",
+				slug: "enduro-refactor",
+				description: "The complete refactor of my fitness tracking app with improved architecture"
+			}
+		],
 	},
 	{
 		title: "Reel Ratings",

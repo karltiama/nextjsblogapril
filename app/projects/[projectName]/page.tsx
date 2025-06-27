@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
+import { FiBookOpen } from "react-icons/fi";
+import Link from "next/link";
 import {
   Tooltip,
   TooltipProvider,
@@ -131,6 +133,33 @@ export default function ProjectPage({ params }: { params: { projectName: string 
               <li key={index} className="text-lg">{change}</li>
             ))}
           </ul>
+        </>
+      )}
+
+      {project.relatedBlogPosts && project.relatedBlogPosts.length > 0 && (
+        <>
+          <h2 className="text-2xl font-semibold mb-4">Related Blog Posts:</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            {project.relatedBlogPosts.map((post, index) => (
+              <Link 
+                key={index}
+                href={`/blog/${post.slug}`}
+                className="group block p-4 border rounded-lg hover:border-primary transition-colors"
+              >
+                <div className="flex items-start gap-3">
+                  <FiBookOpen className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-semibold group-hover:text-primary transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {post.description}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </>
       )}
 
