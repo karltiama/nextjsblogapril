@@ -20,28 +20,31 @@ Objective: Get familiar with Fetch API and how to interact with APIs.
 
 ## Background
 
-Motivation: I have always been interested in APIs and how they work. I have always wanted to learn how to interact with them and how to display the information in a user-friendly way. I have decided to start with the Pokemon API as it is a simple API to start with.
-Prerequisites: Basic understanding of Next.js and React
+Motivation: I have always been interested in APIs and how they work. I have
+always wanted to learn how to interact with them and how to display the
+information in a user-friendly way. I have decided to start with the Pokemon API
+as it is a simple API to start with. Prerequisites: Basic understanding of
+Next.js and React
 
 ## Planning and Set Up
 
-Tools: Next.js, React, Pokemon API
-Environment: Local
+Tools: Next.js, React, Pokemon API Environment: Local
 
 ## Implementation
 
-Steps: Set up next.js project, create a new component, fetch data from the Pokemon API,
-display the data in the component.
+Steps: Set up next.js project, create a new component, fetch data from the
+Pokemon API, display the data in the component.
 
 ```bash
 npx create-next-app pokemon-api-app
 ```
 
-Depending on the use case, there are many different ways to interact with an API.
-We will start with the most basic way to interact with an API using the fetch API.
-In this case we will creating a library folder and a file called pokemon.ts.
-This file will contain the logic to fetch the data from the Pokemon API.
-In our pokemon component file, we will be implementating a click event to fetch the pokemon details from the specific pokemon.
+Depending on the use case, there are many different ways to interact with an
+API. We will start with the most basic way to interact with an API using the
+fetch API. In this case we will creating a library folder and a file called
+pokemon.ts. This file will contain the logic to fetch the data from the Pokemon
+API. In our pokemon component file, we will be implementating a click event to
+fetch the pokemon details from the specific pokemon.
 
 ```js showLineNumbers {2} {10}
 export const getPokemonList = async () => {
@@ -63,17 +66,23 @@ export const getPokemonDetails = async (name: string) => {
 
 Breaking down the code:
 
-Each function is responsible for fetching a different type of data from the API. `getPokemonList{:.entity.name.function}` fetches a list of 20 Pokemon per the API documentation.
-We will fetch all the pokemon later on in the project. Marking the function as async allows us to use the await keyword to wait for the response.
-The endpoints we are using is pokemon and pokemon/name to get the list of pokemon and the details of a specific pokemon.
+Each function is responsible for fetching a different type of data from the API.
+`getPokemonList{:.entity.name.function}` fetches a list of 20 Pokemon per the
+API documentation. We will fetch all the pokemon later on in the project.
+Marking the function as async allows us to use the await keyword to wait for the
+response. The endpoints we are using is pokemon and pokemon/name to get the list
+of pokemon and the details of a specific pokemon.
 
 ## Displaying the data
 
-To display the data were are going to create a new component called PokemonStats.tsx.
+To display the data were are going to create a new component called
+PokemonStats.tsx.
 
-Here is my thought process when trying to display the data, what data will we need and what data will we be displaying.
-From getPokemonList we will need the name of the pokemon and the url to fetch the details of the pokemon.
-From getPokemonDetails we will need the name, height, weight, and a sprite of the pokemon.
+Here is my thought process when trying to display the data, what data will we
+need and what data will we be displaying. From getPokemonList we will need the
+name of the pokemon and the url to fetch the details of the pokemon. From
+getPokemonDetails we will need the name, height, weight, and a sprite of the
+pokemon.
 
 Creating the types for the data we will be fetching:
 
@@ -113,7 +122,8 @@ const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails | null>(
 );
 ```
 
-3. `selectedPokemon{:.variable.parameter}` - to store the name of the selected pokemon
+3. `selectedPokemon{:.variable.parameter}` - to store the name of the selected
+   pokemon
 
 ```tsx
 const [selectedPokemon, setSelectedPokemon] = useState<string>("");
@@ -125,7 +135,8 @@ const [selectedPokemon, setSelectedPokemon] = useState<string>("");
 const [loading, setLoading] = useState<boolean>(false);
 ```
 
-Next we will create a useEffect hook to fetch the list of pokemon when the component mounts.
+Next we will create a useEffect hook to fetch the list of pokemon when the
+component mounts.
 
 ```tsx
 useEffect(() => {
@@ -153,7 +164,8 @@ useEffect(() => {
 	error fetching the data.
 </Callout>
 
-Next we will create a function to fetch the details of the pokemon when the user clicks on the pokemon name.
+Next we will create a function to fetch the details of the pokemon when the user
+clicks on the pokemon name.
 
 ```tsx {16}
 useEffect(() => {
@@ -174,7 +186,9 @@ useEffect(() => {
 }, [selectedPokemon]);
 ```
 
-Notice how we are using the `selectedPokemon{:.variable.parameter}` as the dependency in the useEffect hook. This will ensure that the useEffect hook is called when the selectedPokemon changes.
+Notice how we are using the `selectedPokemon{:.variable.parameter}` as the
+dependency in the useEffect hook. This will ensure that the useEffect hook is
+called when the selectedPokemon changes.
 
 ```tsx
 
@@ -216,17 +230,26 @@ return (
 )
 ```
 
-Here displaying a select dropdown to select the pokemon and displaying the details of the pokemon when the user selects a pokemon.
-We are creating a select element that maps over the pokemonList and creates an option element for each pokemon.
-When the user selects a pokemon, we are setting the selectedPokemon state to the name of the selected pokemon.
-We are displaying the loading state when the data is being fetched and displaying the pokemon details when the data has been fetched.
+Here displaying a select dropdown to select the pokemon and displaying the
+details of the pokemon when the user selects a pokemon. We are creating a select
+element that maps over the pokemonList and creates an option element for each
+pokemon. When the user selects a pokemon, we are setting the selectedPokemon
+state to the name of the selected pokemon. We are displaying the loading state
+when the data is being fetched and displaying the pokemon details when the data
+has been fetched.
 
-The full code can be found [here](https://github.com/karltiama/oxleafnextjs). I also implemented shadcnUI to style the component.
-This was the first way I learned to interact with an API. Next we will be looking at how to interact with an API using Server-Side API routes.
+The full code can be found [here](https://github.com/karltiama/oxleafnextjs). I
+also implemented shadcnUI to style the component. This was the first way I
+learned to interact with an API. Next we will be looking at how to interact with
+an API using Server-Side API routes.
 
 ## Switching to Server-Side API routes
 
-Server-Side API routes are a great way to interact with an API. They allow you to fetch data from an API and return it to the client. They are also a great way to interact with an API that requires authentication.
-I made the mistake of trying to interact with an API that required authentication with out learning the basics first.
+Server-Side API routes are a great way to interact with an API. They allow you
+to fetch data from an API and return it to the client. They are also a great way
+to interact with an API that requires authentication. I made the mistake of
+trying to interact with an API that required authentication with out learning
+the basics first.
 
-Server-Side API routes are recommended for more complex or larger projects. Also they allow for catch-all routes and dynamic routes.
+Server-Side API routes are recommended for more complex or larger projects. Also
+they allow for catch-all routes and dynamic routes.

@@ -2,6 +2,7 @@ import Image from "next/image";
 import * as runtime from "react/jsx-runtime";
 import { Callout } from "./callout";
 import { Mermaid } from "./mermaid";
+import { BlogPreview } from "./blog-preview";
 
 const useMDXComponent = (code: string) => {
 	const fn = new Function(code);
@@ -12,6 +13,7 @@ const components = {
 	Image,
 	Callout,
 	Mermaid,
+	BlogPreview,
 };
 
 interface MdxProps {

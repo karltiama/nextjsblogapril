@@ -1,0 +1,60 @@
+---
+title: React Query Basics
+description:
+  React Query
+tags:
+  [
+    "API",
+    "refactoring",
+    "React Query",
+    "TypeScript",
+    "Strava",
+    "OAuth",
+    "Data Sync",
+  ]
+date: 2025-06-11
+published: false
+---
+
+## Optimizing the User Experience: React Query
+
+React Query transformed how we handle data on the frontend:
+
+```typescript
+// Custom hook for activity data with React Query
+function useAthleteActivities(userId: string) {
+  return useQuery({
+    queryKey: ['activities', userId],
+    queryFn: async () => {
+      const response = await fetch(`/api/activities/${userId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch activities');
+      }
+      return response.json();
+    },
+    staleTime: 5 * 60 * 1000, // Consider data stale after 5 minutes
+    cacheTime: 30 * 60 * 1000, // Keep in cache for 30 minutes
+  });
+}
+
+// Component using the hook
+function ActivityList({ userId }: { userId: string }) {
+  const { data, isLoading, error } = useAthleteActivities(userId);
+
+  if (isLoading) return <ActivitySkeleton />;
+  if (error) return <ErrorBoundary error={error} />;
+
+  return (
+    <div>
+      {data.activities.map(activity => (
+        <ActivityCard
+          key={activity.id}
+          activity={activity}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+_[View the complete React Query implementation →](https://github.com/karltiama/endurorevamp/blob/main/hooks/useActivities.ts)_

@@ -1,6 +1,8 @@
 ---
 title: Creating a Full Stack Todo App
-description: Documenting the process of creating a full stack todo app using Next.js, Prisma, and Supabase.
+description:
+  Documenting the process of creating a full stack todo app using Next.js,
+  Prisma, and Supabase.
 date: 2024-06-21
 tags: ["nextjs", "react", "api", "prisma", "supabase"]
 published: true
@@ -10,13 +12,17 @@ published: true
 
 ## Introduction
 
-Project Overview: Create a full stack todo app using Next.js, Prisma, and Supabase
-Objective: Familiarize myself of the workflow of creating a full stack application using Next.js, Prisma, and Supabase.
+Project Overview: Create a full stack todo app using Next.js, Prisma, and
+Supabase Objective: Familiarize myself of the workflow of creating a full stack
+application using Next.js, Prisma, and Supabase.
 
 ## Background
 
-Motivation: I want to practice my back-end skills and learn how to use Prisma and Supabase to create a full stack application. I have decided to create a todo app as it is a simple application that can be expanded with more features.
-I have a background in database schema design and SQL, so I am excited to see how Prisma can help me interact with the database
+Motivation: I want to practice my back-end skills and learn how to use Prisma
+and Supabase to create a full stack application. I have decided to create a todo
+app as it is a simple application that can be expanded with more features. I
+have a background in database schema design and SQL, so I am excited to see how
+Prisma can help me interact with the database
 
 ## Planning
 
@@ -24,8 +30,11 @@ Tools: Next.js, Prisma, Supabase
 
 ## Implementation
 
-This project will be divided into two parts: the front-end and the back-end. Lets start with the back-end.
-Every good project starts with a good plan. I will start by creating a database schema for the todo app. I will then create a Prisma schema based on the database schema. I will then create the API routes to interact with the database using Prisma.
+This project will be divided into two parts: the front-end and the back-end.
+Lets start with the back-end. Every good project starts with a good plan. I will
+start by creating a database schema for the todo app. I will then create a
+Prisma schema based on the database schema. I will then create the API routes to
+interact with the database using Prisma.
 
 Understanding and Designing the Database Schema
 
@@ -33,7 +42,8 @@ Understanding and Designing the Database Schema
 2. Define Attributes for each entity
 
 - Users: id, email, name, password
-- Todos: id, title, description, due_date, status, created_at, updated_at, user_id
+- Todos: id, title, description, due_date, status, created_at, updated_at,
+  user_id
 - Notes?: id, content, created_at, updated_at, todo_id, user_id,
 
 3. Define Relationships between Entities
@@ -52,14 +62,22 @@ Rationale:
 - Scalability
 - Performance
 
-I spent probably too much time on the database schema design, but I think it is important to have a good foundation before starting the implementation.
-The over research allowed me to really dive deep in to the database schema design and understand the relationships between the entities.
+I spent probably too much time on the database schema design, but I think it is
+important to have a good foundation before starting the implementation. The over
+research allowed me to really dive deep in to the database schema design and
+understand the relationships between the entities.
 
-I also spent some time researching how to use Prisma and Supabase. I found some forum post and questions that actually don't recomend Prisma.
-The main reasoning behind usiny Prisma is that it is a type-safe database client that can be used with TypeScript. It also has a lot of features that can help me interact with the database easily.
-But I also was digging into the Supabase documentation and saw that Supabase supports TypeScript and has a lot of features that can help me interact with the database easily.
+I also spent some time researching how to use Prisma and Supabase. I found some
+forum post and questions that actually don't recomend Prisma. The main reasoning
+behind usiny Prisma is that it is a type-safe database client that can be used
+with TypeScript. It also has a lot of features that can help me interact with
+the database easily. But I also was digging into the Supabase documentation and
+saw that Supabase supports TypeScript and has a lot of features that can help me
+interact with the database easily.
 
-Supabase CLI can be used to generate TypeScript types for the database schema. This is a feature that I really like as it can help me catch errors at compile time.
-So instead of using Prisma, I decided to use Supabase solely for this project.
+Supabase CLI can be used to generate TypeScript types for the database schema.
+This is a feature that I really like as it can help me catch errors at compile
+time. So instead of using Prisma, I decided to use Supabase solely for this
+project.
 
 ## features

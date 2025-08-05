@@ -1,6 +1,8 @@
 ---
 title: "Interacting with the Strava API: A Beginner's Guide"
-description: Learn how to interact with the Strava API to access your fitness data and build cool applications that enhance your workout experience.
+description:
+  Learn how to interact with the Strava API to access your fitness data and
+  build cool applications that enhance your workout experience.
 date: 2024-05-25
 tags: ["api", "strava", "fitness", "oauth", "web development"]
 published: true
@@ -8,53 +10,74 @@ published: true
 
 # Interacting with the Strava API
 
-Strava is a popular platform for tracking and sharing fitness activities, ranging from running and cycling to swimming and hiking.
-If you're a fitness enthusiast or a developer looking to integrate fitness data into your applications, the Strava API provides a wealth of information to explore.
+Strava is a popular platform for tracking and sharing fitness activities,
+ranging from running and cycling to swimming and hiking. If you're a fitness
+enthusiast or a developer looking to integrate fitness data into your
+applications, the Strava API provides a wealth of information to explore.
 
 The Strava REST API includes data on athelete, segments, routes, clubs and gear.
 
-In this beginner's guide, we'll walk through the process of interacting with the Strava API using OAuth 2.0 authentication.
-By the end of this guide, you'll be able to access your fitness data and build cool applications that enhance your workout experience.
+In this beginner's guide, we'll walk through the process of interacting with the
+Strava API using OAuth 2.0 authentication. By the end of this guide, you'll be
+able to access your fitness data and build cool applications that enhance your
+workout experience.
 
 ## Prerequisites
 
-Before we dive into the Strava API, you'll need to have the following prerequisites in place:
+Before we dive into the Strava API, you'll need to have the following
+prerequisites in place:
 
 - A Strava account: Sign up for a Strava account if you don't have one already.
-- A Strava API application: Register a new application on the Strava developers portal to obtain your client ID and client secret.
-- A basic understanding of OAuth 2.0: Familiarize yourself with the OAuth 2.0 authorization framework, which is used to authenticate and authorize users in API requests.
+- A Strava API application: Register a new application on the Strava developers
+  portal to obtain your client ID and client secret.
+- A basic understanding of OAuth 2.0: Familiarize yourself with the OAuth 2.0
+  authorization framework, which is used to authenticate and authorize users in
+  API requests.
 
 Here is a quick overview of the OAuth 2.0:
 
-OAuth is an authorization framework that allows 3rd party applications to obtain limmited access to an HTTP service on behalf of a
+OAuth is an authorization framework that allows 3rd party applications to obtain
+limmited access to an HTTP service on behalf of a
 
 Key Roles in OAuth 2.0:
 
 - Resource Owner: The user who owns the data and grants access to the client.
 - Client: The application requesting access to the user's data.
-- Authorization Server: The server that authenticates the user and issues access tokens.
-- Resource Server: The server hosting the protected resources that the client wants to access.
+- Authorization Server: The server that authenticates the user and issues access
+  tokens.
+- Resource Server: The server hosting the protected resources that the client
+  wants to access.
 
 Key Concepts in OAuth 2.0:
 
-- Authorization Grant: A credential representing the resource owner's authorization to access protected resources.
-- Access Token: A credential used by the client to access protected resources on behalf of the user.
-- Refresh Token: A credential used to obtain a new access token when the current one expires.
+- Authorization Grant: A credential representing the resource owner's
+  authorization to access protected resources.
+- Access Token: A credential used by the client to access protected resources on
+  behalf of the user.
+- Refresh Token: A credential used to obtain a new access token when the current
+  one expires.
 
 OAuth 2.0 Flows:
 
-- Authorization Code Grant: Used by web applications to access user data on behalf of the user.
+- Authorization Code Grant: Used by web applications to access user data on
+  behalf of the user.
 
-- Implicit Grant: Used by single-page applications and mobile apps to access user data on behalf of the user.
+- Implicit Grant: Used by single-page applications and mobile apps to access
+  user data on behalf of the user.
 
-- Resource Owner Password Credentials Grant: Used by trusted applications to access user data with the user's username and password.
+- Resource Owner Password Credentials Grant: Used by trusted applications to
+  access user data with the user's username and password.
 
-- Client Credentials Grant: Used by applications to access their own resources, not on behalf of a user.
+- Client Credentials Grant: Used by applications to access their own resources,
+  not on behalf of a user.
 
-For more information on OAuth 2.0, check out the [OAuth 2.0 RFC](https://tools.ietf.org/html/rfc6749).
+For more information on OAuth 2.0, check out the
+[OAuth 2.0 RFC](https://tools.ietf.org/html/rfc6749).
 
-When learning how to interact with the Strava API its important to understand the flow of the OAuth 2.0 authorization process.
-When I first started learning about OAuth 2.0, I found the concept of authorization flows to be a bit confusing.
+When learning how to interact with the Strava API its important to understand
+the flow of the OAuth 2.0 authorization process. When I first started learning
+about OAuth 2.0, I found the concept of authorization flows to be a bit
+confusing.
 
 A quick over of the steps in the OAuth 2.0 Authorization Code Grant flow:
 
@@ -66,25 +89,32 @@ A quick over of the steps in the OAuth 2.0 Authorization Code Grant flow:
 
 # Getting Started with the Strava API
 
-Now that you have the prerequisites in place, let's get started with the Strava API.
-The first step is to create a new Strava API application on the Strava developers portal.
+Now that you have the prerequisites in place, let's get started with the Strava
+API. The first step is to create a new Strava API application on the Strava
+developers portal.
 
 Here are the steps to create a new Strava API application:
 
 - Log in to the Strava developers portal using your Strava account credentials.
 - Click on the "Create & Manage Your App" button to create a new application.
-- Fill in the required details for your application, including the name, description, website, and authorization callback domain.
-- Once you've created the application, you'll receive your client ID and client secret, which are required for authenticating with the Strava API.
-- Make sure to note down your client ID and client secret, as you'll need them later in the guide.
-- In this guide we will be using Next.js to build a simple web application that interacts with the Strava API.
-- Next.js is a popular React framework that makes it easy to build server-side rendered applications with React.
+- Fill in the required details for your application, including the name,
+  description, website, and authorization callback domain.
+- Once you've created the application, you'll receive your client ID and client
+  secret, which are required for authenticating with the Strava API.
+- Make sure to note down your client ID and client secret, as you'll need them
+  later in the guide.
+- In this guide we will be using Next.js to build a simple web application that
+  interacts with the Strava API.
+- Next.js is a popular React framework that makes it easy to build server-side
+  rendered applications with React.
 - To get started, create a new Next.js project using the following command:
 
 ```bash
 npx create-next-app strava-api-app
 ```
 
-When first setting up Next.js, you will be prompted to choose a template for your project.
+When first setting up Next.js, you will be prompted to choose a template for
+your project.
 
 ```bash
 What is your project named? my-app
@@ -97,24 +127,31 @@ Would you like to customize the default import alias (@/*)? No / Yes
 What import alias would you like configured? @/*
 ```
 
-We will be using TypeScript, ESLint, Tailwind, the source directory and App Router we will keeping the default import alias
+We will be using TypeScript, ESLint, Tailwind, the source directory and App
+Router we will keeping the default import alias
 
-The documentation for [Next.js](https://nextjs.org/docs/getting-started/installation) is great place to read about more configurations
+The documentation for
+[Next.js](https://nextjs.org/docs/getting-started/installation) is great place
+to read about more configurations
 
 ## Background in Routing with Next.js
 
-Always remember that using multiple sources of truths when learning a new technology is the best way to
-learn. The Next.js documentation is a great place to start when learning about the framework.
+Always remember that using multiple sources of truths when learning a new
+technology is the best way to learn. The Next.js documentation is a great place
+to start when learning about the framework.
 
-Next.js uses a file-system based routing system, we will be using App Router which is a recommended routing system for Next.js.
-Each subdirectory of the app directory becomes a route when having a page.tsx file associated with it.
+Next.js uses a file-system based routing system, we will be using App Router
+which is a recommended routing system for Next.js. Each subdirectory of the app
+directory becomes a route when having a page.tsx file associated with it.
 
 [Next.js Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/route-handlers)
-Route Handlers are functions that can be used to handle requests to a specific route using web request and response APIs.
+Route Handlers are functions that can be used to handle requests to a specific
+route using web request and response APIs.
 
 ## Project Flow
 
-First we have to make an environment file to store our Strava API credentials and save it as .env.local in the root of the project.
+First we have to make an environment file to store our Strava API credentials
+and save it as .env.local in the root of the project.
 
 ```bash
 NEXT_PUBLIC_STRAVA_CLIENT_ID=
@@ -124,35 +161,47 @@ STRAVA_SECRET=
 STRAVA_REFRESH_TOKEN=
 ```
 
-Our first task is to create a link that will redirect the user to the Strava authorization page.
-When the user clicks on the link, they will be redirected to the Strava authorization page where they can grant permission to the client application.
+Our first task is to create a link that will redirect the user to the Strava
+authorization page. When the user clicks on the link, they will be redirected to
+the Strava authorization page where they can grant permission to the client
+application.
 
 ```
 https://www.strava.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID}&response_type=code&redirect_uri=${process.env.NEXT_PUBLIC_STRAVA_REDIRECT_URI}&approval_prompt=force&scope=read,activity:read,activity:read_all`;
 ```
 
-`approval_prompt=force&scope=read,activity:read,activity:read_all` is used to force the user to grant permission to the client application and specify the scopes of access to the user's data.
+`approval_prompt=force&scope=read,activity:read,activity:read_all` is used to
+force the user to grant permission to the client application and specify the
+scopes of access to the user's data.
 
 Breaking down the URL:
 
-Redirect the user to the base URL with GET https://www.strava.com/oauth/authorize
+Redirect the user to the base URL with GET
+https://www.strava.com/oauth/authorize
 
 - client_id: The client ID of the Strava API application.
-- redirect_uri: The redirect URI where the user will be redirected after granting permission.
-- response_type: The type of response expected from the authorization server (code for the Authorization Code Grant flow).
+- redirect_uri: The redirect URI where the user will be redirected after
+  granting permission.
+- response_type: The type of response expected from the authorization server
+  (code for the Authorization Code Grant flow).
 - approval_prompt: Force the user to grant permission to the client application.
-- scope: The scopes of access to the user's data (read, activity:read, activity:read_all).
+- scope: The scopes of access to the user's data (read, activity:read,
+  activity:read_all).
 
-Once the user grants permission to the client application, they will be redirected back to the redirect URI with an authorization code.
+Once the user grants permission to the client application, they will be
+redirected back to the redirect URI with an authorization code.
 
-This is where the client application exchanges the authorization code for an access token to make API requests on behalf of the user.
+This is where the client application exchanges the authorization code for an
+access token to make API requests on behalf of the user.
 
 _TO DO BASIC PAGE WITH LINK TO STRAVA AUTHORIZATION PAGE_
 
-The next step is to create a new page in the pages directory of the Next.js project to handle the authorization callback.
+The next step is to create a new page in the pages directory of the Next.js
+project to handle the authorization callback.
 
-Create a new file called 'route.ts' in the 'api/strava/callback directory'.
-In this file, we'll extract the authorization code from the query parameters and exchange it for an access token.
+Create a new file called 'route.ts' in the 'api/strava/callback directory'. In
+this file, we'll extract the authorization code from the query parameters and
+exchange it for an access token.
 
 ```typescript
 import { NextRequest, NextResponse } from "next/server";
@@ -213,18 +262,25 @@ export function getAccessToken(req: NextRequest) {
 }
 ```
 
-In this code, we define two functions: GET and getAccessToken to implement server-side logic using Next.js.
+In this code, we define two functions: GET and getAccessToken to implement
+server-side logic using Next.js.
 
-The 'GET' function handles incoming GET requests to the '/api/strava/callback' route. It extracts the query parameter named 'code' from the URL.
-If the code is missing, it returns a 400 Bad Request response with an error message.
+The 'GET' function handles incoming GET requests to the '/api/strava/callback'
+route. It extracts the query parameter named 'code' from the URL. If the code is
+missing, it returns a 400 Bad Request response with an error message.
 
-If the code parameter is present, headers and body are defined for the POST request to the Strava API token endpoint.
-For error handling, we check if the response is not ok and return a JSON response with the error details.
-When a POST request is successful in getting the access token, we extract the access token from the response data and save it.
-Then we create a redirect URL to the '/strava/success' route and set the access token as a cookie in the NextResponse object.
+If the code parameter is present, headers and body are defined for the POST
+request to the Strava API token endpoint. For error handling, we check if the
+response is not ok and return a JSON response with the error details. When a
+POST request is successful in getting the access token, we extract the access
+token from the response data and save it. Then we create a redirect URL to the
+'/strava/success' route and set the access token as a cookie in the NextResponse
+object.
 
-The getAccessToken function is used to retrieve the access token from the cookie in the request object.
+The getAccessToken function is used to retrieve the access token from the cookie
+in the request object.
 
 ## Handling the Success Route
 
-Create a new file in the 'app/strava/success' directory called 'pages.tsx' to handle the success route.
+Create a new file in the 'app/strava/success' directory called 'pages.tsx' to
+handle the success route.

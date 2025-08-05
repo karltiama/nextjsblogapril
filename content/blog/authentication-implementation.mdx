@@ -1,0 +1,51 @@
+---
+title: Authentication 
+description:
+  Authentication
+tags:
+  [
+    "Authentication",
+  ]
+date: 2025-06-11
+published: false
+---
+## Deep Dive: Authentication Implementation
+
+The first step in transforming Enduro Stats was implementing proper
+authentication. Without it, we couldn't safely store user data or provide
+personalized analytics. Here's how we tackled it:
+
+1. **User Authentication Flow**:
+   - Implemented email/password authentication using Supabase Auth
+   - Added social login options for better user experience
+   - Set up proper session management with refresh tokens
+
+2. **Strava OAuth Integration**:
+   - Implemented the full OAuth 2.0 flow with PKCE
+   - Securely stored refresh tokens for background syncs
+   - Added token rotation and automatic refresh handling
+
+3. **Security Considerations**:
+   - Implemented proper CSRF protection
+   - Added rate limiting on authentication endpoints
+   - Set up secure session cookie handling
+
+## Building the Foundation: Data Layer
+
+With secure authentication in place, we focused on the core challenge: data
+persistence and management. Our data layer needed to handle:
+
+1. **Activity Data**:
+   - Raw activity data from Strava
+   - Derived metrics and analytics
+   - User-specific customizations and notes
+
+2. **User Preferences**:
+   - Training zones and thresholds
+   - Display preferences
+   - Notification settings
+
+3. **Analytics Data**:
+   - Historical performance metrics
+   - Training load calculations
+   - Progress tracking

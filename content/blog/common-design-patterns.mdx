@@ -1,26 +1,23 @@
 ---
 title: Common Coding Practices
-description: In this article we will go over some common design patterns that I find myself using a lot and how to implement them in a React project.
+description:
+  In this article we will go over some common design patterns that I find myself
+  using a lot and how to implement them in a React project.
 date: 2024-10-10
 published: true
 ---
 
 ## Callout
 
-Callouts are effective tools for capturing a user's attention. They can be utilized to convey important information, warnings, or simply to engage the user's interest.
-I use callouts in my blog post to highlight key points.
+Callouts are effective tools for capturing a user's attention. They can be
+utilized to convey important information, warnings, or simply to engage the
+user's interest. I use callouts in my blog post to highlight key points.
 
-<Callout>
-  Default
-</Callout>
+<Callout>Default</Callout>
 
-<Callout type="warning">
-  Warning
-</Callout>
+<Callout type="warning">Warning</Callout>
 
-<Callout type="danger">
-  Danger
-</Callout>
+<Callout type="danger">Danger</Callout>
 
 ```tsx showLineNumbers {17-20}
 import { cn } from "@/lib/utils";
@@ -45,86 +42,99 @@ export function Callout({
 					"border-yellow-600 bg-yellow-50 dark:prose": type === "warning",
 				}
 			)}
-			{...props}>
+			{...props}
+		>
 			<div>{children}</div>
 		</div>
 	);
 }
-
 ```
 
-Above we see the cn function being used to merge default styles with the styles passed as props. Allowing for easy overriding of styles.
+Above we see the cn function being used to merge default styles with the styles
+passed as props. Allowing for easy overriding of styles.
 
 Questions that arose when implementing this component:
 
-- Why is the '...props' necessary?
-The '...props' is necessary to pass any additional props to the component. This is useful if you want to add additional styling to the component.
-It allows for any additional props to be passed to the component, in a way future-proofing the component.
-
-
-
-
-
-
-
+- Why is the '...props' necessary? The '...props' is necessary to pass any
+  additional props to the component. This is useful if you want to add
+  additional styling to the component. It allows for any additional props to be
+  passed to the component, in a way future-proofing the component.
 
 ## Card with photo carousel
 
-Inspired by airbnb, I used this pattern when developing the memory mapper project. Each card represents a memory location and contains a carousel of photos associated with that memory location. I am going to use shadcn/ui for the carousel and the card.
+Inspired by airbnb, I used this pattern when developing the memory mapper
+project. Each card represents a memory location and contains a carousel of
+photos associated with that memory location. I am going to use shadcn/ui for the
+carousel and the card.
 
 ```tsx
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+	Carousel,
+	CarouselContent,
+	CarouselItem,
+	CarouselNext,
+	CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface MemoryCardProps {
-  title: string
-  date: string
-  photos?: string[]
+	title: string;
+	date: string;
+	photos?: string[];
 }
 
-export default function MemoryCard({ title, date, photos = [] }: MemoryCardProps) {
-  return (
-    <Card className="w-full max-w-md mx-auto overflow-hidden">
-      <CardContent className="p-0">
-        <div className="relative aspect-video">
-          {photos && photos.length > 0 ? (
-            <Carousel>
-              <CarouselContent>
-                {photos.map((photo, index) => (
-                  <CarouselItem key={index}>
-                    <div className="relative aspect-video">
-                      <Image
-                        src={photo}
-                        alt={`Memory photo ${index + 1}`}
-                        fill
-                        className="object-cover"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = "/placeholder.svg?height=400&width=600";
-                          target.alt = "Error loading image";
-                        }}
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2" aria-label="Previous slide" />
-              <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2" aria-label="Next slide" />
-            </Carousel>
-          ) : (
-            <div className="flex items-center justify-center h-full bg-gray-200">
-              <p className="text-gray-500">No photos available</p>
-            </div>
-          )}
-        </div>
-        <div className="p-4">
-          <h2 className="text-2xl font-bold mb-2">{title}</h2>
-          <p className="text-sm text-gray-500">{date}</p>
-        </div>
-      </CardContent>
-    </Card>
-  )
+export default function MemoryCard({
+	title,
+	date,
+	photos = [],
+}: MemoryCardProps) {
+	return (
+		<Card className="w-full max-w-md mx-auto overflow-hidden">
+			<CardContent className="p-0">
+				<div className="relative aspect-video">
+					{photos && photos.length > 0 ? (
+						<Carousel>
+							<CarouselContent>
+								{photos.map((photo, index) => (
+									<CarouselItem key={index}>
+										<div className="relative aspect-video">
+											<Image
+												src={photo}
+												alt={`Memory photo ${index + 1}`}
+												fill
+												className="object-cover"
+												onError={(e) => {
+													const target = e.target as HTMLImageElement;
+													target.src = "/placeholder.svg?height=400&width=600";
+													target.alt = "Error loading image";
+												}}
+											/>
+										</div>
+									</CarouselItem>
+								))}
+							</CarouselContent>
+							<CarouselPrevious
+								className="absolute left-2 top-1/2 -translate-y-1/2"
+								aria-label="Previous slide"
+							/>
+							<CarouselNext
+								className="absolute right-2 top-1/2 -translate-y-1/2"
+								aria-label="Next slide"
+							/>
+						</Carousel>
+					) : (
+						<div className="flex items-center justify-center h-full bg-gray-200">
+							<p className="text-gray-500">No photos available</p>
+						</div>
+					)}
+				</div>
+				<div className="p-4">
+					<h2 className="text-2xl font-bold mb-2">{title}</h2>
+					<p className="text-sm text-gray-500">{date}</p>
+				</div>
+			</CardContent>
+		</Card>
+	);
 }
-
 ```

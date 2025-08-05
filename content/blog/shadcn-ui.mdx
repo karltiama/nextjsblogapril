@@ -1,6 +1,8 @@
 ---
 title: A Deep Dive into shadcn UI
-description: Exploring the features of shadcn UI, its integration with Radix UI, and why these libraries are ideal for building accessible and customizable UIs.
+description:
+  Exploring the features of shadcn UI, its integration with Radix UI, and why
+  these libraries are ideal for building accessible and customizable UIs.
 date: 2024-09-12
 tags: ["UI", "shadcn", "radix"]
 published: false
@@ -8,37 +10,52 @@ published: false
 
 ## Introduction
 
-In the ever-evolving world of web development, tools and libraries are constantly being developed
-to make the process easier and more efficient. With the growing demand for highly customizable
-and accessible user interfaces, libraries like **shadcn UI** have emerged as standouts in the field.
+In the ever-evolving world of web development, tools and libraries are
+constantly being developed to make the process easier and more efficient. With
+the growing demand for highly customizable and accessible user interfaces,
+libraries like **shadcn UI** have emerged as standouts in the field.
 
-**shadcn UI** is a collection of React components designed with customization and accessibility
-in mind. Before we dive into the features of shadcn UI, let's first explore the library that powers it:
-**Radix UI**.
+**shadcn UI** is a collection of React components designed with customization
+and accessibility in mind. Before we dive into the features of shadcn UI, let's
+first explore the library that powers it: **Radix UI**.
 
 ## Understanding Radix UI Primitives
 
-Radix UI Primitives is a collection of low-level, unstyled UI components designed to be highly composable and accessible. These components serve as the foundation for shadcn UI, providing a solid base for building complex user interfaces.
+Radix UI Primitives is a collection of low-level, unstyled UI components
+designed to be highly composable and accessible. These components serve as the
+foundation for shadcn UI, providing a solid base for building complex user
+interfaces.
 
 Key features of Radix UI Primitives:
 
-- They adhere to WAI-ARIA guidelines, ensuring web content is more accessible to people with disabilities.
-- They are designed as building blocks for more complex UI components, which is exactly how shadcn UI utilizes them.
-- They handle complex interactions and accessibility concerns, allowing developers to focus on styling and customization.
+- They adhere to WAI-ARIA guidelines, ensuring web content is more accessible to
+  people with disabilities.
+- They are designed as building blocks for more complex UI components, which is
+  exactly how shadcn UI utilizes them.
+- They handle complex interactions and accessibility concerns, allowing
+  developers to focus on styling and customization.
 
 ## Introducing shadcn UI
+
 shadcn UI builds upon Radix UI Primitives by:
 
 - Utilizing Radix components as a base for functionality and accessibility.
-- Applying carefully crafted Tailwind CSS classes for styling, instead of custom CSS.
-- Providing a collection of pre-built, customizable components that you can copy directly into your project.
+- Applying carefully crafted Tailwind CSS classes for styling, instead of custom
+  CSS.
+- Providing a collection of pre-built, customizable components that you can copy
+  directly into your project.
 
-It's worth noting that shadcn UI doesn't use the `clsx` library directly. Instead, it typically uses a custom `cn` utility function (often built with the `clsx` or `tailwind-merge` libraries) for conditional class merging.
+It's worth noting that shadcn UI doesn't use the `clsx` library directly.
+Instead, it typically uses a custom `cn` utility function (often built with the
+`clsx` or `tailwind-merge` libraries) for conditional class merging.
 
-The components themselves are highly customizable and can be easily styled using tailwind classes. Unlike other UI libraries, shadcn UI components are meant to be
-used as building blocks for your own components and copied directly into your project.
+The components themselves are highly customizable and can be easily styled using
+tailwind classes. Unlike other UI libraries, shadcn UI components are meant to
+be used as building blocks for your own components and copied directly into your
+project.
 
-The shadcn/ui documentation is a great resource. It provides a comprehensive guide on how to use the components, as well as examples and best practices.
+The shadcn/ui documentation is a great resource. It provides a comprehensive
+guide on how to use the components, as well as examples and best practices.
 
 ## Key Features of shadcn UI
 
@@ -53,4 +70,3 @@ The shadcn/ui documentation is a great resource. It provides a comprehensive gui
 ## Future of shadcn UI
 
 ## Conclusion
-

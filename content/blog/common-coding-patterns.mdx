@@ -1,11 +1,15 @@
 ---
 title: Common Coding Components
-description: Going thru the most common components when designing with tailwind or CSS in that matter really.
+description:
+  Going thru the most common components when designing with tailwind or CSS in
+  that matter really.
 date: 2024-04-09
 published: false
 ---
 
-Object Destructuring is a common practice in JavaScript. It allows you to extract multiple properties from an object and assign them to variables. This can make your code cleaner and more readable.
+Object Destructuring is a common practice in JavaScript. It allows you to
+extract multiple properties from an object and assign them to variables. This
+can make your code cleaner and more readable.
 
 ```js
 const person = {
@@ -35,14 +39,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-This cn function is a utility function that I use in my projects.
-It takes an array of class names and merges them into a single string.
-This can be useful when you want to conditionally apply classes to an element.
+This cn function is a utility function that I use in my projects. It takes an
+array of class names and merges them into a single string. This can be useful
+when you want to conditionally apply classes to an element.
 
 It takes a rest parameter ...inputs of type ClassValue[].
 
-Quick Knowledge Check:
-What is a rest parameter in JavaScript?
+Quick Knowledge Check: What is a rest parameter in JavaScript?
 
 It allows a function to accept an indefinite number of arguments as an array.
 
@@ -56,13 +59,16 @@ function sum(...numbers) {
 console.log(sum(1, 2, 3, 4)); // Outputs: 10
 ```
 
-The cn function allows you to conditionally apply class names based on certain conditions.
-It combines the clsx and twMerge functions to merge the class names into a single string.
+The cn function allows you to conditionally apply class names based on certain
+conditions. It combines the clsx and twMerge functions to merge the class names
+into a single string.
 
 Here is a breakdown of the function:
 
-1. Base Class: The base class is the default class that you want to apply to an element.
-2. Conditional Classes: The conditional classes are additional classes that you want to apply based on certain conditions.
+1. Base Class: The base class is the default class that you want to apply to an
+   element.
+2. Conditional Classes: The conditional classes are additional classes that you
+   want to apply based on certain conditions.
 
 Example Usage:
 
@@ -93,8 +99,11 @@ export default MyButton;
 Explanation:
 
 - Base class: 'base-class' is always applied to the button element.
-- Conditional Classes: 'active-class' is applied if isActive is true, and 'disabled-class' is applied if isDisabled is true.
+- Conditional Classes: 'active-class' is applied if isActive is true, and
+  'disabled-class' is applied if isDisabled is true.
 
-The cn function uses clsx to conditional combine these class names and twMerge to handle any potential conflicts or dupilications specific to Tailwind CSS.
+The cn function uses clsx to conditional combine these class names and twMerge
+to handle any potential conflicts or dupilications specific to Tailwind CSS.
 
-This is a simple example of how you can use the cn function to conditionally apply classes to an element in a React component.
+This is a simple example of how you can use the cn function to conditionally
+apply classes to an element in a React component.
