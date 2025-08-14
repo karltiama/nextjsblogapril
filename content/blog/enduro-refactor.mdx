@@ -2,7 +2,7 @@
 title: What I Learned from Refactoring Enduro Stats
 description:
   A deep dive into transforming a simple Strava API wrapper into a robust
-  analytics platform
+  analytics platform - from V1 to V2
 tags:
   [
     "API",
@@ -12,6 +12,8 @@ tags:
     "Strava",
     "OAuth",
     "Data Sync",
+    "V2",
+    "architecture",
   ]
 date: 2025-06-11
 published: true
@@ -23,8 +25,14 @@ published: true
 of how I transformed a simple Strava API wrapper into a full-fledged analytics
 platform, and the valuable lessons learned along the way.
 
-> **📱 [View the live application](https://enduro-stats.vercel.app)** | **⚡
-> [Explore the source code on GitHub](https://github.com/karltiama/endurorevamp)**
+> **📱 [View the live application (V2)](https://enduro-stats.vercel.app)** | **⚡
+> [Explore the source code on GitHub](https://github.com/karltiama/endurorevamp)** | **📊 [Original V1 Version](https://endurostats.vercel.app)**
+
+## Version Evolution: V1 → V2
+
+**Enduro Stats V1** (Completed): My initial learning project that successfully integrated with Strava's API, implemented OAuth authentication, and created a basic dashboard. While functional, it had architectural limitations that prevented scaling.
+
+**Enduro Stats V2** (Live): A complete ground-up refactor with modern architecture, advanced analytics, proper data persistence, and professional development practices. This version represents the evolution from "it works" to "it works well."
 
 ## The Journey from Simple to Sophisticated
 
@@ -460,11 +468,10 @@ details deserve their own deep dives. I'll be publishing separate articles on:
 <div className="my-6" />
 
 <BlogPreview
-	slug="react-query-optimization"
-	title="Optimizing Data Management with Modern Tools"
-	description="How I transformed API call chaos into efficient, cached data flows using React Query and modern state management."
-	status="upcoming"
-	estimatedDate="February 2025"
+	slug="react-query"
+	title="From API Call Chaos to Efficient Data Management: How React Query Transformed My Strava App"
+	description="A deep dive into implementing React Query to solve data fetching problems in a real-world Strava integration project."
+	status="published"
 />
 
 These technical deep dives will include real code examples, implementation challenges, and lessons learned from the trenches.

@@ -7,96 +7,75 @@ import {
 	SiMapbox,
 	SiResend,
 	SiMdx,
+	SiReactquery,
+	SiUmami,
 } from "react-icons/si";
 import { FaStrava } from "react-icons/fa";
 
 export const projects = [
 	{
-		title: "Enduro Stats",
+		title: "Enduro Stats V2",
 		description:
-			"EnduroStats is a fitness app that helps users track activities, set goals, and monitor progress with a sleek, responsive design. Currently undergoing a complete ground-up refactor with improved architecture.",
-		imageSrc: "/strava3.png", // Reference the image path directly from the public folder
-		altText: "Enduro Stats project screenshot",
+			"A complete ground-up refactor of my fitness tracking app with improved architecture, advanced analytics, and professional development practices. Built with modern React patterns, proper data persistence, and enhanced user experience.",
+		imageSrc: "/endurostatsv2.png",
+		altText: "Enduro Stats V2 project screenshot",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTypescript, name: "TypeScript" },
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
 			{ icon: FaStrava, name: "Strava API" },
+			{ icon: SiSupabase, name: "Supabase" },
+			{ icon: SiReactquery, name: "React Query" },
+			{ icon: SiResend, name: "Resend" },
+			{ icon: SiUmami, name: "Umami" },
 		],
-		liveLink: "https://endurostats.vercel.app",
-		githubRepo: "https://github.com/karltiama/junestravaapp",
-		status: "Refactoring v2" as const,
+		liveLink: "https://endurostats.vercel.app/",
+		githubRepo: "https://github.com/karltiama/endurorevamp",
+		status: "Live" as const,
 		featured: true,
-		situation: "A personalized fitness dashboard built to track my running progress and visualize activity data from Strava as I trained for the 2024 Toronto Waterfront Marathon. This project started as a personal tool for myself and evolved into a public-facing web app designed to help other runners easily track performance trends and gain insight into their training.",
+		situation: "After completing the initial version of Enduro Stats, I realized the limitations of my original architecture. The app needed to evolve from a simple API wrapper into a robust analytics platform with proper data persistence, advanced caching, and professional development practices. This V2 represents a complete architectural overhaul.",
 		challenges: [
-			"Implemented secure OAuth 2.0 authentication flow with Strava using Next.js API routes for user connection and activity fetching.",
-			"Developed backend API logic for token handling, caching, and pagination to optimize API requests and stay within rate limits.",
-			"Built an interactive, data-driven dashboard that visualizes complex datasets — making performance trends easy to understand at a glance.",
-			"Designed a fully responsive UI focused on clarity and usability across devices."
+			"Complete architectural refactoring from scratch while maintaining user data and functionality",
+			"Implementing proper data persistence and synchronization with conflict resolution",
+			"Building advanced analytics and trend analysis features",
+			"Creating a scalable, maintainable codebase with proper testing and CI/CD",
+			"Optimizing performance with intelligent caching and data management"
 		],
 		task: [
-			"Integrate with the Strava API to fetch and display workout data, in my case running and cycling.",
-			"Display the data in a dashboard that is both aesthetically pleasing and functional.",
-			"Ensure the application is secure and handles data appropriately.",
+			"Redesign the entire application architecture with proper separation of concerns",
+			"Implement persistent data storage and synchronization with Strava API",
+			"Add advanced analytics, trend analysis, and performance insights",
+			"Establish professional development practices including testing and CI/CD",
+			"Create a more intuitive and feature-rich user experience"
 		],
-		implementation: "To integrate with the Strava API, I implemented OAuth authentication to securely obtain and store access tokens. I created API routes using Next.js to handle the OAuth callback, exchange the authorization code for an access token, and store the token securely in cookies. Additionally, I set up API routes to fetch user activity data from the Strava API using the stored access token. To ensure efficient data handling, I implemented caching and pagination mechanisms. This approach allowed me to securely and efficiently fetch and display running statistics in the application, providing valuable insights and visualizations for users.",
+		implementation: "I completely rebuilt the application from the ground up using modern React patterns and best practices. The new architecture includes proper data modeling with Supabase, intelligent caching strategies, and a robust data synchronization system. I implemented React Query for efficient data fetching, proper error boundaries, and comprehensive testing. The app now features advanced analytics, trend visualization, and a much more maintainable codebase.",
 		learnings: [
-			"Gained a deeper understanding of React and Next.js, including server-side rendering and client-side navigation.",
-			"Enhanced my skills in frontend development, focusing on responsive design and user experience.",
-			"Acquired skills in API development and integration, including authentication and data handling.",
-			"Learned best practices fro data visualization and handling large datasets."
+			"Deep understanding of React Query and modern data fetching patterns",
+			"Experience with database design and data synchronization strategies",
+			"Advanced TypeScript patterns and type safety best practices",
+			"Professional development workflow with testing, CI/CD, and code quality tools",
+			"Performance optimization and caching strategies for real-time data applications"
 		],
 		changes: [
-			"Implementing API caching with revalidation and stale-while-revalidate to reduce Strava API requests",
-			"Planning to add friend tracking and activity comparison features",
-			"Need to implement a persistent backend using Supabase/PostgreSQL for social features",
-			"Looking to expand backend development experience through user data management and authentication"
+			"Complete architectural overhaul with proper separation of concerns",
+			"Advanced analytics and trend analysis capabilities",
+			"Professional testing suite and CI/CD pipeline",
+			"Improved performance through intelligent caching and data management",
+			"Better user experience with enhanced UI/UX and responsive design"
 		],
 		screenshots: [
-			{ src: "/endurofull.png", alt: "Enduro Stats project screenshot" },
-			{ src: "/strava.png", alt: "Enduro Stats project screenshot" },
-			{ src: "/recentactivities.png", alt: "Enduro Stats project screenshot" },
+			{ src: "/activity-analytics.png", alt: "Activity Analytics" },
+			{ src: "/performance-trends.png", alt: "Performance Trends" },
+			{ src: "/activegoals.png", alt: "Active Goals" },
+			{ src: "/trainingload.png", alt: "Training Load" },
 		],
 		relatedBlogPosts: [
 			{
-				title: "Strava API Integration",
-				slug: "strava-api",
-				description: "Learn how I integrated the Strava API into my fitness tracking app"
-			},
-			{
-				title: "Enduro Stats Refactor",
+				title: "Enduro Stats Refactor (Part 1)",
 				slug: "enduro-refactor",
 				description: "The complete refactor of my fitness tracking app with improved architecture"
 			}
 		],
-	},
-	{
-		title: "Reel Ratings",
-		description:
-			"Reel Ratings is a movie rating app that allows users to rate and review movies.",
-		imageSrc: "/reelratings.png",
-		altText: "Project 2",
-		technologies: [
-			{ icon: SiNextdotjs, name: "Next.js" },
-			{ icon: SiTailwindcss, name: "Tailwind CSS" },
-			{ icon: SiTypescript, name: "TypeScript" },
-			{ icon: SiSupabase, name: "Supabase" },
-			{ icon: SiThemoviedatabase, name: "TMDB API" },
-		],
-		githubRepo: "https://github.com/karltiama/movieapp",
-		status: "Completed" as const,
-		featured: false,
-		situation:"I created this project to further improve my skills with API integration and backend development. I wanted to create a movie rating app that pulled data from an External API and allow uses to rate and review movies.",
-		challenges:[
-			"Creating user authentication and authorization",
-			"Handling backend data and storing it in a backend database",
-			"Designing the schema for the database and how to store the likes and reviews",
-		],
-		task:[],
-		implementation:"",
-		learnings:[],
-		changes:[],
-		screenshots:[],
 	},
 	{
 		title: "Memory Mapper",
@@ -110,7 +89,7 @@ export const projects = [
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
 			{ icon: SiSupabase, name: "Supabase" },
 			{ icon: SiMapbox, name: "Mapbox" },
-			{ icon: SiResend, name: "Resend" },
+			{ icon: SiResend, name: "Resend" }
 		],
 		liveLink: "https://memorymapper.vercel.app",
 		githubRepo: "https://github.com/karltiama/memorymap",
@@ -174,4 +153,87 @@ export const projects = [
 		],
 		screenshots:[],
 	},
+	{
+		title: "Reel Ratings",
+		description:
+			"Reel Ratings is a movie rating app that allows users to rate and review movies.",
+		imageSrc: "/reelratings.png",
+		altText: "Project 2",
+		technologies: [
+			{ icon: SiNextdotjs, name: "Next.js" },
+			{ icon: SiTailwindcss, name: "Tailwind CSS" },
+			{ icon: SiTypescript, name: "TypeScript" },
+			{ icon: SiSupabase, name: "Supabase" },
+			{ icon: SiThemoviedatabase, name: "TMDB API" },
+		],
+		githubRepo: "https://github.com/karltiama/movieapp",
+		status: "Completed" as const,
+		featured: false,
+		situation:"I created this project to further improve my skills with API integration and backend development. I wanted to create a movie rating app that pulled data from an External API and allow uses to rate and review movies.",
+		challenges:[
+			"Creating user authentication and authorization",
+			"Handling backend data and storing it in a backend database",
+			"Designing the schema for the database and how to store the likes and reviews",
+		],
+		task:[],
+		implementation:"",
+		learnings:[],
+		changes:[],
+		screenshots:[],
+	},
+	{
+		title: "Enduro Stats",
+		description:
+			"EnduroStats is a fitness app that helps users track activities, set goals, and monitor progress with a sleek, responsive design. Currently undergoing a complete ground-up refactor with improved architecture.",
+		imageSrc: "/strava3.png", // Reference the image path directly from the public folder
+		altText: "Enduro Stats project screenshot",
+		technologies: [
+			{ icon: SiNextdotjs, name: "Next.js" },
+			{ icon: SiTypescript, name: "TypeScript" },
+			{ icon: SiTailwindcss, name: "Tailwind CSS" },
+			{ icon: FaStrava, name: "Strava API" },
+		],
+		liveLink: "https://endurostats.vercel.app",
+		githubRepo: "https://github.com/karltiama/junestravaapp",
+		status: "Completed" as const,
+		featured: false,
+		situation: "A personalized fitness dashboard built to track my running progress and visualize activity data from Strava as I trained for the 2024 Toronto Waterfront Marathon. This project started as a personal tool for myself and evolved into a public-facing web app designed to help other runners easily track performance trends and gain insight into their training.",
+		challenges: [
+			"Implemented secure OAuth 2.0 authentication flow with Strava using Next.js API routes for user connection and activity fetching.",
+			"Developed backend API logic for token handling, caching, and pagination to optimize API requests and stay within rate limits.",
+			"Built an interactive, data-driven dashboard that visualizes complex datasets — making performance trends easy to understand at a glance.",
+			"Designed a fully responsive UI focused on clarity and usability across devices."
+		],
+		task: [
+			"Integrate with the Strava API to fetch and display workout data, in my case running and cycling.",
+			"Display the data in a dashboard that is both aesthetically pleasing and functional.",
+			"Ensure the application is secure and handles data appropriately.",
+		],
+		implementation: "To integrate with the Strava API, I implemented OAuth authentication to securely obtain and store access tokens. I created API routes using Next.js to handle the OAuth callback, exchange the authorization code for an access token, and store the token securely in cookies. Additionally, I set up API routes to fetch user activity data from the Strava API using the stored access token. To ensure efficient data handling, I implemented caching and pagination mechanisms. This approach allowed me to securely and efficiently fetch and display running statistics in the application, providing valuable insights and visualizations for users.",
+		learnings: [
+			"Gained a deeper understanding of React and Next.js, including server-side rendering and client-side navigation.",
+			"Enhanced my skills in frontend development, focusing on responsive design and user experience.",
+			"Acquired skills in API development and integration, including authentication and data handling.",
+			"Learned best practices fro data visualization and handling large datasets."
+		],
+		changes: [
+			"Implementing API caching with revalidation and stale-while-revalidate to reduce Strava API requests",
+			"Planning to add friend tracking and activity comparison features",
+			"Need to implement a persistent backend using Supabase/PostgreSQL for social features",
+			"Looking to expand backend development experience through user data management and authentication"
+		],
+		screenshots: [
+			{ src: "/endurofull.png", alt: "Enduro Stats project screenshot" },
+			{ src: "/strava.png", alt: "Enduro Stats project screenshot" },
+			{ src: "/recentactivities.png", alt: "Enduro Stats project screenshot" },
+		],
+		relatedBlogPosts: [
+			{
+				title: "Strava API Integration",
+				slug: "strava-api",
+				description: "Learn how I integrated the Strava API into my fitness tracking app"
+			}
+		],
+	},
+	
 ];
