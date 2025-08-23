@@ -21,7 +21,7 @@ const techStack = [
 ];
 
 export default function Home() {
-	const latestPosts = sortPosts(posts).slice(0, 3);
+	const latestPosts = sortPosts(posts.filter((post) => post.published)).slice(0, 3);
 
 	return (
 		<>
