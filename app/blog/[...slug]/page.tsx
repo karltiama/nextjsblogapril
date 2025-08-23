@@ -8,6 +8,7 @@ import "@/styles/mdx.css";
 import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Tag } from "@/components/tag";
+import { CommentSection } from "@/components/comment-section";
 
 interface PostPageProps {
 	params: {
@@ -94,6 +95,9 @@ export default async function PostPage({ params }: PostPageProps) {
 					
 					<hr className="my-4" />
 					<MDXContent code={post.body} />
+					
+					{/* Comments Section */}
+					<CommentSection postSlug={post.slug} postTitle={post.title} />
 				</article>
 
 				{/* Sidebar - Table of Contents */}
