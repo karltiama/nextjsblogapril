@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Giscus from '@giscus/react';
 
 interface CommentSectionProps {
@@ -10,6 +10,7 @@ interface CommentSectionProps {
 
 export function CommentSection({ postSlug, postTitle }: CommentSectionProps) {
 	const commentRef = useRef<HTMLDivElement>(null);
+	const [giscusKey, setGiscusKey] = useState(0);
 
 	useEffect(() => {
 		// Scroll to comments when hash changes
@@ -18,30 +19,39 @@ export function CommentSection({ postSlug, postTitle }: CommentSectionProps) {
 		}
 	}, []);
 
+	// Force re-render of Giscus when post changes
+	useEffect(() => {
+		setGiscusKey(prev => prev + 1);
+	}, [postSlug, postTitle]);
+
 	return (
-		<div ref={commentRef} id="comments" className="mt-16 pt-8 border-t">
-			<div className="mb-8">
-				<h2 className="text-2xl font-bold mb-2">Comments</h2>
-				<p className="text-muted-foreground">
-					Have thoughts on this post? Join the discussion below!
-				</p>
+		<section ref={commentRef} id="comments" className="w-full border-t border-border pt-8">
+			<div className="max-w-4xl mx-auto">
+				<div className="mb-8">
+					<h2 className="text-2xl font-bold mb-2">Comments</h2>
+					<p className="text-muted-foreground">
+						Have thoughts on this post? Join the discussion below!
+					</p>
+				</div>
+				
+				<Giscus
+					key={giscusKey}
+					id="comments"
+					repo="karltiama/nextjsblogapril"
+					repoId="784028516"
+					category="Announcements"
+					categoryId="45742932"
+					mapping="specific"
+					term={postSlug}
+					strict="0"
+					reactionsEnabled="1"
+					emitMetadata="0"
+					inputPosition="top"
+					theme="preferred_color_scheme"
+					lang="en"
+					loading="lazy"
+				/>
 			</div>
-			
-			<Giscus
-				id="comments"
-				repo="karltiama/nextjsblogapril"
-				repoId="784028516"
-				category="Announcements"
-				categoryId="45742932"
-				mapping="title"
-				strict="0"
-				reactionsEnabled="1"
-				emitMetadata="0"
-				inputPosition="top"
-				theme="preferred_color_scheme"
-				lang="en"
-				loading="lazy"
-			/>
-		</div>
+		</section>
 	);
 }

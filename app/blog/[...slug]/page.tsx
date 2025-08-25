@@ -77,7 +77,8 @@ export default async function PostPage({ params }: PostPageProps) {
 
 	return (
 		<div className="container py-6 max-w-7xl mx-auto">
-			<div className="flex gap-8">
+			{/* Article Section with Sidebar */}
+			<div className="flex gap-8 mb-16">
 				{/* Main Content */}
 				<article className="flex-1 prose dark:prose-invert max-w-4xl">
 					<h1 className="mb-2">{post.title}</h1>
@@ -95,17 +96,19 @@ export default async function PostPage({ params }: PostPageProps) {
 					
 					<hr className="my-4" />
 					<MDXContent code={post.body} />
-					
-					{/* Comments Section */}
-					<CommentSection postSlug={post.slug} postTitle={post.title} />
 				</article>
 
-				{/* Sidebar - Table of Contents */}
+				{/* Sidebar - Table of Contents only for article */}
 				<aside className="hidden lg:block w-64 shrink-0">
 					<div className="sticky top-20 max-h-[calc(100vh-5rem)] overflow-y-auto">
 						<TableOfContents />
 					</div>
 				</aside>
+			</div>
+
+			{/* Comments Section - Full width, no sidebar */}
+			<div className="w-full">
+				<CommentSection postSlug={post.slug} postTitle={post.title} />
 			</div>
 		</div>
 	);
