@@ -46,7 +46,7 @@ function Project({
 
 	return (
 		<TooltipProvider>
-			<div className="bg-background rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl h-full flex flex-col w-full max-w-md mx-auto relative">
+			<div className="bg-background rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl h-full flex flex-col w-full relative">
 				{/* Featured Badge */}
 				{featured && (
 					<div className="absolute top-4 left-4 z-10">

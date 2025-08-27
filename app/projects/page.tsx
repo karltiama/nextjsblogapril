@@ -2,7 +2,7 @@ import ProjectList from "@/components/project-list"; // Adjust the path as neede
 
 export default async function ProjectsPage() {
 	return (
-		<div className="container max-w-4xl py-6 lg:py-10">
+		<div className="container max-w-7xl py-6 lg:py-10">
 			<div className="flex flex-col items-start gap-4">
 				<h1 className="font-black text-3xl md:text-4xl lg:text-5xl">
 					Projects
