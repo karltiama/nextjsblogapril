@@ -12,7 +12,7 @@ import ProjectList from "@/components/project-list";
 
 
 export const metadata: Metadata = {
-	title: "Karl Tiama - Hi, I'm Karl & Technical Writer",
+			title: "Karl Tiama - Hi, I&apos;m Karl & Technical Writer",
 	description: "Experienced React developer specializing in Next.js, TypeScript, and API integrations. Building scalable web applications and sharing knowledge through technical writing.",
 };
 
@@ -60,7 +60,7 @@ export default function Home() {
 						/>
 						<div className="space-y-2">
 							<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-balance">
-								Hi, I'm Karl
+								Hi, I&apos;m Karl
 							</h1>
 							<p className="text-lg text-muted-foreground">
 								Building Scalable Web Applications
