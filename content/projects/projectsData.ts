@@ -11,8 +11,9 @@ import {
 	SiUmami,
 } from "react-icons/si";
 import { FaStrava } from "react-icons/fa";
+import { Project } from "../../lib/types";
 
-export const projects = [
+export const projects: Project[] = [
 	{
 		title: "Enduro Stats V2",
 		description:

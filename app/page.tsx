@@ -8,17 +8,15 @@ import { posts } from "#site/content";
 import { PostItem } from "@/components/post-item";
 import { Metadata } from "next";
 import ProjectList from "@/components/project-list";
-import { Badge } from "@/components/ui/badge";
+
+
 
 export const metadata: Metadata = {
-	title: "Karl Tiama - Full-Stack Developer & Technical Writer",
+	title: "Karl Tiama - Hi, I'm Karl & Technical Writer",
 	description: "Experienced React developer specializing in Next.js, TypeScript, and API integrations. Building scalable web applications and sharing knowledge through technical writing.",
 };
 
-const techStack = [
-	"React", "Next.js", "TypeScript", "Node.js", "Tailwind CSS", 
-	"Supabase", "PostgreSQL", "REST APIs", "Git", "Docker"
-];
+
 
 export default function Home() {
 	const latestPosts = sortPosts(posts.filter((post) => post.published)).slice(0, 3);
@@ -62,7 +60,7 @@ export default function Home() {
 						/>
 						<div className="space-y-2">
 							<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-balance">
-								Full-Stack Developer
+								Hi, I'm Karl
 							</h1>
 							<p className="text-lg text-muted-foreground">
 								Building Scalable Web Applications
@@ -74,14 +72,7 @@ export default function Home() {
 							knowledge through technical writing.
 						</p>
 						
-						{/* Tech Stack Display */}
-						<div className="flex flex-wrap gap-2 justify-center max-w-md">
-							{techStack.map((tech) => (
-								<Badge key={tech} variant="secondary" className="text-sm">
-									{tech}
-								</Badge>
-							))}
-						</div>
+
 
 						<div className="flex flex-col gap-4 justify-center sm:flex-row">
 							<Link

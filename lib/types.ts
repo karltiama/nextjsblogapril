@@ -24,7 +24,7 @@ export interface Project {
   technologies: Technology[];
   liveLink?: string;
   githubRepo?: string;
-  status: "Live" | "Completed" | "Refactoring v2";
+  status: "Live" | "In Development" | "Completed" | "Refactoring v2" | "Archived";
   featured: boolean;
   situation?: string;
   challenges?: string[];
