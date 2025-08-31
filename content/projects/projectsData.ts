@@ -79,7 +79,7 @@ export const projects: Project[] = [
 		],
 	},
 	{
-		title: "Karl's Dev Blog",
+		title: "Karl&apos;s Dev Blog",
 		description:
 			"This my personal blog where I write about my experiences and thoughts on software development.",
 		imageSrc: "/devblog2.png", // Reference the image path directly from the public folder
@@ -94,7 +94,7 @@ export const projects: Project[] = [
 		],
 		status: "Live" as const,
 		featured: false,
-		situation:"I wanted to create a portfolio websites that showcases my projects and skills as a software developer. I also wanted to share my thoughts and ideas on software development. I've learned the best way to learn is to teach and talk about what topics that peak my interest, this blog is my way of sharing my knowledge and experiences with the world.",
+		situation:"I wanted to create a portfolio websites that showcases my projects and skills as a software developer. I also wanted to share my thoughts and ideas on software development. I&apos;ve learned the best way to learn is to teach and talk about what topics that peak my interest, this blog is my way of sharing my knowledge and experiences with the world.",
 		challenges:[
 			"Finding the right balance between showcasing my projects and sharing my thoughts on software development.",
 			"Creating a system that allows me to share and manage my blog post and projects in a way that is easy to use and maintain.",
