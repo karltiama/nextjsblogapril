@@ -12,7 +12,7 @@ import ProjectList from "@/components/project-list";
 
 
 export const metadata: Metadata = {
-			title: "Karl Tiama - Hi, I&apos;m Karl & Technical Writer",
+	title: "Karl Tiama - Hi, I'm Karl & Technical Writer",
 	description: "Experienced React developer specializing in Next.js, TypeScript, and API integrations. Building scalable web applications and sharing knowledge through technical writing.",
 };
 
