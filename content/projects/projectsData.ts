@@ -162,7 +162,7 @@ export const projects: Project[] = [
 		title: "Tiama Legacy",
 		description:
 			"A complete ground-up rebuild of a lodging website with integrated booking system. Featuring modern architecture, real-time availability, secure payment processing, and comprehensive admin dashboard for property management.",
-		imageSrc: "/tiama-legacy-preview.png", // You'll need to add this image
+		imageSrc: "/construction.png", // You'll need to add this image
 		altText: "Tiama Legacy lodging website preview",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
@@ -212,7 +212,7 @@ export const projects: Project[] = [
 		title: "NBA AI Predictor",
 		description:
 			"An AI-powered NBA betting prediction platform that leverages machine learning models and comprehensive historical data to provide confident game predictions. Features real-time data processing, advanced analytics, and intelligent betting recommendations.",
-		imageSrc: "/nba-ai-predictor-preview.png", // You'll need to add this image
+		imageSrc: "/businessplan.png", // You'll need to add this image
 		altText: "NBA AI Predictor app preview",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
@@ -257,11 +257,17 @@ export const projects: Project[] = [
 			"Implementation of real-time data processing and model inference pipeline",
 			"Creation of comprehensive analytics dashboard for prediction performance tracking",
 			"Integration of multiple data sources for enhanced prediction accuracy",
-			"Development of confidence scoring system for prediction reliability"
-		],
-		screenshots: [],
-		relatedBlogPosts: [],
-	},
+		"Development of confidence scoring system for prediction reliability"
+	],
+	screenshots: [],
+	relatedBlogPosts: [
+		{
+			title: "My NBA Analytics Journey: Building an AI-Powered Prediction Platform",
+			slug: "nba-analytics",
+			description: "How I combined my passion for basketball with web development and machine learning to create an NBA analytics platform that predicts game outcomes."
+		}
+	],
+},
 	{
 		title: "Reel Ratings",
 		description:
