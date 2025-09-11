@@ -10,7 +10,7 @@
       "files": "*.mdx",
       "options": {
         "parser": "mdx",
-        "printWidth": 80,
+        "printWidth": 70,
         "proseWrap": "always"
       }
     },

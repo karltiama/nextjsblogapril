@@ -9,6 +9,10 @@ import {
 	SiMdx,
 	SiReactquery,
 	SiUmami,
+	SiPython,
+	SiTensorflow,
+	SiPandas,
+	SiScikitlearn,
 } from "react-icons/si";
 import { FaStrava } from "react-icons/fa";
 import { Project } from "../../lib/types";
@@ -79,7 +83,7 @@ export const projects: Project[] = [
 		],
 	},
 	{
-		title: "Karl&apos;s Dev Blog",
+		title: "My Personal Dev Blog",
 		description:
 			"This my personal blog where I write about my experiences and thoughts on software development.",
 		imageSrc: "/devblog2.png", // Reference the image path directly from the public folder
@@ -153,6 +157,110 @@ export const projects: Project[] = [
 			"I would take a different approach in the system design of the website, I would create a more modular and scalable architecture. I would also spend more time on the frontend design of the website to make it more aesthetically pleasing."
 		],
 		screenshots:[],
+	},
+	{
+		title: "Tiama Legacy",
+		description:
+			"A complete ground-up rebuild of a lodging website with integrated booking system. Featuring modern architecture, real-time availability, secure payment processing, and comprehensive admin dashboard for property management.",
+		imageSrc: "/tiama-legacy-preview.png", // You'll need to add this image
+		altText: "Tiama Legacy lodging website preview",
+		technologies: [
+			{ icon: SiNextdotjs, name: "Next.js" },
+			{ icon: SiTypescript, name: "TypeScript" },
+			{ icon: SiTailwindcss, name: "Tailwind CSS" },
+			{ icon: SiSupabase, name: "Supabase" },
+			{ icon: SiReactquery, name: "React Query" },
+		],
+		status: "In Development" as const,
+		featured: false,
+		situation: "Tiama Legacy is a complete overhaul of an existing lodging website, rebuilt from the ground up with modern architecture and a robust booking system. The project aims to create a seamless user experience for guests while providing powerful management tools for property owners. This represents a significant step up in complexity, incorporating real-time data, payment processing, and comprehensive admin functionality.",
+		challenges: [
+			"Designing a scalable database schema for properties, bookings, and user management",
+			"Implementing real-time availability checking and booking conflict resolution",
+			"Building secure payment processing and booking confirmation workflows",
+			"Creating an intuitive admin dashboard for property and booking management",
+			"Ensuring responsive design across all devices for optimal user experience",
+			"Implementing proper authentication and authorization for different user types"
+		],
+		task: [
+			"Design and implement comprehensive database schema using Supabase",
+			"Build responsive frontend with modern UI/UX for property browsing and booking",
+			"Develop secure booking system with real-time availability checking",
+			"Integrate payment processing and booking confirmation workflows",
+			"Create admin dashboard for property and booking management",
+			"Implement user authentication and role-based access control"
+		],
+		implementation: "Starting with a complete architectural redesign, I'm building the application using Next.js 14 with App Router for optimal performance and SEO. The backend leverages Supabase for database management, real-time subscriptions, and authentication. React Query handles efficient data fetching and caching for booking availability. The project emphasizes type safety with TypeScript throughout the entire stack.",
+		learnings: [
+			"Advanced database design for complex booking and property management systems",
+			"Real-time data synchronization and conflict resolution strategies",
+			"Payment processing integration and secure transaction handling",
+			"Role-based access control and multi-tenant architecture patterns",
+			"Advanced React Query patterns for complex data relationships"
+		],
+		changes: [
+			"Complete architectural overhaul from legacy system to modern stack",
+			"Implementation of real-time booking system with conflict resolution",
+			"Integration of secure payment processing and booking workflows",
+			"Development of comprehensive admin dashboard for property management",
+			"Enhanced user experience with modern UI/UX and responsive design"
+		],
+		screenshots: [],
+		relatedBlogPosts: [],
+	},
+	{
+		title: "NBA AI Predictor",
+		description:
+			"An AI-powered NBA betting prediction platform that leverages machine learning models and comprehensive historical data to provide confident game predictions. Features real-time data processing, advanced analytics, and intelligent betting recommendations.",
+		imageSrc: "/nba-ai-predictor-preview.png", // You'll need to add this image
+		altText: "NBA AI Predictor app preview",
+		technologies: [
+			{ icon: SiNextdotjs, name: "Next.js" },
+			{ icon: SiTypescript, name: "TypeScript" },
+			{ icon: SiTailwindcss, name: "Tailwind CSS" },
+			{ icon: SiSupabase, name: "Supabase" },
+			{ icon: SiPython, name: "Python" },
+			{ icon: SiTensorflow, name: "TensorFlow" },
+			{ icon: SiPandas, name: "Pandas" },
+			{ icon: SiScikitlearn, name: "Scikit-learn" },
+		],
+		status: "In Development" as const,
+		featured: false,
+		situation: "The NBA AI Predictor represents a significant leap into machine learning and data science, combining my web development skills with AI/ML expertise. The project aims to create a sophisticated prediction platform that processes vast amounts of NBA data to generate accurate game predictions. This involves complex data processing, model training, and real-time prediction delivery through a modern web interface.",
+		challenges: [
+			"Processing and cleaning large datasets of NBA historical data and player statistics",
+			"Designing and training machine learning models for accurate game outcome predictions",
+			"Implementing real-time data ingestion and model inference pipelines",
+			"Creating an intuitive interface for displaying predictions and confidence scores",
+			"Handling data quality issues and ensuring model reliability across different game scenarios",
+			"Integrating Python ML models with a TypeScript/Next.js frontend"
+		],
+		task: [
+			"Collect and preprocess comprehensive NBA datasets including player stats, team performance, and historical outcomes",
+			"Develop and train multiple ML models using Python (TensorFlow, Scikit-learn) for different prediction types",
+			"Build data pipeline for real-time data ingestion and model inference",
+			"Create responsive web interface for displaying predictions and analytics",
+			"Implement user authentication and prediction tracking system",
+			"Develop model evaluation and retraining workflows for continuous improvement"
+		],
+		implementation: "The project combines a Python backend for ML model training and inference with a Next.js frontend for user interaction. Data processing uses Pandas for cleaning and feature engineering, while TensorFlow and Scikit-learn handle model training. The web interface provides real-time predictions, confidence scores, and historical performance analytics. Supabase manages user data and prediction history, with real-time updates for live game predictions.",
+		learnings: [
+			"Advanced machine learning techniques for sports prediction and time series analysis",
+			"Data preprocessing and feature engineering for complex sports datasets",
+			"Model evaluation and validation strategies for prediction accuracy",
+			"Integration of Python ML models with modern web applications",
+			"Real-time data processing and model inference optimization",
+			"Advanced statistical analysis and probability modeling for sports betting"
+		],
+		changes: [
+			"Development of custom ML models specifically tuned for NBA game prediction",
+			"Implementation of real-time data processing and model inference pipeline",
+			"Creation of comprehensive analytics dashboard for prediction performance tracking",
+			"Integration of multiple data sources for enhanced prediction accuracy",
+			"Development of confidence scoring system for prediction reliability"
+		],
+		screenshots: [],
+		relatedBlogPosts: [],
 	},
 	{
 		title: "Reel Ratings",
