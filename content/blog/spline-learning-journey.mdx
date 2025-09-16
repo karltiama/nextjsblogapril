@@ -1,34 +1,62 @@
 ---
-title: "My Spline Learning Journey: From 403 Errors to Interactive 3D Scenes"
-description: "A deep dive into integrating Spline 3D scenes into Next.js, covering the challenges, solutions, and lessons learned along the way."
-date: "2024-12-19"
+title:
+  "My Spline Learning Journey: From 403 Errors to Interactive 3D
+  Scenes"
+description:
+  "A deep dive into integrating Spline 3D scenes into Next.js,
+  covering the challenges, solutions, and lessons learned along the
+  way."
+date: "2025-9-16"
 tags: ["spline", "3d", "nextjs", "react", "webgl", "learning"]
-featured: false
+featured: true
 ---
 
 # My Spline Learning Journey: From 403 Errors to Interactive 3D Scenes
 
 ## Introduction
 
-When I first discovered Spline, I was immediately captivated by the idea of creating interactive 3D scenes directly in the browser. The promise of drag-and-drop 3D design that could be embedded into any React application seemed too good to be true. Spoiler alert: it wasn't, but the journey to get there was filled with more challenges than I initially anticipated.
+When I first discovered Spline, I was immediately captivated by the
+idea of creating interactive 3D scenes directly in the browser. The
+promise of drag-and-drop 3D design that could be embedded into any
+React application seemed too good to be true. Spoiler alert: it
+wasn't, but the journey to get there was filled with more challenges
+than I initially anticipated.
 
-In this post, I'll walk you through my complete learning journey with Spline, from the initial excitement to the frustrating 403 errors, through the debugging process, and finally to a working implementation. Whether you're just starting with Spline or hitting similar roadblocks, I hope this story helps you navigate your own 3D web development adventure.
+In this post, I'll walk you through my complete learning journey with
+Spline, from the initial excitement to the frustrating 403 errors,
+through the debugging process, and finally to a working
+implementation. Whether you're just starting with Spline or hitting
+similar roadblocks, I hope this story helps you navigate your own 3D
+web development adventure.
 
 ## The Initial Vision
 
 ### What I Wanted to Build
 
-My goal was ambitious but seemingly straightforward:
-- A 3D scene with 5 distinct layers stacked vertically
-- An additional 6th layer for opacity effects
-- Interactive hover states where hovering over layer 2 would make the top layer fade to the opacity layer
-- Progressive opacity effects: hover layer 3, fade layers 1 and 2, and so on
+I was browsing some GitHub repos when I stumbled upon Medusa, which is a
+digital commerce platform with a built-in framework for customization.
+I came across their homepage and saw a beautiful animation that I knew
+I had to learn how to recreate. I sat at their page mesmerized by how
+elegant this animation was, a floating 5-layer interactive UI stacked
+vertically representing 5 different layers of their framework.
+As you hover over each layer, the top layer would fade to an opaque state
+and reveal the next layer underneath. You can check out the animation yourself if
+you'd [like](https://medusajs.com/).
+
+This interactive layering effect was exactly what I wanted to build, but
+I needed to figure out the best way to implement it in a React application. 
+
+
+
 
 ### Why Spline?
 
 I chose Spline for several reasons:
-- **Visual Design**: The ability to design 3D scenes visually rather than coding everything from scratch
-- **React Integration**: Native React components with `@splinetool/react-spline`
+
+- **Visual Design**: The ability to design 3D scenes visually rather
+  than coding everything from scratch
+- **React Integration**: Native React components with
+  `@splinetool/react-spline`
 - **Performance**: Optimized WebGL rendering out of the box
 - **Ease of Use**: Promised to be beginner-friendly for 3D development
 
@@ -36,16 +64,20 @@ I chose Spline for several reasons:
 
 ### URL vs Local File Confusion
 
-One of my first challenges was understanding the different ways to integrate Spline scenes:
+One of my first challenges was understanding the different ways to
+integrate Spline scenes:
 
 **URL Method:**
+
 - Export scene as React component
-- Get a public URL (e.g., `https://prod.spline.design/.../scene.splinecode`)
+- Get a public URL (e.g.,
+  `https://prod.spline.design/.../scene.splinecode`)
 - Load directly in React component
 - Pros: Simple, no file management
 - Cons: Requires public scene, dependent on Spline's servers
 
 **Local File Method:**
+
 - Export as self-hosted `.splinecode` file
 - Host the file in your own `public/` directory
 - Load from local file system
@@ -54,29 +86,36 @@ One of my first challenges was understanding the different ways to integrate Spl
 
 ### The Decision Process
 
-I initially wanted to try both methods to compare them, but quickly realized the local file approach required a paid subscription. This led me to focus on the URL method, which turned out to be the right choice for my use case.
+I initially wanted to try both methods to compare them, but quickly
+realized the local file approach required a paid subscription. This
+led me to focus on the URL method, which turned out to be the right
+choice for my use case.
 
 ## The Debugging Nightmare
 
 ### Error #1: 403 Forbidden
 
-The first major roadblock was a 403 error when trying to load my scene. This taught me several important lessons:
+The first major roadblock was a 403 error when trying to load my
+scene. This taught me several important lessons:
 
 ```javascript
 // What I learned about Spline URLs
-const splineUrl = "https://prod.spline.design/0tc5vcx8upINop77/scene.splinecode"
+const splineUrl =
+	"https://prod.spline.design/0tc5vcx8upINop77/scene.splinecode";
 // ✅ Correct format
 // ❌ https://my.spline.design/... (wrong subdomain)
 ```
 
 **Key Learnings:**
+
 - Always use `prod.spline.design` for public scenes
 - Ensure your scene is set to "Public" in Spline
 - The URL format is very specific and case-sensitive
 
 ### Error #2: "Data read, but end of buffer not reached"
 
-This cryptic error was particularly frustrating because it provided no clear solution path. Through extensive debugging, I discovered:
+This cryptic error was particularly frustrating because it provided no
+clear solution path. Through extensive debugging, I discovered:
 
 - The error often indicates a corrupted or invalid scene file
 - Sometimes it's a network issue where the file isn't fully downloaded
@@ -84,20 +123,21 @@ This cryptic error was particularly frustrating because it provided no clear sol
 
 ### Error #3: Infinite Loading States
 
-The most user-unfriendly issue was scenes that would load forever without any error feedback. This led me to implement:
+The most user-unfriendly issue was scenes that would load forever
+without any error feedback. This led me to implement:
 
 ```javascript
 // Loading timeout with user control
 useEffect(() => {
-  const timeout = setTimeout(() => {
-    if (!isLoaded && !error) {
-      setTimeoutReached(true)
-      setError('Loading timeout - check URL and scene settings')
-    }
-  }, 8000) // 8 second timeout
+	const timeout = setTimeout(() => {
+		if (!isLoaded && !error) {
+			setTimeoutReached(true);
+			setError("Loading timeout - check URL and scene settings");
+		}
+	}, 8000); // 8 second timeout
 
-  return () => clearTimeout(timeout)
-}, [isLoaded, error])
+	return () => clearTimeout(timeout);
+}, [isLoaded, error]);
 ```
 
 ## The Technical Deep Dive
@@ -107,6 +147,7 @@ useEffect(() => {
 Working with Spline in Next.js presented several unique challenges:
 
 **Client-Side Rendering Issues:**
+
 ```javascript
 // ❌ This caused hydration errors
 export default function SplineComponent() {
@@ -117,31 +158,32 @@ export default function SplineComponent() {
 'use client'
 export default function SplineComponent() {
   const [isClient, setIsClient] = useState(false)
-  
+
   useEffect(() => {
     setIsClient(true)
   }, [])
-  
+
   if (!isClient) return <div>Loading...</div>
-  
+
   return <Spline scene={url} />
 }
 ```
 
-**Module Resolution Problems:**
-The `@splinetool/react-spline` package had some export issues that required careful import handling:
+**Module Resolution Problems:** The `@splinetool/react-spline` package
+had some export issues that required careful import handling:
 
 ```javascript
 // ❌ This caused module resolution errors
-import Spline from '@splinetool/react-spline/next'
+import Spline from "@splinetool/react-spline/next";
 
 // ✅ This worked reliably
-import Spline from '@splinetool/react-spline'
+import Spline from "@splinetool/react-spline";
 ```
 
 ### Building a Robust Component
 
-Through trial and error, I developed a robust Spline component that handles all the edge cases:
+Through trial and error, I developed a robust Spline component that
+handles all the edge cases:
 
 ```javascript
 export default function SplineBasic({ splineUrl }: SplineBasicProps) {
@@ -171,7 +213,7 @@ export default function SplineBasic({ splineUrl }: SplineBasicProps) {
     setIsLoaded(true)
     setError(null)
     console.log('Spline scene loaded successfully!')
-    
+
     // Test object detection
     if (splineApp && splineApp.findObjectByName) {
       const testObjects = ['Monitor', 'UI', 'Puzzle', 'Framework', 'Cloud']
@@ -185,13 +227,13 @@ export default function SplineBasic({ splineUrl }: SplineBasicProps) {
   const onError = (error: any) => {
     console.error('Spline loading error:', error)
     let errorMessage = 'Failed to load scene'
-    
+
     if (error.message && error.message.includes('Unexpected token')) {
       errorMessage = 'Invalid scene format - check URL and scene settings'
     } else if (error.message) {
       errorMessage = `Failed to load scene: ${error.message}`
     }
-    
+
     setError(errorMessage)
   }
 
@@ -203,59 +245,76 @@ export default function SplineBasic({ splineUrl }: SplineBasicProps) {
 
 ### Understanding Spline's Animation System
 
-One of the most complex parts was figuring out how to control Spline animations from React:
+One of the most complex parts was figuring out how to control Spline
+animations from React:
 
 **Spline Actions vs Direct Object Manipulation:**
-- Spline Actions: Built-in system for scene interactions
-- Direct Manipulation: Accessing objects via `findObjectByName()` and modifying properties
 
-**The OverlayViel Problem:**
-My original vision required hiding the opacity layer initially, but Spline's free Actions don't include a "Hide Object" action. This led to a fundamental decision:
+- Spline Actions: Built-in system for scene interactions
+- Direct Manipulation: Accessing objects via `findObjectByName()` and
+  modifying properties
+
+**The OverlayViel Problem:** My original vision required hiding the
+opacity layer initially, but Spline's free Actions don't include a
+"Hide Object" action. This led to a fundamental decision:
 
 1. Use Spline Actions (limited but integrated)
 2. Use direct object manipulation (more control but more complex)
 
 ### The Viewport Interaction Approach
 
-I experimented with direct viewport interaction using Spline's native event system:
+I experimented with direct viewport interaction using Spline's native
+event system:
 
 ```javascript
 // Setting up hover events directly in Spline viewport
-layer.addEventListener('mouseHover', () => {
-  console.log(`Hovered over ${layerName} in viewport`)
-  handleLayerHover(index)
-})
+layer.addEventListener("mouseHover", () => {
+	console.log(`Hovered over ${layerName} in viewport`);
+	handleLayerHover(index);
+});
 
-layer.addEventListener('mouseLeave', () => {
-  console.log(`Left ${layerName} in viewport`)
-  handleLayerLeave()
-})
+layer.addEventListener("mouseLeave", () => {
+	console.log(`Left ${layerName} in viewport`);
+	handleLayerLeave();
+});
 ```
 
-This approach worked but required careful coordination between Spline's event system and React's state management.
+This approach worked but required careful coordination between
+Spline's event system and React's state management.
 
 ## Lessons Learned
 
 ### What Worked Well
 
-1. **Step-by-Step Approach**: Starting with basic rendering before adding complex features
-2. **Comprehensive Error Handling**: Timeouts, user feedback, and detailed error messages
-3. **Debugging Tools**: URL testing component to verify scene accessibility
-4. **Client-Side Rendering**: Proper handling of Next.js SSR requirements
+1. **Step-by-Step Approach**: Starting with basic rendering before
+   adding complex features
+2. **Comprehensive Error Handling**: Timeouts, user feedback, and
+   detailed error messages
+3. **Debugging Tools**: URL testing component to verify scene
+   accessibility
+4. **Client-Side Rendering**: Proper handling of Next.js SSR
+   requirements
 
 ### What Was Challenging
 
-1. **Documentation Gaps**: Limited examples for complex integration scenarios
-2. **Error Messages**: Cryptic errors that didn't provide clear solutions
-3. **Animation Control**: Limited options for fine-grained animation control
-4. **State Management**: Coordinating between Spline's internal state and React state
+1. **Documentation Gaps**: Limited examples for complex integration
+   scenarios
+2. **Error Messages**: Cryptic errors that didn't provide clear
+   solutions
+3. **Animation Control**: Limited options for fine-grained animation
+   control
+4. **State Management**: Coordinating between Spline's internal state
+   and React state
 
 ### Key Insights
 
-1. **Start Simple**: Get basic rendering working before adding animations
+1. **Start Simple**: Get basic rendering working before adding
+   animations
 2. **Plan for Errors**: Users will hit the same issues you do
-3. **Test Thoroughly**: Different browsers and devices can behave differently
-4. **Document Everything**: You'll forget the solutions to problems you've already solved
+3. **Test Thoroughly**: Different browsers and devices can behave
+   differently
+4. **Document Everything**: You'll forget the solutions to problems
+   you've already solved
 
 ## The Current State
 
@@ -302,7 +361,7 @@ export default function UrlTest({ url }: { url: string }) {
   const testUrl = async () => {
     setLoading(true)
     setError(null)
-    
+
     try {
       const res = await fetch(url)
       const text = await res.text()
@@ -328,26 +387,41 @@ export default function UrlTest({ url }: { url: string }) {
 
 ## Conclusion
 
-My Spline learning journey was filled with both excitement and frustration, but ultimately it was incredibly rewarding. The key was persistence, systematic debugging, and not being afraid to simplify when things got too complex.
+My Spline learning journey was filled with both excitement and
+frustration, but ultimately it was incredibly rewarding. The key was
+persistence, systematic debugging, and not being afraid to simplify
+when things got too complex.
 
-The most important lesson I learned is that 3D web development, even with tools as powerful as Spline, still requires a solid understanding of the underlying technologies. Spline makes it easier, but it doesn't eliminate the need for proper error handling, state management, and performance considerations.
+The most important lesson I learned is that 3D web development, even
+with tools as powerful as Spline, still requires a solid understanding
+of the underlying technologies. Spline makes it easier, but it doesn't
+eliminate the need for proper error handling, state management, and
+performance considerations.
 
 If you're starting your own Spline journey, I'd recommend:
+
 1. Start with the basics - get a simple scene rendering first
 2. Build robust error handling from the beginning
 3. Don't be afraid to simplify your initial vision
 4. Document everything as you learn
 5. Be patient with the debugging process
 
-The 3D web is an exciting frontier, and tools like Spline are making it more accessible than ever. With the right approach and persistence, you can create amazing interactive experiences that were impossible just a few years ago.
+The 3D web is an exciting frontier, and tools like Spline are making
+it more accessible than ever. With the right approach and persistence,
+you can create amazing interactive experiences that were impossible
+just a few years ago.
 
 ## Resources
 
 - [Spline Documentation](https://docs.spline.design/)
 - [React Spline Package](https://www.npmjs.com/package/@splinetool/react-spline)
 - [My Spline Demo](https://your-site.com/spline-demo) (when deployed)
-- [GitHub Repository](https://github.com/your-username/your-repo) (if public)
+- [GitHub Repository](https://github.com/your-username/your-repo) (if
+  public)
 
 ---
 
-*Have you worked with Spline or other 3D web tools? I'd love to hear about your experiences and any tips you've discovered along the way. Feel free to reach out on [Twitter](https://twitter.com/your-handle) or [GitHub](https://github.com/your-username)!*
+_Have you worked with Spline or other 3D web tools? I'd love to hear
+about your experiences and any tips you've discovered along the way.
+Feel free to reach out on [Twitter](https://twitter.com/your-handle)
+or [GitHub](https://github.com/your-username)!_

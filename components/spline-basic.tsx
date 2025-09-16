@@ -160,10 +160,10 @@ export default function SplineBasic({ splineUrl }: SplineBasicProps) {
       <div className="mt-4 text-center text-slate-300">
         <p className="text-sm">
           {isLoaded && !error
-            ? 'Great! Your Spline scene is rendering. Now we can add the opacity animations.'
+            ? &apos;Great! Your Spline scene is rendering. Now we can add the opacity animations.&apos;
             : error
-            ? 'Fix the error above to continue'
-            : 'Loading your Spline scene...'
+            ? &apos;Fix the error above to continue&apos;
+            : &apos;Loading your Spline scene...&apos;
           }
         </p>
       </div>
