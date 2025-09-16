@@ -33,21 +33,20 @@ web development adventure.
 
 ### What I Wanted to Build
 
-I was browsing some GitHub repos when I stumbled upon Medusa, which is a
-digital commerce platform with a built-in framework for customization.
-I came across their homepage and saw a beautiful animation that I knew
-I had to learn how to recreate. I sat at their page mesmerized by how
-elegant this animation was, a floating 5-layer interactive UI stacked
-vertically representing 5 different layers of their framework.
-As you hover over each layer, the top layer would fade to an opaque state
-and reveal the next layer underneath. You can check out the animation yourself if
-you'd [like](https://medusajs.com/).
+I was browsing some GitHub repos when I stumbled upon Medusa, which is
+a digital commerce platform with a built-in framework for
+customization. I came across their homepage and saw a beautiful
+animation that I knew I had to learn how to recreate. I sat at their
+page mesmerized by how elegant this animation was, a floating 5-layer
+interactive UI stacked vertically representing 5 different layers of
+their framework. As you hover over each layer, the top layer would
+fade to an opaque state and reveal the next layer underneath. You can
+check out the animation yourself if you'd
+[like](https://medusajs.com/).
 
-This interactive layering effect was exactly what I wanted to build, but
-I needed to figure out the best way to implement it in a React application. 
-
-
-
+This interactive layering effect was exactly what I wanted to build,
+but I needed to figure out the best way to implement it in a React
+application.
 
 ### Why Spline?
 
@@ -316,6 +315,103 @@ Spline's event system and React's state management.
 4. **Document Everything**: You'll forget the solutions to problems
    you've already solved
 
+## The Reality Check: Spline's Limitations
+
+### Discovering the Truth Too Late
+
+One of the most frustrating aspects of this entire journey was that I
+didn't realize the fundamental limitations of Spline until I was deep
+into the implementation process. After spending hours debugging,
+building components, and trying different approaches, I finally
+discovered the hard truths about what Spline could and couldn't
+deliver.
+
+### Premium Requirements for Full Control
+
+One important realization I had during this journey is that to truly
+recreate the same effect and animation quality that Medusa achieved,
+you would need to pay for Spline's premium plan to get access to the
+actual object files. This gives you full granular control over every
+aspect of the 3D scene.
+
+### The Viewport Constraint
+
+The biggest limitation I discovered is that Spline only allows you to
+interact through their own viewport system. You can't add any
+interactivity outside of that viewport, which significantly limits the
+creative possibilities. This was particularly frustrating when trying
+to create seamless integrations with the rest of my React application.
+
+### A Silver Lining: Learning 3D Modeling
+
+Despite these limitations, the whole Spline experience was incredibly
+valuable for my development journey. I was getting a bit burnt out
+from traditional coding, and diving into 3D modeling through Spline's
+visual interface gave me a fresh perspective and helped me gain a
+better understanding of 3D concepts. It was a nice break from the
+usual coding routine while still being productive and learning new
+skills.
+
+## The 3D Modeling Journey
+
+Before jumping into Spline, I checked the
+[documentation](https://docs.spline.design/doc) and went through some
+tutorials they had. I think the most important thing to get familiar
+with is the UI and how to move around the 3D space, which I learned
+quickly after a few videos. Next was creating basic shapes, then
+transforming them to have extrusions to make 3D space. In that
+process, I found how to create corners or bevels on shapes or even go
+into even more detail by adding bevels to individual indices on an
+object. I spent a few hours making the first layer of my animation and
+had so much fun creating in 3D space.
+
+Another feature I soon discovered was their boolean operations, which
+allow you to union, subtract, or intersect objects. This allowed me to
+make the hardest 3D model of the whole project: the puzzle pieces.
+
+Overall, there are many great resources to follow along with in their
+official documentation and on YouTube, which all made illustrating
+anything easy and the only limitation was your imagination!
+
+## The Final Result
+
+After all the debugging, learning, and 3D modeling, here's what I was able to create:
+
+### Live Spline Scene
+
+Here's the actual interactive 3D scene embedded directly in this blog post:
+
+<SplineDemo />
+
+### Working React Component
+
+Here's the final working component that successfully loads the Spline scene:
+
+```jsx
+import Spline from '@splinetool/react-spline/next';
+
+export default function Home() {
+  return (
+    <main>
+      <Spline
+        scene="https://prod.spline.design/0tc5vcx8upINop77/scene.splinecode" 
+      />
+    </main>
+  );
+}
+```
+
+### What the Scene Contains
+
+The scene features a multi-layered 3D interface with:
+- **Monitor Layer**: The top layer representing the user interface
+- **UI Components**: Various interactive elements
+- **Puzzle Pieces**: Complex 3D models created using boolean operations
+- **Framework Elements**: Representing the underlying system architecture
+- **Cloud Elements**: Background components for visual depth
+
+While it doesn't achieve the exact Medusa-style layering effect I originally envisioned (due to Spline's limitations), it demonstrates the 3D modeling skills I developed and serves as a working example of Spline integration in React.
+
 ## The Current State
 
 ### What's Working
@@ -411,13 +507,6 @@ it more accessible than ever. With the right approach and persistence,
 you can create amazing interactive experiences that were impossible
 just a few years ago.
 
-## Resources
-
-- [Spline Documentation](https://docs.spline.design/)
-- [React Spline Package](https://www.npmjs.com/package/@splinetool/react-spline)
-- [My Spline Demo](https://your-site.com/spline-demo) (when deployed)
-- [GitHub Repository](https://github.com/your-username/your-repo) (if
-  public)
 
 ---
 

@@ -3,6 +3,7 @@ import * as runtime from "react/jsx-runtime";
 import { Callout } from "./callout";
 import { Mermaid } from "./mermaid";
 import { BlogPreview } from "./blog-preview";
+import SplineDemo from "./spline-demo";
 
 const useMDXComponent = (code: string) => {
 	const fn = new Function(code);
@@ -14,6 +15,7 @@ const components = {
 	Callout,
 	Mermaid,
 	BlogPreview,
+	SplineDemo,
 };
 
 interface MdxProps {
