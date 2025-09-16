@@ -4,9 +4,24 @@ import { useTheme } from "next-themes"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "./ui/button"
+import { useEffect, useState } from "react"
 
 export function ModeToggle() {
   const { setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return (
+      <Button variant="ghost" className="w-10 px-0">
+        <Sun className="h-[1.2rem] w-[1.2rem]" />
+        <span className="sr-only">Toggle Theme</span>
+      </Button>
+    )
+  }
 
   return(
     <DropdownMenu>

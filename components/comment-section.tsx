@@ -11,13 +11,18 @@ interface CommentSectionProps {
 export function CommentSection({ postSlug, postTitle }: CommentSectionProps) {
 	const commentRef = useRef<HTMLDivElement>(null);
 	const [giscusKey, setGiscusKey] = useState(0);
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	useEffect(() => {
 		// Scroll to comments when hash changes
-		if (window.location.hash === '#comments') {
+		if (mounted && window.location.hash === '#comments') {
 			commentRef.current?.scrollIntoView({ behavior: 'smooth' });
 		}
-	}, []);
+	}, [mounted]);
 
 	// Force re-render of Giscus when post changes
 	useEffect(() => {

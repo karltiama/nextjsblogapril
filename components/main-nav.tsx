@@ -5,9 +5,15 @@ import Link from "next/link";
 import { Icons } from "./icons";
 import { usePathname } from "next/navigation";
 import { cn } from "@/components/lib/utils";
+import { useEffect, useState } from "react";
 
 export function MainNav() {
 	const pathname = usePathname();
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => {
+		setMounted(true);
+	}, []);
 
 	return (
 		<nav className="flex items-center space-x-4 lg:space-x-6">
@@ -19,7 +25,7 @@ export function MainNav() {
 				href="/blog"
 				className={cn(
 					"text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block",
-					pathname === "/blog" ? "text-foreground" : "text-foreground/60"
+					mounted && pathname === "/blog" ? "text-foreground" : "text-foreground/60"
 				)}>
 				Blog
 			</Link>
@@ -27,7 +33,7 @@ export function MainNav() {
 				href="/projects"
 				className={cn(
 					"text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block",
-					pathname === "/projects" ? "text-foreground" : "text-foreground/60"
+					mounted && pathname === "/projects" ? "text-foreground" : "text-foreground/60"
 				)}>
 				Projects
 			</Link>
@@ -35,7 +41,7 @@ export function MainNav() {
 				href="/about"
 				className={cn(
 					"text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block",
-					pathname === "/about" ? "text-foreground" : "text-foreground/60"
+					mounted && pathname === "/about" ? "text-foreground" : "text-foreground/60"
 				)}>
 				About
 			</Link>
