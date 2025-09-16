@@ -1,0 +1,10 @@
+// This is a placeholder file to demonstrate the local file method
+// Replace this with your actual .splinecode file from Spline
+
+// To use this method:
+// 1. Export your Spline scene as .splinecode file
+// 2. Replace this file with your actual scene file
+// 3. Update the component to use: splineFile="/spline/example-scene.splinecode"
+
+// The actual .splinecode file would contain binary data and be much larger
+// This is just a placeholder to show the file structure
