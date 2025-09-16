@@ -11,7 +11,6 @@ export function Providers ({ children} : {children: ReactNode}) {
         defaultTheme="system"
         enableSystem
         disableTransitionOnChange
-        suppressHydrationWarning
       >
         {children}
       </ThemeProvider>

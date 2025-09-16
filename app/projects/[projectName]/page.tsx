@@ -23,8 +23,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ProjectPage({ params }: { params: { projectName: string } }) {
-  const project = projects.find((p) => generateSlug(p.title) === params.projectName);
+export default async function ProjectPage({ params }: { params: Promise<{ projectName: string }> }) {
+  const resolvedParams = await params;
+  const project = projects.find((p) => generateSlug(p.title) === resolvedParams.projectName);
 
   if (!project) {
     notFound();
@@ -33,7 +34,13 @@ export default function ProjectPage({ params }: { params: { projectName: string 
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
       <h1 className="font-black text-3xl md:text-4xl lg:text-5xl mb-4">{project.title}</h1>
-      <img src={project.imageSrc} alt={project.altText} className="w-full mb-6" />
+      <Image 
+        src={project.imageSrc} 
+        alt={project.altText} 
+        width={800} 
+        height={400} 
+        className="w-full mb-6" 
+      />
       <p className="text-xl text-muted-foreground mb-8">{project.description}</p>
       
       <div className="flex flex-col md:flex-row gap-8 mb-8">

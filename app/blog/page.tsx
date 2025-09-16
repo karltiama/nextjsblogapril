@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 const POSTS_PER_PAGE = 5;
 
 interface BlogPageProps {
-	searchParams: {
+	searchParams: Promise<{
 		page?: string;
-	};
+	}>;
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {

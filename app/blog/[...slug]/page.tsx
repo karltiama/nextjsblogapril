@@ -11,9 +11,9 @@ import { Tag } from "@/components/tag";
 import { CommentSection } from "@/components/comment-section";
 
 interface PostPageProps {
-	params: {
+	params: Promise<{
 		slug: string[];
-	};
+	}>;
 }
 
 async function getPostFromParams(params: PostPageProps["params"]) {
@@ -64,7 +64,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams(): Promise<
-	PostPageProps["params"][]
+	{ slug: string[] }[]
 > {
 	return posts.map((post) => ({ slug: post.slugAsParams.split("/") }));
 }
