@@ -143,10 +143,11 @@ export default function Home() {
 					Rebuild your mental model
 				</h2>
 				<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance text-center">
-					Breaking down front-end development makes learning more structured and
-					predictable by understanding the fundamental workings of its
-					components. In my blog, I share strategies for dissecting problems and
-					describe my mental model for learning specific topics.
+				I break down modern web development into clear, structured mental
+				models, from frontend architecture to backend systems and cloud
+				infrastructure. In my blog, I share strategies for dissecting complex
+				problems, learning new technologies, and building reliable full-stack
+				applications.
 				</p>
 				<ul className="flex flex-col w-full max-w-3xl">
 					{latestPosts.map((post) => (
