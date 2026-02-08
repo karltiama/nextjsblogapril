@@ -140,7 +140,7 @@ export default function Home() {
 					loading="lazy"
 				/>
 				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
-					Rebuild your mental model
+					Engineered for Thinking
 				</h2>
 				<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance text-center">
 				I break down modern web development into clear, structured mental
