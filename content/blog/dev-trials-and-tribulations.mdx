@@ -1,0 +1,105 @@
+---
+title: Development Trials & Tribulations - What Building in Public Is Really Teaching Me
+description: Reflecting on the trials and tribulations of building in public and what it is really teaching me.
+tags: ["AWS", "building in public", "learning"]
+date: 2026-02-08
+published: true
+---
+
+# Development Trials & Tribulations: What Building in Public Is Really Teaching Me
+
+### Another Iteration, Another Wall
+
+Recently, I failed an AWS certification exam, something I had been working toward for months. On paper, it’s a small setback. In reality, it triggered a much deeper self audit about how I learn, how I build, and how I measure progress.
+
+Around the same time, I found myself stuck in limbo with my projects, caught between shipping things that work and truly understanding the systems behind them. That tension is what this post is about. It’s not a list of wins, but a reflection on the friction, the missteps, and the lessons that come from building in an era of fast moving tools and AI-assisted workflows.
+
+This is my attempt to bridge the gap between *functional* and *foundational* understanding.
+
+Over the past few months, I’ve been rotating between a few core projects, each exposing a different kind of friction: technical, architectural, and sometimes personal.
+
+---
+
+## NBA Analytics: Learning the Cost of the Wrong MVP
+
+My NBA analytics project has gone through several iterations, with each version improving on the last, but not without setbacks. I initially focused heavily on historical data, assuming it would provide a strong foundation. Over time, I realized that an MVP centered around more recent and near real-time data would make far more technical sense in the long run.
+
+That realization led to multiple rewrites and moments that felt like one step forward and two steps back. But those iterations forced me to confront the importance of clean data flow, reliable data sources, and clear ownership of ingestion logic. It also pushed me to learn how to scrape and reconcile data from multiple sources, less glamorous work, but foundational for anything that scales.
+
+Lately, that’s shifted into a more operational challenge: building a repeatable data pipeline instead of a one time dataset. I’m currently working on seeding the database with consistent baseline data and setting up automated daily refreshes using AWS Lambda.
+
+That process has been more difficult than I expected, not because the code is complex, but because reliable data workflows require careful handling of edge cases, source inconsistencies, and long-term maintainability. It’s pushed me to think less like someone running scripts locally, and more like someone designing a system that can run unattended.
+
+---
+
+## EnduroStats: When UX Friction Reveals Deeper System Problems
+
+EnduroStats, my running companion app, introduced a different kind of challenge. Rather than data ingestion, the friction surfaced around account linking and recurring authentication issues. Users needing to constantly reauthorize or resign in exposed weaknesses in how I had designed the connection flow and session lifecycle management.
+
+While the issue isn’t fully resolved yet, it’s forced me to slow down and re-examine the system from the user’s perspective, not just whether something works, but whether it works *consistently* and predictably over time.
+
+It’s also been a reminder that the hardest problems often aren’t the flashy features, but the invisible infrastructure: token refresh, state management, edge cases, and the reliability expectations that come with building something people actually depend on.
+
+---
+
+## Tiama Legacy: Shipping Something Complete (and Expandable)
+
+In contrast, Tiama Legacy, a simple lodging website for my family’s rest stop in the Philippines, was a project I was able to take across the finish line. Its scope was intentionally constrained, allowing me to focus on delivering a complete, functional product while leaving room for future backend expansion.
+
+That contrast was important. It reinforced how clarity of scope and well defined boundaries can dramatically change both velocity and confidence when building.
+
+While these projects differ in domain, they all surfaced the same underlying lesson: progress isn’t linear, and most friction comes from unclear assumptions rather than lack of effort. Each project forced me to reassess how I define MVPs, how I manage complexity, and how intentional I am about the systems I choose to build.
+
+---
+
+## AI Dependency
+
+One issue I’ve become more aware of is my growing dependency on AI tools. Cursor, in particular, has allowed me to move quickly and unblock myself when building, but speed came at a cost. In some cases, I found myself shipping functionality without fully internalizing *why* it worked.
+
+The problem wasn’t the use of AI itself, but the lack of friction. When answers come too easily, it’s easy to mistake forward motion for understanding. Over time, that gap showed up in subtle ways: difficulty explaining decisions, uncertainty when debugging without assistance, and hesitation when modifying code I didn’t fully reason through.
+
+That realization forced me to rethink how I use AI. Instead of treating it as a solution generator, I’ve been more intentional about using it as a teaching tool. I now rely on it to break down core concepts, clarify mental models, and simplify complex systems into smaller, digestible pieces that I can reason about independently.
+
+The goal isn’t to avoid AI, but to balance comprehension with reliability, making sure that what I build is not only functional, but explainable. If I can’t articulate the core idea behind a piece of code, that’s a signal to slow down, not speed up.
+
+---
+
+## AWS Failure and Feedback Loop
+
+Another area where I’ve been forced to reflect is in how I approach structured learning, especially after recently failing an AWS certification exam. While the failure itself was disappointing, it revealed something more important: the way I was studying wasn’t fully preparing me for the environment I was testing in.
+
+In my preparation, I leaned heavily on Tutorial Dojo practice exams and AI tools like ChatGPT to supplement my understanding. That combination was incredibly useful for breaking down concepts, filling knowledge gaps, and reviewing explanations quickly.
+
+However, I began to realize that I had built a study loop around *instant feedback*. I was optimizing for knowing whether an answer was right or wrong immediately, rather than training my ability to reason through uncertainty under real exam pressure. The exam doesn’t provide hints, context, or confirmation, and I hadn’t practiced enough in that mode.
+
+Going forward, my next attempt will be structured differently. I plan to take more timed practice exams, simulate full exam scenarios, and use AI less as an immediate validator and more as a post-session teacher. The goal is not just to pass, but to build confidence in my own reasoning when feedback isn’t instantly available.
+
+In a strange way, the failure became a useful signal: understanding isn’t measured by how quickly you can check the answer, but by how well you can arrive at it on your own.
+
+---
+
+## Context Switching
+
+Another source of friction I’ve been confronting is how frequently I switch contexts while building. On any given day, I might move between backend schemas, OAuth flows, frontend components, cloud configuration, and deployment concerns, often within the same work session. Individually, none of these tasks are overwhelming. Collectively, they create a cognitive load that’s easy to underestimate.
+
+The result is a kind of surface level productivity. I stay busy, make progress, and close small loops, but the deeper understanding required to reason confidently about the system as a whole starts to erode. Context switching doesn’t just slow momentum, it fragments it, making it harder to hold mental models long enough for them to solidify.
+
+I began to notice this most clearly when revisiting code after a short break. Decisions that once felt obvious required rederivation. Data flows had to be retraced. Time was spent rebuilding context rather than moving forward. That wasn’t a discipline problem, it was a systems problem.
+
+To address this, I’ve started treating focus as a constraint, not an afterthought. I now define narrower scopes for each session, limit myself to a single layer of the stack at a time, and resist the urge to “just fix one more thing” outside that boundary. Fewer tasks per session has paradoxically led to clearer progress and more durable understanding.
+
+The takeaway has been simple but difficult to apply: doing less at once often leads to building more that actually lasts.
+
+---
+
+## What I’m Doing Differently Going Forward
+
+More than anything, the past few months have reminded me that growth as a developer isn’t just about building more, it’s about building with intention. The friction I’ve run into hasn’t been a sign to stop, but a signal to slow down and refine how I work.
+
+Going forward, I’m focusing on smaller, clearer MVPs, deeper understanding over speed, and more deliberate workflows. That means using AI as a learning partner rather than a shortcut, limiting context switching, and spending more time strengthening the mental models underneath the code.
+
+I’m also learning to treat failure, whether it’s a broken feature or a failed exam, not as a reflection of capability, but as feedback. Each setback has pointed to something concrete I can improve, both technically and personally.
+
+This post isn’t the end of any of these projects. It’s just a snapshot of the process: the messy middle where real learning happens. I’m still building, still iterating, and still closing the gap between something that works and something I truly understand.
+
+*Still learning. Still shipping. Still showing up.*
