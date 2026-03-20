@@ -1,0 +1,44 @@
+## Context
+
+The About block was first mounted on `/about`; the intended placement is under the wireframe terrain hero.
+
+## Goal
+
+Render `AboutSection` directly below the terrain hero stack inside `TerrainHero`.
+
+## Files Changed
+
+- `components/terrain-hero.tsx`
+
+## Implementation Notes (key logic explained)
+
+- Imported `AboutSection` and wrapped the return in a fragment (`<>...</>`).
+- First child: existing full-width hero `div` (canvas, overlay, gradient).
+- Second child: `<AboutSection />` so scrolling on `/terrain` shows terrain then the dark about band.
+
+## Key Decisions (and alternatives considered)
+
+- **Decision:** always include `AboutSection` when `TerrainHero` mounts (matches current single use on `/terrain`).
+- **Alternative:** optional prop `showAboutSection` — not added unless you need terrain without about elsewhere.
+
+## Assumptions
+
+- `id="about"` on `AboutSection` is fine on `/terrain` for `#about` links.
+
+## Failure Modes
+
+- Larger client bundle for any future reuse of `TerrainHero` without wanting about content.
+
+## How to Test (commands + steps)
+
+1. `npm run dev` → `/terrain`
+2. Scroll past the terrain — About section appears with stagger animations.
+
+## Next Steps
+
+- Remove duplicate mount from `/about` if it was added there (done in companion change).
+
+## Verification Checklist
+
+- [ ] `/terrain` shows terrain then About
+- [ ] No duplicate About on `/about` if that was the goal

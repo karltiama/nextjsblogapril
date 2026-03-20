@@ -1,0 +1,42 @@
+## Context
+
+The About section uses Tailwind arbitrary animation `animate-[fade-in-up_0.6s_ease-out_both]`, which requires a `fade-in-up` keyframe definition.
+
+## Goal
+
+Register `fade-in-up` in the Tailwind theme so arbitrary animations resolve correctly.
+
+## Files Changed
+
+- `tailwind.config.ts`
+
+## Implementation Notes (key logic explained)
+
+Extended `theme.extend.keyframes` with `fade-in-up`: opacity 0→1 and `translateY(12px)` → `0` for a subtle entrance.
+
+## Key Decisions (and alternatives considered)
+
+- **Decision:** global keyframe in Tailwind config (reusable across components).
+- **Alternative:** inline `@keyframes` in CSS module — rejected to keep one source of truth with Tailwind.
+
+## Assumptions
+
+- Tailwind JIT will emit keyframes when the arbitrary animation class is used in source.
+
+## Failure Modes
+
+- If class names are constructed dynamically without safelisting, JIT might omit the animation (not the case here — strings are static in components).
+
+## How to Test (commands + steps)
+
+1. `npm run dev`
+2. Open `/about`, scroll to About — elements should fade/slide up.
+
+## Next Steps
+
+- Add `AboutHeadline` and `AboutSection` components.
+
+## Verification Checklist
+
+- [ ] Build/dev compiles without Tailwind errors
+- [ ] Visible fade-in-up motion on scroll into view

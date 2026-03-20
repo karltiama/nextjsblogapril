@@ -1,0 +1,44 @@
+## Context
+
+`AboutSection` references `AboutHeadline` with `inView` and shared `headlineProps` from a stagger helper.
+
+## Goal
+
+Implement a client headline that staggers two lines when `inView` is true.
+
+## Files Changed
+
+- `components/about-headline.tsx`
+
+## Implementation Notes (key logic explained)
+
+- Outer `div` spreads `headlineProps` from `AboutSection`’s `stagger(1, …)` so the whole headline block uses one fade-in-up animation and delay.
+- Two lines: first plain, second gradient (`from-blue-400 to-cyan-300`).
+- `inView` is accepted for API compatibility with the user snippet (prefixed `_inView` to avoid unused-var lint).
+
+## Key Decisions (and alternatives considered)
+
+- **Decision:** avoid a second nested stagger on each line so motion does not stack with the parent `stagger(1)` animation.
+- **Alternative:** per-line delays inside `AboutHeadline` — deferred to avoid double-animation.
+
+## Assumptions
+
+- Copy can differ slightly from user paste; user can edit strings in this file.
+
+## Failure Modes
+
+- If `inView` never becomes true, headline stays `opacity-0`.
+
+## How to Test (commands + steps)
+
+1. `npm run dev` → `/about`
+2. Scroll until headline is visible — lines should appear in sequence.
+
+## Next Steps
+
+- Implement `AboutSection` and mount on the about page.
+
+## Verification Checklist
+
+- [ ] No `react/no-unescaped-entities` issues
+- [ ] Headline readable in light and dark if applicable

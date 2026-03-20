@@ -1,0 +1,45 @@
+## Context
+
+You wanted the About section background to read with **reduced opacity at the top** so the scroll handoff from terrain feels softer and more layered.
+
+## Goal
+
+Replace a flat `#0a0a0f` fill with a vertical gradient: semi-transparent at the top, solid brand dark at the bottom.
+
+## Files Changed
+
+- `components/about-section.tsx`
+
+## Implementation Notes (key logic explained)
+
+- Removed `bg-[#0a0a0f]` from the `<section>`.
+- Applied `style.background` with `linear-gradient(to bottom, …)`:
+  - **Top:** `rgba(10, 10, 15, 0.45)` (~45% opacity) so content behind (e.g. sticky terrain) can show through.
+  - **Mid:** ramps through `0.82` opacity then reaches full `#0a0a0f` by ~38% of section height.
+  - **Rest:** solid `#0a0a0f` for readable body copy.
+
+## Key Decisions (and alternatives considered)
+
+- **Decision:** gradient on the section itself (under dot grid + optional terrain blend).
+- **Alternative:** extra absolutely positioned overlay — rejected to avoid duplicating background logic.
+
+## Assumptions
+
+- `rgba(10, 10, 15, …)` matches your existing `#0a0a0f` hue.
+
+## Failure Modes
+
+- If used on a light parent (no terrain), the top may look washed — only mount with dark stack or tune stops.
+
+## How to Test (commands + steps)
+
+1. `npm run dev` → `/terrain`, scroll into About — top should feel more “airy” and blended.
+
+## Next Steps
+
+- Tweak `0.45` / `0.82` / `38%` stops if you want stronger or subtler transparency.
+
+## Verification Checklist
+
+- [ ] Lower About area still reads as solid `#0a0a0f`
+- [ ] Dot grid + `withTerrainTopBlend` still look acceptable together

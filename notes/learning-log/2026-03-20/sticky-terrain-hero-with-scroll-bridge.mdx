@@ -1,0 +1,46 @@
+## Context
+
+The terrain + about stack should feel like one continuous scroll: terrain stays pinned while the user scrolls into the about content.
+
+## Goal
+
+Make the terrain hero `position: sticky` and overlap the about block with a matching negative margin + padding bridge so the first viewport of scroll keeps terrain visible.
+
+## Files Changed
+
+- `components/terrain-hero.tsx`
+
+## Implementation Notes (key logic explained)
+
+- Wrapped layout in `relative w-full`.
+- Hero: `sticky top-0 z-0` with fixed height — `h-[100svh] min-h-[100svh]` when `fullHeight`, else `h-[600px]` (matches `HomeTerrainHero`).
+- Scroll bridge wrapper: `relative z-10` + `-mt-[H] pt-[H]` where `H` matches hero height (`100svh` or `600px`). Pulls the about stack up over the hero in layout flow while reserving one viewport of scroll “runway” before about content starts.
+- Renders `<AboutSection withTerrainTopBlend />` inside the bridge.
+
+## Key Decisions (and alternatives considered)
+
+- **Decision:** use `100svh` for full-height hero and bridge so units stay aligned on mobile (stable viewport height).
+- **Alternative:** `fixed` hero + scroll container — heavier and worse for accessibility; sticky + bridge is standard.
+
+## Assumptions
+
+- Parent layout does not apply `overflow: hidden` around this component (would break `sticky`).
+
+## Failure Modes
+
+- Mismatched `H` between hero and bridge causes a visual jump — keep classes in sync.
+- Very old browsers without `svh` may fall back inconsistently; `min-h-[100svh]` is best-effort.
+
+## How to Test (commands + steps)
+
+1. `npm run dev` → `/terrain`
+2. Scroll slowly: terrain should stay fixed until about content rises; no harsh seam if blend is enabled.
+
+## Next Steps
+
+- Tune blend gradient in `AboutSection` if the handoff still feels harsh.
+
+## Verification Checklist
+
+- [ ] Sticky works on `/terrain` with `fullHeight`
+- [ ] Non-`fullHeight` usage still gets matching `600px` bridge if used

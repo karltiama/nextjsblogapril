@@ -1,0 +1,45 @@
+## Context
+
+The new About section uses scroll-triggered stagger animations and needs a small Intersection Observer hook.
+
+## Goal
+
+Provide `useInView(threshold)` returning `{ ref, inView }` for client components.
+
+## Files Changed
+
+- `hooks/use-in-view.ts`
+
+## Implementation Notes (key logic explained)
+
+- `useRef<HTMLElement | null>` attaches to a section or block element.
+- `IntersectionObserver` with configurable `threshold` sets `inView` to `true` once the target intersects; observer is cleaned up on unmount.
+
+## Key Decisions (and alternatives considered)
+
+- **Decision:** one-shot `inView` (stays true after first intersection) so animations do not re-run on scroll away.
+- **Alternative:** toggle `inView` on every intersection change — rejected for this stagger UX.
+
+## Assumptions
+
+- Browser supports `IntersectionObserver` (standard in supported Next.js targets).
+
+## Failure Modes
+
+- If `ref` is never attached, `inView` stays `false`.
+- Very small `threshold` on tall sections may fire later than expected.
+
+## How to Test (commands + steps)
+
+1. `npm run dev`
+2. Open `/about`, scroll until the About block enters view — children should animate.
+
+## Next Steps
+
+- Wire `AboutSection` to this hook and add Tailwind `fade-in-up` keyframes.
+
+## Verification Checklist
+
+- [ ] No TypeScript errors on `hooks/use-in-view.ts`
+- [ ] Hook is only imported from client components
+- [ ] Observer disconnects when component unmounts

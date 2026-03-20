@@ -1,0 +1,33 @@
+## Context
+You requested a two-part transition: a soft gradient bridge before `AboutSection`, plus subtle texture inside `AboutSection`.
+
+## Goal
+Insert a dedicated gradient spacer before About so the top edge fades smoothly into the section background.
+
+## Files Changed
+- `components/terrain-hero.tsx`
+
+## Implementation Notes (key logic explained)
+- Added a spacer `div` right before `<AboutSection />`:
+  - fixed height: `h-40`
+  - `pointer-events-none`
+  - `background: linear-gradient(to bottom, transparent 0%, #0a0a0f 100%)`
+- Switched `AboutSection` call to `<AboutSection />` (no blend prop) so transition behavior now comes from the explicit bridge element as requested.
+
+## Key Decisions (and alternatives considered)
+- Decision: bridge lives in `terrain-hero.tsx`, not inside `AboutSection`, to match your “right before `<AboutSection />`” requirement exactly.
+- Alternative: keep using `withTerrainTopBlend` overlay inside `AboutSection`. Rejected for this implementation style.
+
+## Assumptions
+- `AboutSection` already has the subtle texture overlay internally (dot pattern, low opacity).
+
+## Failure Modes
+- If bridge height is too small/large, the handoff may feel abrupt or too long.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`.
+2. Open `/terrain`.
+3. Scroll from terrain into about and confirm a soft top fade into `#0a0a0f`.
+
+## Next Steps
+- Tune bridge height (`h-32`, `h-48`) or gradient stops to taste.
