@@ -1,0 +1,38 @@
+## Context
+You asked for animated rotating words in the About headline with smooth in/out transitions and accessibility-aware reduced-motion behavior.
+
+## Goal
+Implement rotating suffix phrases that animate every ~3.8s.
+
+## Files Changed
+- `components/about-headline.tsx`
+
+## Implementation Notes (key logic explained)
+- Added suffix constants:
+  - `ABOUT_HEADLINE_SUFFIXES`
+  - `ABOUT_HEADLINE_INTERVAL_MS = 3800`
+- Uses `useState` for active suffix index.
+- Uses `useEffect` interval when `inView` is true and reduced motion is not requested.
+- Uses `useReducedMotion()` to lock to first suffix for users preferring reduced motion.
+- Uses `AnimatePresence` + `motion.span` for enter/exit text transitions.
+- Kept parent-provided `headlineProps` spread, so existing stagger timing/style from `AboutSection` still applies.
+
+## Key Decisions (and alternatives considered)
+- Decision: rely on Framer Motion for exit/enter transitions.
+- Alternative: CSS-only keyframe swapping. Rejected due to poorer exit choreography and reduced-motion handling.
+
+## Assumptions
+- Headline should continue rotating while section remains in view.
+
+## Failure Modes
+- If `inView` never flips true, suffix stays at initial value (expected fallback behavior).
+- If animations are too subtle/fast, perceived rotation may feel abrupt depending on device refresh rate.
+
+## How to Test (commands + steps)
+1. `npm run dev`
+2. Open route with About section and scroll until it is visible.
+3. Verify suffix changes every ~3.8s with fade/slide transitions.
+4. Emulate reduced-motion in dev tools and verify suffix no longer animates.
+
+## Next Steps
+- Tune phrase list and interval for voice/timing preference.
