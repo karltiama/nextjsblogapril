@@ -1,0 +1,35 @@
+## Context
+After replacing the terrain implementation, React Three dependencies were no longer required.
+
+## Goal
+Remove unused 3D dependencies to reduce conflict surface and simplify runtime behavior.
+
+## Files Changed
+- `package.json`
+- `package-lock.json`
+
+## Implementation Notes (key logic explained)
+Uninstalled:
+- `@react-three/fiber`
+- `three`
+- `@types/three`
+
+This aligns installed dependencies with actual code usage and avoids future accidental import/runtime issues.
+
+## Key Decisions (and alternatives considered)
+- Decision: remove unused dependencies immediately.
+- Alternative: keep them installed “just in case”. Rejected because unused heavy deps increase maintenance and conflict risk.
+
+## Assumptions
+- No other app files rely on these packages right now.
+
+## Failure Modes
+- If another feature still imports these packages, build will fail with module-not-found (which is a clear signal to reinstall intentionally).
+
+## How to Test (commands + steps)
+1. Run `npm run build`.
+2. Run `npm run dev:clean`.
+3. Open `/` and verify hero renders.
+
+## Next Steps
+- If WebGL hero is needed again, reintroduce dependencies with a version matrix validated against current Next.js/React versions.

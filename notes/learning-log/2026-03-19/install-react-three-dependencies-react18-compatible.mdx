@@ -1,0 +1,33 @@
+## Context
+The homepage now uses `TerrainHero`, which depends on React Three Fiber and Three.js runtime packages.
+
+## Goal
+Install the required 3D dependencies in a way that is compatible with the current React version in this project.
+
+## Files Changed
+- `package.json`
+- `package-lock.json`
+
+## Implementation Notes (key logic explained)
+Attempted install of latest `@react-three/fiber` and `three` first. NPM reported a peer dependency conflict because latest Fiber expects React 19, while this project uses React 18. Installed `@react-three/fiber@8` with `three`, which is React 18 compatible.
+
+## Key Decisions (and alternatives considered)
+- Decision: use `@react-three/fiber@8` to match React 18.
+- Alternative: upgrade project to React 19 and use latest Fiber. Rejected for now due to broader upgrade scope.
+- Alternative: force install with `--legacy-peer-deps`. Rejected to avoid hidden incompatibilities.
+
+## Assumptions
+- The project should remain on React 18 at this time.
+
+## Failure Modes
+- If React is upgraded later, Fiber v8 may become outdated and should be upgraded accordingly.
+- If lockfile is regenerated in a different environment, dependency resolution may vary without consistent Node/NPM versions.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`.
+2. Open `/`.
+3. Confirm the terrain hero renders and animates.
+4. Confirm no module resolution errors for `@react-three/fiber` or `three`.
+
+## Next Steps
+- Optional: add `@react-three/drei` only if helper components/controls are needed.

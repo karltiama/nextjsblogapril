@@ -1,0 +1,30 @@
+## Context
+Next.js 15 disallows `ssr: false` with `next/dynamic` inside Server Components like `app/page.tsx`.
+
+## Goal
+Create a client-side boundary for the terrain hero without converting the whole page to client.
+
+## Files Changed
+- `components/home-terrain-hero.tsx`
+
+## Implementation Notes (key logic explained)
+Added a small Client Component wrapper (`HomeTerrainHero`) with `'use client'` that imports and renders `<TerrainHero fullHeight />`. This isolates browser-only rendering behind a client boundary.
+
+## Key Decisions (and alternatives considered)
+- Decision: create a dedicated wrapper component.
+- Alternative: make `app/page.tsx` a Client Component. Rejected because that would reduce server-rendering benefits for the rest of the page.
+
+## Assumptions
+- Terrain hero should remain full-height at the top of the homepage.
+
+## Failure Modes
+- If `TerrainHero` import path changes, wrapper compile will fail.
+- If full-height is not desired, layout may appear too tall.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`.
+2. Confirm build succeeds.
+3. Open `/` and verify terrain hero renders.
+
+## Next Steps
+- Replace dynamic import usage in `app/page.tsx` with this wrapper.

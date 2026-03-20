@@ -1,0 +1,31 @@
+## Context
+The homepage currently renders a traditional static hero section and does not yet include the new terrain animation component.
+
+## Goal
+Render `TerrainHero` on the home page with minimal changes.
+
+## Files Changed
+- `app/page.tsx`
+
+## Implementation Notes (key logic explained)
+Imported `TerrainHero` from `components/terrain-hero` and rendered `<TerrainHero fullHeight />` at the top of the page fragment so it appears before the existing sections.
+
+## Key Decisions (and alternatives considered)
+- Decision: prepend `TerrainHero` and keep existing homepage sections unchanged.
+- Alternative: replace the existing hero section entirely. Not chosen to avoid removing current content without explicit request.
+
+## Assumptions
+- You want the terrain hero added, not a full replacement of your existing hero layout.
+
+## Failure Modes
+- Visual duplication: the new hero and old hero both appear, making the page longer than expected.
+- If `fullHeight` is too tall for your design, above-the-fold content density may feel sparse.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`.
+2. Open `/`.
+3. Confirm animated terrain hero appears first.
+4. Scroll and verify existing sections still render correctly.
+
+## Next Steps
+- If desired, replace or trim the old hero section for a cleaner single-hero layout.

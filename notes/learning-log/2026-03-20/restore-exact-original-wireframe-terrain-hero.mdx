@@ -1,0 +1,37 @@
+## Context
+You explicitly requested the exact original wireframe terrain behavior instead of the fallback animation.
+
+## Goal
+Restore the original React Three Fiber + Three.js terrain implementation in `TerrainHero`.
+
+## Files Changed
+- `components/terrain-hero.tsx`
+
+## Implementation Notes (key logic explained)
+Replaced the CSS fallback with the original WebGL terrain code:
+- `Canvas` + `useFrame` from `@react-three/fiber`
+- procedural vertex displacement using `ImprovedNoise`
+- wireframe material rendering
+- original camera, fog, lights, and animated flying motion logic
+
+The existing API remained unchanged (`children`, `fullHeight`) so page integration did not need refactoring.
+
+## Key Decisions (and alternatives considered)
+- Decision: restore exact original behavior as requested.
+- Alternative: keep simplified fallback and optimize visuals. Deferred until later, per your instruction.
+
+## Assumptions
+- Fidelity to the original effect is preferred over immediate optimization.
+
+## Failure Modes
+- Runtime React internals error may reappear if dependency/bundler conditions regress.
+- High GPU/CPU load on lower-end devices due to per-frame geometry updates.
+
+## How to Test (commands + steps)
+1. Run `npm run dev:clean`.
+2. Open `/`.
+3. Confirm wireframe terrain animates continuously.
+4. Confirm hero text overlay still renders and remains readable.
+
+## Next Steps
+- After confirming correctness, optimize in a follow-up pass (geometry resolution, update cadence, memoization).

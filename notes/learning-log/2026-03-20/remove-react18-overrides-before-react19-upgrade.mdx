@@ -1,0 +1,28 @@
+## Context
+Project dependencies were pinned to React 18 via npm `overrides`, which blocks upgrading to React 19.
+
+## Goal
+Unblock dependency resolution so React 19 can be installed.
+
+## Files Changed
+- `package.json`
+
+## Implementation Notes (key logic explained)
+Removed the `overrides` section that forced `react` and `react-dom` to `18.2.0`. Keeping those pins would prevent npm from resolving React 19.
+
+## Key Decisions (and alternatives considered)
+- Decision: remove overrides before running upgrade.
+- Alternative: keep overrides and force install. Rejected because that would create a broken or invalid dependency tree.
+
+## Assumptions
+- The target stack should no longer hard-pin React 18.
+
+## Failure Modes
+- If other dependencies still require React 18 only, install will fail with peer conflicts.
+
+## How to Test (commands + steps)
+1. Run dependency upgrade command for React 19 and Next.
+2. Confirm npm install completes without override errors.
+
+## Next Steps
+- Upgrade Next.js + React packages together and run full build verification.

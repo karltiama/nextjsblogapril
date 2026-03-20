@@ -1,0 +1,37 @@
+## Context
+You requested the exact original wireframe terrain behavior to be restored.
+
+## Goal
+Reintroduce React Three Fiber + Three.js dependencies required by the original terrain implementation.
+
+## Files Changed
+- `package.json`
+- `package-lock.json`
+
+## Implementation Notes (key logic explained)
+Installed and restored:
+- `@react-three/fiber`
+- `three`
+- `@types/three`
+
+Then moved runtime packages (`@react-three/fiber`, `three`) into `dependencies` so they are available in production/runtime installs, while `@types/three` remains in `devDependencies`.
+
+## Key Decisions (and alternatives considered)
+- Decision: restore the same dependency family used by the original terrain code.
+- Alternative: keep CSS fallback only. Rejected because request is for exact wireframe behavior.
+
+## Assumptions
+- The app should continue using React 18.2.0 with overrides pinned.
+
+## Failure Modes
+- If a nested package introduces conflicting React internals, runtime errors may still occur and need targeted isolation.
+- If lockfile drift occurs in another environment, versions may resolve differently.
+
+## How to Test (commands + steps)
+1. Run `npm install`.
+2. Run `npm run build`.
+3. Run `npm run dev:clean`.
+4. Open `/` and verify wireframe hero renders.
+
+## Next Steps
+- Restore original `terrain-hero.tsx` implementation and validate runtime.

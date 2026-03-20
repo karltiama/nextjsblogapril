@@ -1,0 +1,36 @@
+## Context
+After moving to React 19, peer resolution blocked on packages still pinned to React 18 ranges.
+
+## Goal
+Upgrade ecosystem packages so they are compatible with React 19 and allow clean installs.
+
+## Files Changed
+- `package.json`
+- `package-lock.json`
+
+## Implementation Notes (key logic explained)
+Upgraded compatibility-sensitive packages:
+- `@react-three/fiber` -> `^9.5.0`
+- `embla-carousel-react` -> `^8.6.0`
+- `next-themes` -> `^0.4.6`
+- `lucide-react` -> `^0.577.0`
+- testing libs (`@testing-library/*`) to newer versions compatible with React 19
+
+## Key Decisions (and alternatives considered)
+- Decision: upgrade conflicting libraries rather than forcing install with legacy flags.
+- Alternative: use `--legacy-peer-deps`. Rejected due to long-term instability risk.
+
+## Assumptions
+- Updated package versions are API-compatible with current app usage.
+
+## Failure Modes
+- Some packages may introduce minor breaking changes needing code updates.
+- Lint tooling versions might still require alignment.
+
+## How to Test (commands + steps)
+1. Run `npm run build`.
+2. Run `npm run lint`.
+3. Smoke test `/` and `/terrain`.
+
+## Next Steps
+- If lint/tooling warnings persist, align ESLint major with Next.js plugin peer range.

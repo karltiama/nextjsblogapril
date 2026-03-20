@@ -1,0 +1,107 @@
+'use client'
+
+import { Canvas, useFrame } from '@react-three/fiber'
+import { useMemo, useRef } from 'react'
+import * as THREE from 'three'
+import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js'
+
+interface TerrainHeroProps {
+  children?: React.ReactNode
+  /** When true, uses min-h-screen for full-viewport landing pages */
+  fullHeight?: boolean
+}
+
+function Terrain() {
+  const mesh = useRef<THREE.Mesh>(null!)
+  const flyingRef = useRef(0)
+
+  const { geom, noise, originalPositions } = useMemo(() => {
+    // Create terrain geometry: width, height, widthSegments, heightSegments
+    // Reduced from 200x150 to 120x90 for better performance (~63% fewer vertices)
+    const geom = new THREE.PlaneGeometry(80, 60, 120, 90)
+    // Rotate to match p5.js perspective (floor-like view)
+    geom.rotateX(-Math.PI / 2.6)
+
+    // Store original positions for reference
+    const originalPositions = new Float32Array(geom.attributes.position.array)
+
+    return { geom, noise: new ImprovedNoise(), originalPositions }
+  }, [])
+
+  useFrame(() => {
+    // Flying speed: default 0.01 | medium 0.005 | slowest 0.002
+    flyingRef.current += 0.01
+
+    const pos = geom.attributes.position as THREE.BufferAttribute
+    const arr = pos.array as Float32Array
+
+    // Animate terrain vertices with noise that flows forward
+    for (let i = 0; i < arr.length; i += 3) {
+      // Use original positions for consistent noise sampling
+      const x = originalPositions[i] * 0.2
+      const y = originalPositions[i + 1] * 0.2
+
+      // Add flying offset to y to create forward movement through the terrain
+      // This simulates moving along the z-axis through an infinite landscape
+      const noiseValue = noise.noise(x, y + flyingRef.current, 0)
+      // Apply power to make peaks sharper and valleys deeper
+      const sharpened = Math.sign(noiseValue) * Math.pow(Math.abs(noiseValue), 0.5)
+      const z = sharpened * 4.0
+
+      // Update vertex height
+      arr[i + 2] = z
+    }
+
+    pos.needsUpdate = true
+    geom.computeVertexNormals()
+  })
+
+  return (
+    <mesh ref={mesh} geometry={geom} position={[0, -1.2, 0]}>
+      {/* Wireframe material for the classic terrain look */}
+      <meshStandardMaterial
+        wireframe
+        transparent
+        opacity={0.75}
+        color="#c8c8c8"
+      />
+    </mesh>
+  )
+}
+
+export default function TerrainHero({ children, fullHeight }: TerrainHeroProps) {
+  return (
+    <div className={`relative w-full overflow-hidden bg-black ${fullHeight ? 'min-h-screen' : 'h-[600px]'}`}>
+      {/* Three.js Canvas */}
+      <div className="absolute inset-0">
+        <Canvas
+          camera={{ position: [0, -10, 10], fov: 80 }}
+          dpr={[1, 2]}
+        >
+          <fog attach="fog" args={['#000000', 8, 28]} />
+          <ambientLight intensity={0.7} />
+          <directionalLight position={[4, -7, 3]} intensity={1.2} />
+          <Terrain />
+        </Canvas>
+      </div>
+
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="text-center px-0.5 pointer-events-auto z-10">
+          {children || (
+            <>
+              <h1 className="text-5xl md:text-7xl font-bold text-blue-400 mb-6 drop-shadow-lg">
+                Hi I&apos;m Karl
+              </h1>
+              <p className="text-xl md:text-2xl text-gray-200 drop-shadow-md max-w-3xl mx-auto">
+                I build scalable systems and data-driven applications that solve real problems.
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+
+      <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-gradient-to-b from-transparent to-black pointer-events-none z-20" />
+    </div>
+  )
+}
+

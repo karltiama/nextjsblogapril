@@ -1,0 +1,30 @@
+## Context
+`TerrainHero` relies on browser-only rendering via `@react-three/fiber` and React hooks.
+
+## Goal
+Make `TerrainHero` safe to import from the homepage without server-component runtime errors.
+
+## Files Changed
+- `components/terrain-hero.tsx`
+
+## Implementation Notes (key logic explained)
+Added the `'use client'` directive at the top of `terrain-hero.tsx` so Next.js treats it as a Client Component. This is required because `useRef`, `useMemo`, `useFrame`, and WebGL canvas rendering all run in the browser.
+
+## Key Decisions (and alternatives considered)
+- Decision: mark the component as client with `'use client'`.
+- Alternative: dynamically import the component with `ssr: false` from the page. Rejected for now because the direct client-component contract is simpler and clearer for this file.
+
+## Assumptions
+- The intended behavior is interactive terrain animation on the homepage.
+
+## Failure Modes
+- If omitted, Next.js may fail build/render with client hook usage in a server context.
+- If browser WebGL is unavailable, canvas rendering may degrade on unsupported devices.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`.
+2. Open the homepage.
+3. Confirm no Next.js client/server component error is shown in terminal or browser overlay.
+
+## Next Steps
+- Import and render `TerrainHero` in `app/page.tsx`.

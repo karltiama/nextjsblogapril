@@ -1,0 +1,32 @@
+## Context
+Rendering `TerrainHero` directly in the Next.js page triggered an SSR crash: `Cannot read properties of undefined (reading 'ReactCurrentOwner')` from `@react-three/fiber`.
+
+## Goal
+Prevent server-side execution of `@react-three/fiber` code while keeping `TerrainHero` on the homepage.
+
+## Files Changed
+- `app/page.tsx`
+
+## Implementation Notes (key logic explained)
+Replaced the static import of `TerrainHero` with a dynamic import via `next/dynamic` and set `ssr: false`. This ensures the component is only instantiated in the browser, avoiding SSR evaluation of fiber internals.
+
+## Key Decisions (and alternatives considered)
+- Decision: dynamic import in the page with `ssr: false`.
+- Alternative: convert the entire page to a Client Component. Rejected because this page benefits from server rendering for other sections.
+- Alternative: remove the terrain section. Rejected because the requirement is to keep it on the homepage.
+
+## Assumptions
+- The homepage should remain mostly server-rendered except for the 3D hero.
+
+## Failure Modes
+- Users may briefly see layout shift while the client-only hero hydrates.
+- If the component import path changes later, dynamic import will fail at runtime.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`.
+2. Open `/`.
+3. Confirm no `ReactCurrentOwner` error appears in terminal/browser.
+4. Confirm terrain animation renders after page load.
+
+## Next Steps
+- Optional: add a lightweight loading fallback for the dynamic hero to smooth first paint.
