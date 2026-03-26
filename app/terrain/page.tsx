@@ -23,7 +23,7 @@ export default function TerrainPage() {
 
 			<section className="container max-w-6xl py-16 lg:py-20 flex flex-col space-y-8">
 				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
-					Proof of Work
+					Featured Projects
 				</h2>
 				<p className="max-w-[52rem] mx-auto text-muted-foreground sm:text-xl text-balance text-center">
 					A selection of real-world systems and applications I&apos;ve built, with

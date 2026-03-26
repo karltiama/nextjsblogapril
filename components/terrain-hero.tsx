@@ -76,7 +76,7 @@ export default function TerrainHero({ children, fullHeight }: TerrainHeroProps) 
     : 'h-[600px]'
 
   const scrollBridgeClass = fullHeight
-    ? '-mt-[100svh] pt-[100svh]'
+    ? '-mt-[92svh] pt-[92svh]'
     : '-mt-[600px] pt-[600px]'
 
   return (
@@ -117,7 +117,7 @@ export default function TerrainHero({ children, fullHeight }: TerrainHeroProps) 
 
       <div className={`relative z-10 ${scrollBridgeClass}`}>
         <div
-          className="pointer-events-none h-40"
+          className="pointer-events-none h-28"
           style={{
             background: 'linear-gradient(to bottom, transparent 0%, #0a0a0f 100%)',
           }}

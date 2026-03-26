@@ -2,11 +2,13 @@ import Project from "./project-card";
 import { projects } from "../content/projects/projectsData";
 
 export default function ProjectList() {
+	const featuredProjects = projects.slice(0, 3);
+
 	return (
 		<section className="w-full py-12">
 			<div className="container px-4 md:px-6">
-				<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-					{projects.map((project, index) => (
+				<div className="grid grid-cols-1 gap-8">
+					{featuredProjects.map((project, index) => (
 						<Project
 							key={index}
 							title={project.title}
@@ -18,6 +20,7 @@ export default function ProjectList() {
 							githubRepo={project.githubRepo}
 							status={project.status}
 							featured={project.featured}
+							reverseLayout={index % 2 === 1}
 						/>
 					))}
 				</div>

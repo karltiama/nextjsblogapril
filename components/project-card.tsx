@@ -25,7 +25,8 @@ function Project({
 	githubRepo,
 	featured = false,
 	status = "Completed",
-}: Project) {
+	reverseLayout = false,
+}: Project & { reverseLayout?: boolean }) {
 	const statusColors = {
 		"Live": "bg-green-500/10 text-green-700 border-green-200",
 		"In Development": "bg-yellow-500/10 text-yellow-700 border-yellow-200",
@@ -36,7 +37,7 @@ function Project({
 
 	return (
 		<TooltipProvider>
-			<div className="bg-background rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl h-full flex flex-col w-full relative">
+			<div className="group bg-background rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl w-full relative grid md:grid-cols-2">
 				{/* Featured Badge */}
 				{featured && (
 					<div className="absolute top-4 left-4 z-10">
@@ -54,7 +55,9 @@ function Project({
 					</Badge>
 				</div>
 
-				<div className="relative w-full pb-[56.25%]">
+				<div
+					className={`relative min-h-[220px] md:min-h-full ${reverseLayout ? "md:order-2" : "md:order-1"}`}
+				>
 					<Image
 						src={imageSrc}
 						alt={altText}
@@ -84,7 +87,7 @@ function Project({
 					</div>
 				</div>
 				
-				<div className="p-6 flex-1 flex flex-col">
+				<div className={`p-6 flex flex-col ${reverseLayout ? "md:order-1" : "md:order-2"}`}>
 					<h3 className="text-xl font-bold">{title}</h3>
 					<p className="text-muted-foreground mt-2 flex-1 text-sm leading-relaxed">{description}</p>
 					

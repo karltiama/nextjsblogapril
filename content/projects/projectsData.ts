@@ -21,7 +21,7 @@ export const projects: Project[] = [
 	{
 		title: "Enduro Stats V2",
 		description:
-			"A complete ground-up refactor of my fitness tracking app with improved architecture, advanced analytics, and professional development practices. Built with modern React patterns, proper data persistence, and enhanced user experience.",
+			"A full-stack fitness analytics platform built to replicate and extend premium Strava insights without requiring a subscription. Originally started as a simple API wrapper, the project was later refactored from the ground up to improve data modeling, scalability, and performance. The new architecture integrates Strava OAuth, persists activity data, and enables custom analytics on training load, pacing, and consistency.",
 		imageSrc: "/endurostatsv2.png",
 		altText: "Enduro Stats V2 project screenshot",
 		technologies: [
