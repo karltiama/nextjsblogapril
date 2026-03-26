@@ -1,0 +1,55 @@
+## Context
+
+Adjusted the terrain hero vertical bridge so users can see a hint of the next section without fully leaving the hero aesthetic.
+
+## Goal
+
+Show a small portion of the next section in the initial viewport while keeping the terrain hero dominant.
+
+## Files Changed
+
+- `components/terrain-hero.tsx`
+
+## Implementation Notes (key logic explained)
+
+- Reduced full-height bridge offset from `100svh` to `92svh`:
+  - `-mt-[100svh] pt-[100svh]` -> `-mt-[92svh] pt-[92svh]`
+- This causes content below to begin slightly earlier, creating a visible next-section peek.
+- Reduced gradient transition spacer from `h-40` to `h-28` to keep the transition tighter with the new overlap.
+
+## Key Decisions (and alternatives considered)
+
+- Chosen value: **92svh** as a balanced reveal.
+- Alternatives:
+  - **96svh** for a subtler peek.
+  - **88svh** for a stronger “scroll cue”.
+
+## Assumptions
+
+- `fullHeight` mode is used on the terrain route where this reveal is desired.
+- Existing sticky/canvas behavior should remain unchanged apart from the bridge timing.
+
+## Failure Modes
+
+- Too much reveal on short viewports could reduce hero impact.
+- Too little reveal on very tall displays might still feel like a full lock.
+
+## How to Test (commands + steps)
+
+1. Run `npm run dev`.
+2. Open `/terrain`.
+3. Confirm hero still fills most of the viewport.
+4. Confirm a small amount of the next section is visible without scrolling.
+5. Resize viewport (desktop + laptop-ish heights) and verify the effect remains tasteful.
+
+## Next Steps
+
+- Tune bridge to `94svh` or `90svh` depending on visual preference.
+- Optionally make the peek amount configurable via a prop (e.g. `bridgeSvH`).
+
+## Verification Checklist
+
+- [ ] Hero remains visually dominant.
+- [ ] Next section is slightly visible in initial view.
+- [ ] Transition gradient still looks smooth.
+- [ ] No layout jump while scrolling into About section.
