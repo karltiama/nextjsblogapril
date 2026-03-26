@@ -1,0 +1,41 @@
+## Context
+You asked to keep the terrain/about experience and then show homepage proof content in this order: Projects first, then Blog.
+
+## Goal
+Refactor `terrain/page.tsx` so content after About is:
+1) Projects
+2) Blog posts
+
+## Files Changed
+- `app/terrain/page.tsx`
+
+## Implementation Notes (key logic explained)
+- Reused existing data and components:
+  - `ProjectList` for project cards
+  - `PostItem` for blog previews
+  - `sortPosts` + `posts` to derive latest published posts
+- Added a Projects section after `HomeTerrainHero` with recruiter-focused “Proof of Work” copy.
+- Added a Blog section after Projects with “Writing & Mental Models” framing.
+- Kept all existing project/blog links and slug behavior untouched.
+
+## Key Decisions (and alternatives considered)
+- Decision: implement in `app/terrain/page.tsx` only (minimal, production-minded refactor).
+- Alternative: create new reusable homepage section components first. Deferred to keep change surface small.
+
+## Assumptions
+- `HomeTerrainHero` continues to include the About section internally.
+
+## Failure Modes
+- If `posts` source is unavailable at runtime, blog list section would fail.
+- If future project data shape changes, `ProjectList` fallback/loading state may need adjustment.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`.
+2. Open `/terrain`.
+3. Scroll after About and verify:
+   - Projects section appears first
+   - Blog section appears after projects
+4. Click project cards and post links to confirm navigation still works.
+
+## Next Steps
+- If needed, add a final contact/CTA section under blog for application-focused conversion.

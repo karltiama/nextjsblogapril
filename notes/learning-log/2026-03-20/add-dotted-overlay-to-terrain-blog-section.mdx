@@ -1,0 +1,37 @@
+## Context
+The blog section on `/terrain` should visually match the About section’s subtle dotted atmosphere.
+
+## Goal
+Apply the same low-opacity radial dot overlay treatment to the “Writing & Mental Models” section.
+
+## Files Changed
+- `app/terrain/page.tsx`
+
+## Implementation Notes (key logic explained)
+- Converted the blog section into a layered structure:
+  - Section wrapper: `relative isolate overflow-hidden bg-[#0a0a0f]`
+  - Overlay layer: `absolute inset-0 pointer-events-none opacity-[0.16]`
+  - Pattern style:
+    - `backgroundImage: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.18) 1px, transparent 0)`
+    - `backgroundSize: 18px 18px`
+  - Content wrapper moved into `container relative z-[3] ...` so text remains above the overlay.
+
+## Key Decisions (and alternatives considered)
+- Decision: mirror the About overlay pattern exactly for visual consistency.
+- Alternative: create a shared background utility component. Deferred to keep refactor minimal.
+
+## Assumptions
+- Blog section should remain readable and stylistically secondary to Projects while sharing atmospheric texture.
+
+## Failure Modes
+- If z-index is changed later, the overlay could overlap content.
+- If opacity is increased too much, text contrast may degrade.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`.
+2. Open `/terrain`.
+3. Scroll to “Writing & Mental Models”.
+4. Confirm same dotted texture style as About with readable text.
+
+## Next Steps
+- If desired, extract shared texture layer into a reusable section background helper.

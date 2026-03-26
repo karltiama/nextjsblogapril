@@ -1,0 +1,66 @@
+## Context
+
+The portfolio app already uses `@react-three/fiber` and `three`. This entry documents adding a test route for stacked GLB layers with spring motion and pointer logic suitable for overlapping meshes.
+
+## Goal
+
+Implement a vertical stack of three instances of one GLB with `hoveredIndex: null | 1 | 2`, spring-animated Y offsets and highlight scale on layers 1–2, top layer (index 0) ignoring hover, and reliable picking when the middle layer occludes the bottom layer.
+
+## Files Changed
+
+- [`package.json`](../../../package.json) — added `@react-three/drei`, `@react-spring/three`, `@react-spring/core`.
+- [`components/stack-layers-constants.ts`](../../../components/stack-layers-constants.ts) — `BASE_SPACING`, `LIFT_STEP`-derived lifts, spring config, GLB URL.
+- [`components/stacked-glb-layers.tsx`](../../../components/stacked-glb-layers.tsx) — `useGLTF` + `Clone` ×3, `@react-spring/three` springs, raycast strategy.
+- [`components/stack-layers-scene.tsx`](../../../components/stack-layers-scene.tsx) — `Canvas`, lights, `Environment`, `OrbitControls`, `Suspense`.
+- [`components/stack-layers-test-client.tsx`](../../../components/stack-layers-test-client.tsx) — `dynamic(..., { ssr: false })` wrapper (Next.js 16 requires this in a Client Component).
+- [`app/stack-layers-test/page.tsx`](../../../app/stack-layers-test/page.tsx) — test page and copy.
+
+## Implementation Notes (key logic explained)
+
+- **Indices:** 0 = top, 1 = middle, 2 = bottom. Collapsed Y uses `(2 - i) * BASE_SPACING` so the top sits highest.
+- **Top layer pass-through:** All meshes under group 0 replace `raycast` with a no-op so the cursor can hit layers 1 and 2. No `hoveredIndex` is driven from layer 0.
+- **Occlusion (1 vs 2):** A single raycast would always hit layer 1 first. **Two-pass picking:** temporarily disable layer 1 raycasts, test only layer 2; if no hit, restore layer 1 and test again. This matches “bottom wins when both would otherwise register.”
+- **Springs:** `useSpring` from `@react-spring/three` animates `position-y` and uniform `scale` for highlight on layers 1–2 only.
+- **Pointer wiring:** `pointermove` / `pointerleave` on `gl.domElement` so picking stays consistent without relying on a parent mesh receiving events.
+
+## Key Decisions (and alternatives considered)
+
+- **Dependencies:** Added **Drei** for `useGLTF` / `Clone` / scene helpers and **react-spring** for springs. **Alternative:** `useFrame` + `maath`/`THREE.MathUtils.lerp` — fewer deps, no spring physics.
+- **Picking:** Chose **two-pass raycast** instead of screen-space AABB tests — fewer projections, same outcome for stacked opaque meshes.
+- **Next.js 16:** `dynamic(..., { ssr: false })` cannot live in a Server Component; moved into [`stack-layers-test-client.tsx`](../../../components/stack-layers-test-client.tsx) (`'use client'`), matching the pattern used by [`home-terrain-hero.tsx`](../../../components/home-terrain-hero.tsx).
+
+## Assumptions
+
+- Asset path [`/glb/UIani.glb`](../../../public/glb/UIani.glb) is valid and each `Clone` produces pickable meshes after layout.
+- Orbit controls and canvas pointer listeners coexist acceptably for local testing.
+
+## Failure Modes
+
+- **Empty mesh lists after layout:** If `Clone` mounts late, the first `useLayoutEffect` pass could miss meshes; pointer picking would do nothing until a refresh. Mitigation: add a follow-up `requestAnimationFrame` collect or depend on a “ready” flag.
+- **Very large or offset models:** Camera and `BASE_SPACING` may need tuning so all three layers stay in view and lifts read clearly.
+- **HDR / Environment:** `Environment preset="city"` requires network on first load in dev; failures fall back to lights only if configured.
+
+## How to Test (commands + steps)
+
+1. `npm run dev`
+2. Open `http://localhost:3000/stack-layers-test`
+3. Hover the **bottom** region of the stack (layer 2): top lifts more, middle lifts slightly, bottom layer scales up slightly.
+4. Hover the **middle** (layer 1): only top lifts a bit; middle scales up slightly.
+5. Move the pointer over the **top** shell only: no lift animation (top does not drive state).
+6. Move the pointer off the canvas: stack returns to collapsed springs.
+7. Drag to orbit; repeat hovers.
+
+## Next Steps
+
+- Tune `BASE_SPACING` / lift multipliers per real-world model bounds.
+- Optionally add `PerformanceMonitor` or swap `Environment` for a static HDRI if offline loading matters.
+
+## Verification Checklist
+
+1. `npm run build` completes without errors.
+2. `/stack-layers-test` loads the GLB without runtime exceptions.
+3. Hovering layer 1 vs 2 produces visibly different lift heights.
+4. Hovering the top visual does not trigger lift state (only layers 1–2 do).
+5. Pointer leave clears hover and the stack animates back smoothly.
+6. Orbit controls still rotate the scene while hover behavior works.
+7. No unexpected console warnings from Drei/react-spring beyond known dev noise.

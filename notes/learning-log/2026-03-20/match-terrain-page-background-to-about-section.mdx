@@ -1,0 +1,29 @@
+## Context
+The terrain page background behind/around sections should visually match the About section color for a seamless look.
+
+## Goal
+Align `/terrain` page background with About section background color.
+
+## Files Changed
+- `app/terrain/page.tsx`
+
+## Implementation Notes (key logic explained)
+Updated the top-level page wrapper class from `bg-black` to `bg-[#0a0a0f]`, matching the About section base color and reducing visible contrast seams between sections.
+
+## Key Decisions (and alternatives considered)
+- Decision: change only the page-level wrapper background.
+- Alternative: update each section background individually. Rejected as unnecessary and more error-prone.
+
+## Assumptions
+- About section canonical dark color is `#0a0a0f`.
+
+## Failure Modes
+- If future sections rely on pure black contrast, they may appear slightly softer with the new base.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`.
+2. Open `/terrain`.
+3. Check transitions around About/Projects/Blog for consistent dark background.
+
+## Next Steps
+- Optionally align the Back home button background tint if you want exact color consistency there too.
