@@ -66,10 +66,10 @@ export function AboutSection({ withTerrainTopBlend = false }: AboutSectionProps)
 						"mb-6 text-lg leading-relaxed text-gray-400 md:text-xl"
 					)}
 				>
-					I&apos;m a software engineer who cares deeply about craft — from the
-					architecture that holds a system together to the interface that makes
-					it feel effortless. I focus on building scalable, well-tested software
-					that solves real problems.
+					I specialize in dissecting the architecture that holds a system 
+					together and the mental models that make it legible. I build software 
+					that isn&apos;t just scalable, but defensible — where every technical 
+					trade-off is intentional.
 				</p>
 				<p
 					{...stagger(
@@ -77,22 +77,25 @@ export function AboutSection({ withTerrainTopBlend = false }: AboutSectionProps)
 						"mb-12 text-lg leading-relaxed text-gray-400 md:text-xl"
 					)}
 				>
-					Whether it&apos;s designing APIs, shipping production frontends, or
-					exploring new tools and frameworks, I bring curiosity and rigor to
+					Whether I&apos;m designing APIs, shipping production frontends, or 
+					writing about engineering systems, I bring curiosity and rigor to 
 					everything I build.
 				</p>
 				<div className="grid grid-cols-1 gap-8 border-t border-white/10 pt-12 sm:grid-cols-3">
 					<div {...stagger(4, "")}>
-						<p className="mb-1 text-3xl font-bold text-white">5+</p>
-						<p className="text-sm text-gray-500">Years of experience</p>
+						<p className="mb-1 text-3xl font-bold text-white tracking-tight">30+</p>
+						<p className="text-sm text-gray-500 uppercase tracking-widest">Articles Written</p>
+						<p className="mt-1 text-xs text-blue-400/80 italic font-medium">Shared mental models</p>
 					</div>
 					<div {...stagger(5, "")}>
-						<p className="mb-1 text-3xl font-bold text-white">Full-Stack</p>
-						<p className="text-sm text-gray-500">End-to-end delivery</p>
+						<p className="mb-1 text-3xl font-bold text-white tracking-tight">First Principles</p>
+						<p className="text-sm text-gray-500 uppercase tracking-widest">Foundation</p>
+						<p className="mt-1 text-xs text-blue-400/80 italic font-medium">System-wide thinking</p>
 					</div>
 					<div {...stagger(6, "")}>
-						<p className="mb-1 text-3xl font-bold text-white">Open Source</p>
-						<p className="text-sm text-gray-500">Community contributor</p>
+						<p className="mb-1 text-3xl font-bold text-white tracking-tight">Architecture-First</p>
+						<p className="text-sm text-gray-500 uppercase tracking-widest">Strategy</p>
+						<p className="mt-1 text-xs text-blue-400/80 italic font-medium">Design before code</p>
 					</div>
 				</div>
 			</div>

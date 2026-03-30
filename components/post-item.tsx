@@ -25,7 +25,7 @@ export function PostItem({
 				<h2 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight">
 					<Link 
 						href={"/" + slug}
-						className="break-words hyphens-auto hover:text-primary transition-colors"
+						className="break-words hyphens-auto hover:text-blue-400 transition-colors"
 					>
 						{title}
 					</Link>
@@ -53,7 +53,11 @@ export function PostItem({
 				</dl>
 				<Link
 					href={slug}
-					className={cn(buttonVariants({ variant: "link" }), "py-0 h-auto self-start sm:self-auto")}>
+					className={cn(
+						buttonVariants({ variant: "link" }),
+						"py-0 h-auto self-start sm:self-auto text-blue-400 hover:text-blue-300 font-semibold"
+					)}
+				>
 					Read More →
 				</Link>
 			</div>

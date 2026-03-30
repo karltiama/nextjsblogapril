@@ -4,9 +4,9 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const ABOUT_HEADLINE_SUFFIXES = [
-	"solve real-world problems.",
-	"scale with users.",
-	"actually get used.",
+	"demystify the 'why' behind the code.",
+	"evolve systems for long-term thinking.",
+	"make the invisible logic visible.",
 ] as const;
 
 const ABOUT_HEADLINE_INTERVAL_MS = 3800;

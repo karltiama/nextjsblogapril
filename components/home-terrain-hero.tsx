@@ -6,6 +6,6 @@ const TerrainHero = dynamic(() => import("@/components/terrain-hero"), {
 	ssr: false,
 });
 
-export default function HomeTerrainHero() {
-	return <TerrainHero fullHeight />;
+export default function HomeTerrainHero({ children }: { children?: React.ReactNode }) {
+	return <TerrainHero fullHeight>{children}</TerrainHero>;
 }

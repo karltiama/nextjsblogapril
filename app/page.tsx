@@ -1,180 +1,117 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Suspense } from "react";
-import { cn, sortPosts } from "@/components/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { siteConfig } from "@/config/site";
-import { posts } from "#site/content";
-import { PostItem } from "@/components/post-item";
-import { Metadata } from "next";
+import HomeTerrainHero from "@/components/home-terrain-hero";
 import ProjectList from "@/components/project-list";
-
-
+import { PostItem } from "@/components/post-item";
+import { cn, sortPosts } from "@/components/lib/utils";
+import { posts } from "#site/content";
+import { Metadata } from "next";
+import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-	title: "Karl Tiama - Hi, I'm Karl & Technical Writer",
-	description: "Experienced React developer specializing in Next.js, TypeScript, and API integrations. Building scalable web applications and sharing knowledge through technical writing.",
+	title: "Karl Tiama - Mental Models & Technical Writing",
+	description: "Software Engineer specializing in scalable web systems and technical mental models. I build robust applications and write about the engineering trade-offs that turn complexity into clear decisions.",
 };
-
-
 
 export default function Home() {
 	const latestPosts = sortPosts(posts.filter((post) => post.published)).slice(0, 3);
 
 	return (
-		<>
-			{/* Hero Section - More Employer Focused */}
-			<section className="min-h-screen md:pb-12 md:mt-10 lg:py-28">
-				<div className="container grid grid-cols-1 lg:grid-cols-3 gap-4 text-center">
-					{/* Left Column */}
-					<div className="hidden lg:flex flex-col gap-4 items-center justify-between">
-						<Image
-							width={200}
-							height={200}
-							src="/programming.svg"
-							alt="Illustration of a person programming"
-							loading="lazy"
-						/>
-						<Image
-							width={200}
-							height={200}
-							src="/visual_data.svg"
-							alt="Illustration of a person visualizing data"
-							loading="lazy"
-						/>
-						<Image
-							width={200}
-							height={200}
-							src="/biking.svg"
-							alt="Illustration of a person biking"
-							loading="lazy"
-						/>
-					</div>
-					{/* Center Column */}
-					<div className="flex flex-col gap-6 items-center pt-20">
-						<Image
-							width={200}
-							height={200}
-							src="/drink_coffee.svg"
-							alt="Illustration of a person drinking coffee"
-						/>
-						<div className="space-y-2">
-							<h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-balance">
-								Hi, I&apos;m Karl
-							</h1>
-							<p className="text-lg text-muted-foreground">
-								Building Scalable Web Applications
-							</p>
-						</div>
+		<div className="relative min-h-screen bg-[#0a0a0f]">
+			<HomeTerrainHero>
+				<h1 className="text-5xl md:text-7xl font-black text-blue-400 mb-6 drop-shadow-lg tracking-tight">
+					Architecting Mental Models
+				</h1>
+				<p className="text-xl md:text-2xl text-gray-200 drop-shadow-md max-w-3xl mx-auto mb-10 leading-relaxed">
+					I build scalable systems and share the engineering trade-offs and mental models 
+					that turn complex problems into clear, structured decisions.
+				</p>
+				<div className="flex flex-col sm:flex-row gap-4 justify-center pointer-events-auto px-4">
+					<Link
+						href="/blog"
+						className={cn(
+							buttonVariants({ size: "lg" }),
+							"w-full sm:w-fit min-w-[160px] max-w-[280px] mx-auto sm:mx-0 bg-blue-400 text-black hover:bg-blue-500 border-none transition-colors"
+						)}
+					>
+						Read the Blog
+					</Link>
+					<Link
+						href="/projects"
+						className={cn(
+							buttonVariants({ variant: "outline", size: "lg" }),
+							"w-full sm:w-fit min-w-[160px] max-w-[280px] mx-auto sm:mx-0 backdrop-blur-sm bg-blue-400/5 border-blue-400 text-blue-400 hover:bg-blue-400/10 transition-colors"
+						)}
+					>
+						View Projects
+					</Link>
+				</div>
+			</HomeTerrainHero>
+
+			{/* Writing Section - Moved Up for Focus */}
+			<section className="relative isolate overflow-hidden bg-[#0a0a0f] py-16 lg:py-24">
+				<div
+					className="pointer-events-none absolute inset-0 opacity-[0.16]"
+					style={{
+						backgroundImage:
+							'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.18) 1px, transparent 0)',
+						backgroundSize: '18px 18px',
+					}}
+				/>
+				<div className="container relative z-[3] max-w-4xl flex flex-col space-y-10">
+					<div className="flex flex-col space-y-4 text-center">
+						<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight">
+							Writing & Thinking
+						</h2>
 						<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance">
-							I specialize in the React ecosystem and modern web technologies, 
-							with a passion for creating user-focused applications and sharing 
-							knowledge through technical writing.
+							After shipping systems, I document how they work. I write about
+							architecture, engineering trade-offs, and the mental models that help
+							turn complexity into clear decisions.
 						</p>
-						
-
-
-						<div className="flex flex-col gap-4 justify-center sm:flex-row">
-							<Link
-								href="/projects"
-								className={cn(
-									buttonVariants({ size: "lg" }),
-									"w-full sm:w-fit"
-								)}>
-								View My Projects
-							</Link>
-							<Link
-								href="/about"
-								className={cn(
-									buttonVariants({ variant: "outline", size: "lg" }),
-									"w-full sm:w-fit"
-								)}>
-								About Me
-							</Link>
-							<Link
-								href={siteConfig.links.github}
-								target="_blank"
-								rel="noreferrer"
-								className={cn(
-									buttonVariants({ variant: "outline", size: "lg" }),
-									"w-full sm:w-fit"
-								)}>
-								GitHub
-							</Link>
-						</div>
 					</div>
-					{/* Right Column */}
-					<div className="hidden lg:flex flex-col gap-4 items-center justify-between">
-						<Image
-							width={200}
-							height={200}
-							src="/building_website.svg"
-							alt="Illustration of a person building a website"
-							loading="lazy"
-						/>
-						<Image
-							width={200}
-							height={200}
-							src="/hacker_mind.svg"
-							alt="Illustration of a person hacking"
-							loading="lazy"
-						/>
-						<Image
-							width={200}
-							height={200}
-							src="/running.svg"
-							alt="Illustration of a person running"
-							loading="lazy"
-						/>
+					<ul className="flex flex-col w-full max-w-3xl mx-auto">
+						{latestPosts.map((post) => (
+							<li key={post.slug} className="first:border-t first:border-border">
+								<PostItem
+									slug={post.slug}
+									title={post.title}
+									description={post.description}
+									date={post.date}
+									tags={post.tags}
+								/>
+							</li>
+						))}
+					</ul>
+					<div className="flex justify-center pt-8">
+						<Link
+							href="/blog"
+							className={cn(
+								buttonVariants({ variant: "ghost", size: "lg" }),
+								"group text-blue-400 hover:text-blue-300 hover:bg-blue-400/10"
+							)}
+						>
+							View all posts
+							<span className="ml-2 transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
+						</Link>
 					</div>
 				</div>
 			</section>
 
-			<section className="container max-w-4xl py-6 lg:lg:py-10 flex flex-col space-y-10 mt-30 justify-between items-center">
-				<Image
-					className=""
-					width={200}
-					height={200}
-					src="/firmware.svg"
-					alt="Illustration of a person working on firmware"
-					loading="lazy"
-				/>
-				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
-					Engineered for Thinking
-				</h2>
-				<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance text-center">
-				I break down modern web development into clear, structured mental
-				models, from frontend architecture to backend systems and cloud
-				infrastructure. In my blog, I share strategies for dissecting complex
-				problems, learning new technologies, and building reliable full-stack
-				applications.
-				</p>
-				<ul className="flex flex-col w-full max-w-3xl">
-					{latestPosts.map((post) => (
-						<li key={post.slug} className="first:border-t first:border-border">
-							<PostItem
-								slug={post.slug}
-								title={post.title}
-								description={post.description}
-								date={post.date}
-								tags={post.tags}
-							/>
-						</li>
-					))}
-				</ul>
-			</section>
-			<section className="container max-w-6xl py-6 lg:lg:py-10 flex flex-col space-y-10 mt-60">
-				<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center">
-					My Projects
-				</h2>
-				<p className="max-w-[42rem] mx-auto text-muted-foreground sm:text-xl text-balance text-center">
-					Here are some of the projects I have worked on. I am always looking
-					forward to new projects and collaborations.
-				</p>
+			{/* Projects Section */}
+			<section className="container max-w-6xl py-20 lg:py-32 flex flex-col space-y-12">
+				<div className="flex flex-col space-y-4 text-center">
+					<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight">
+						Featured Systems
+					</h2>
+					<p className="max-w-[52rem] mx-auto text-muted-foreground sm:text-xl text-balance">
+						A selection of real-world systems and applications I&apos;ve built, with
+						a focus on scalability, reliability, and measurable outcomes.
+					</p>
+				</div>
 				<Suspense fallback={<div>Loading projects...</div>}>
 					<ProjectList />
 				</Suspense>
 			</section>
-		</>
+		</div>
 	);
 }
