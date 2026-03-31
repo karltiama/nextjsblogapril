@@ -1,4 +1,4 @@
-import { ArrowRightIcon, ExternalLink, Github, Star } from "lucide-react";
+import { ArrowRightIcon, ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -7,8 +7,9 @@ import {
 	TooltipTrigger,
 	TooltipContent,
 } from "@/components/ui/tooltip";
-import { Badge } from "@/components/ui/badge";
+
 import { Button } from "@/components/ui/button";
+import { cn } from "@/components/lib/utils";
 import type { Project } from "@/lib/types";
 
 function generateSlug(title: string) {
@@ -27,59 +28,45 @@ function Project({
 	status = "Completed",
 	reverseLayout = false,
 }: Project & { reverseLayout?: boolean }) {
-	const statusColors = {
-		"Live": "bg-green-500/10 text-green-700 border-green-200",
-		"In Development": "bg-yellow-500/10 text-yellow-700 border-yellow-200",
-		"Completed": "bg-blue-500/10 text-blue-700 border-blue-200",
-		"Refactoring v2": "bg-purple-500/10 text-purple-700 border-purple-200",
-		"Archived": "bg-gray-500/10 text-gray-700 border-gray-200"
-	};
+
 
 	return (
 		<TooltipProvider>
-			<div className="group bg-background rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl w-full relative grid md:grid-cols-2">
-				{/* Featured Badge */}
-				{featured && (
-					<div className="absolute top-4 left-4 z-10">
-						<Badge className="bg-primary/90 text-primary-foreground">
-							<Star className="w-3 h-3 mr-1" />
-							Featured
-						</Badge>
-					</div>
-				)}
-				
-				{/* Status Badge */}
-				<div className="absolute top-4 right-4 z-10">
-					<Badge className={statusColors[status]}>
-						{status}
-					</Badge>
-				</div>
-
-				<div
-					className={`relative min-h-[220px] md:min-h-full ${reverseLayout ? "md:order-2" : "md:order-1"}`}
+			<div className="group relative grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center pb-20 md:pb-32">
+				{/* Image "Card" */}
+				<div 
+					className={cn(
+						"relative aspect-[16/10] w-full rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 group-hover:shadow-[0_20px_50px_rgba(59,130,246,0.15)] transition-shadow duration-500",
+						reverseLayout ? "md:order-2" : "md:order-1"
+					)}
 				>
 					<Image
 						src={imageSrc}
 						alt={altText}
 						fill
-						className="absolute top-0 left-0 w-full h-full object-cover group-hover:opacity-80 transition-opacity"
+						className="object-cover object-top"
+						sizes="(max-width: 768px) 100vw, 50vw"
+						priority={featured}
 					/>
-					{/* Overlay on hover */}
-					<div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
-						<div className="flex gap-2">
+					
+
+
+					{/* Image Hover Overlay */}
+					<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+						<div className="flex gap-3 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
 							{liveLink && (
-								<Button size="sm" asChild>
-									<Link href={liveLink} target="_blank" rel="noopener noreferrer">
-										<ExternalLink className="w-4 h-4 mr-1" />
+								<Button size="sm" asChild className="bg-blue-400 text-black hover:bg-blue-500 border-none transition-colors rounded-lg">
+									<Link href={liveLink as string} target="_blank" rel="noopener noreferrer">
+										<ExternalLink className="w-4 h-4 mr-2" />
 										Live Demo
 									</Link>
 								</Button>
 							)}
 							{githubRepo && (
-								<Button size="sm" variant="outline" asChild>
-									<Link href={githubRepo} target="_blank" rel="noopener noreferrer">
-										<Github className="w-4 h-4 mr-1" />
-										Code
+								<Button size="sm" variant="outline" asChild className="backdrop-blur-md bg-white/10 border-white/20 text-white hover:bg-white/20 transition-colors rounded-lg">
+									<Link href={githubRepo as string} target="_blank" rel="noopener noreferrer">
+										<Github className="w-4 h-4 mr-2" />
+										Source
 									</Link>
 								</Button>
 							)}
@@ -87,49 +74,50 @@ function Project({
 					</div>
 				</div>
 				
-				<div className={`p-6 flex flex-col ${reverseLayout ? "md:order-1" : "md:order-2"}`}>
-					<h3 className="text-xl font-bold">{title}</h3>
-					<p className="text-muted-foreground mt-2 flex-1 text-sm leading-relaxed">{description}</p>
+				{/* Content area */}
+				<div className={cn(
+					"flex flex-col space-y-6",
+					reverseLayout ? "md:order-1 md:text-right md:items-end" : "md:order-2"
+				)}>
+					<div className={cn("space-y-2 w-fit", reverseLayout ? "ml-auto" : "")}>
+						<h3 className="text-3xl md:text-4xl font-bold tracking-tight text-white group-hover:text-blue-400 transition-colors duration-300">
+							{title}
+						</h3>
+						<div className={cn("h-1 w-12 bg-blue-400 rounded-full transition-all duration-500 ease-out group-hover:w-full", reverseLayout ? "ml-auto" : "")} />
+					</div>
+
+					<p className="text-gray-400 text-lg leading-relaxed max-w-xl">
+						{description}
+					</p>
 					
 					{/* Technology Stack */}
-					<div className="flex items-center gap-2 mt-4 flex-wrap">
-						{technologies.slice(0, 4).map((tech, index) => {
+					<div className={cn("flex flex-wrap gap-3 pt-2", reverseLayout ? "justify-end" : "")}>
+						{technologies.map((tech, index) => {
 							const IconComponent = tech.icon;
 							return (
 								<Tooltip key={index} delayDuration={0}>
 									<TooltipTrigger asChild>
-										<div className="p-2 rounded-md bg-muted/50 hover:bg-muted transition-colors">
-											<IconComponent className="w-4 h-4" />
+										<div className="p-3 rounded-xl bg-white/5 border border-white/10 hover:border-blue-400/50 hover:bg-blue-400/10 transition-all duration-300 group/icon">
+											<IconComponent className="w-5 h-5 text-gray-400 group-hover/icon:text-blue-400 transition-colors" />
 										</div>
 									</TooltipTrigger>
-									<TooltipContent>
+									<TooltipContent className="bg-gray-900 border-white/10 text-white text-xs">
 										<p>{tech.name}</p>
 									</TooltipContent>
 								</Tooltip>
 							);
 						})}
-						{technologies.length > 4 && (
-							<Badge variant="outline" className="text-xs">
-								+{technologies.length - 4} more
-							</Badge>
-						)}
 					</div>
 					
 					{/* Action Buttons */}
-					<div className="mt-6 flex gap-2">
-						<Button asChild className="flex-1" variant="outline">
-							<Link href={`/projects/${generateSlug(title)}`}>
-								View Details
-								<ArrowRightIcon className="w-4 h-4 ml-1" />
-							</Link>
-						</Button>
-						{liveLink && (
-							<Button asChild size="sm" variant="outline">
-								<Link href={liveLink} target="_blank" rel="noopener noreferrer">
-									<ExternalLink className="w-4 h-4" />
-								</Link>
-							</Button>
-						)}
+					<div className="pt-4">
+						<Link 
+							href={`/projects/${generateSlug(title)}` as string}
+							className="inline-flex items-center text-blue-400 font-bold tracking-wide uppercase text-sm hover:text-blue-300 transition-colors group/link"
+						>
+							Explore Case Study
+							<ArrowRightIcon className="w-4 h-4 ml-2 transition-transform duration-300 group-hover/link:translate-x-2" />
+						</Link>
 					</div>
 				</div>
 			</div>

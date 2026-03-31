@@ -2,7 +2,7 @@ import Project from "./project-card";
 import { projects } from "../content/projects/projectsData";
 
 export default function ProjectList() {
-	const featuredProjects = projects.slice(0, 3);
+	const featuredProjects = projects.filter(p => p.featured);
 
 	return (
 		<section className="w-full py-12">

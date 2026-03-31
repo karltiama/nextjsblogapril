@@ -13,6 +13,8 @@ import {
 	SiTensorflow,
 	SiPandas,
 	SiScikitlearn,
+	SiTerraform,
+	SiAmazonwebservices,
 } from "react-icons/si";
 import { FaStrava } from "react-icons/fa";
 import { Project } from "../../lib/types";
@@ -21,7 +23,7 @@ export const projects: Project[] = [
 	{
 		title: "Enduro Stats V2",
 		description:
-			"A full-stack fitness analytics platform built to replicate and extend premium Strava insights without requiring a subscription. Originally started as a simple API wrapper, the project was later refactored from the ground up to improve data modeling, scalability, and performance. The new architecture integrates Strava OAuth, persists activity data, and enables custom analytics on training load, pacing, and consistency.",
+			"A full-stack fitness analytics platform built to replicate and extend premium Strava insights without requiring a subscription. Originally started as a simple API wrapper, the project was later refactored from the ground up to improve data modeling, scalability, and performance.",
 		imageSrc: "/endurostatsv2.png",
 		altText: "Enduro Stats V2 project screenshot",
 		technologies: [
@@ -31,8 +33,6 @@ export const projects: Project[] = [
 			{ icon: FaStrava, name: "Strava API" },
 			{ icon: SiSupabase, name: "Supabase" },
 			{ icon: SiReactquery, name: "React Query" },
-			{ icon: SiResend, name: "Resend" },
-			{ icon: SiUmami, name: "Umami" },
 		],
 		liveLink: "https://endurostats.vercel.app/",
 		githubRepo: "https://github.com/karltiama/endurorevamp",
@@ -53,7 +53,7 @@ export const projects: Project[] = [
 			"Establish professional development practices including testing and CI/CD",
 			"Create a more intuitive and feature-rich user experience"
 		],
-		implementation: "I completely rebuilt the application from the ground up using modern React patterns and best practices. The new architecture includes proper data modeling with Supabase, intelligent caching strategies, and a robust data synchronization system. I implemented React Query for efficient data fetching, proper error boundaries, and comprehensive testing. The app now features advanced analytics, trend visualization, and a much more maintainable codebase.",
+		implementation: "I completely rebuilt the application from the ground up using modern React patterns and best practices. The new architecture includes proper data modeling with Supabase, intelligent caching strategies, and a robust data synchronization system. I implemented React Query for efficient data fetching, proper error boundaries, and comprehensive testing.",
 		learnings: [
 			"Deep understanding of React Query and modern data fetching patterns",
 			"Experience with database design and data synchronization strategies",
@@ -61,108 +61,63 @@ export const projects: Project[] = [
 			"Professional development workflow with testing, CI/CD, and code quality tools",
 			"Performance optimization and caching strategies for real-time data applications"
 		],
-		changes: [
-			"Complete architectural overhaul with proper separation of concerns",
-			"Advanced analytics and trend analysis capabilities",
-			"Professional testing suite and CI/CD pipeline",
-			"Improved performance through intelligent caching and data management",
-			"Better user experience with enhanced UI/UX and responsive design"
-		],
 		screenshots: [
 			{ src: "/activity-analytics.png", alt: "Activity Analytics" },
 			{ src: "/performance-trends.png", alt: "Performance Trends" },
 			{ src: "/activegoals.png", alt: "Active Goals" },
 			{ src: "/trainingload.png", alt: "Training Load" },
 		],
+	},
+	{
+		title: "NBA Analytics App",
+		description:
+			"A real-time NBA analytics platform that leverages automated data ingestion and custom projection models to provide actionable insights for evaluating player prop bets.",
+		imageSrc: "/businessplan.png",
+		altText: "NBA Analytics App preview",
+		technologies: [
+			{ icon: SiNextdotjs, name: "Next.js" },
+			{ icon: SiTypescript, name: "TypeScript" },
+			{ icon: SiSupabase, name: "Supabase" },
+			{ icon: SiAmazonwebservices, name: "AWS Lambda" },
+			{ icon: SiTerraform, name: "Terraform" },
+		],
+		status: "In Development" as const,
+		featured: true,
+		situation: "The sports betting space is heavily driven by data, but most tools either rely on surface-level stats or require manual analysis. I set out to build a system that could ingest real-time National Basketball Association data and turn it into actionable insights for evaluating player prop bets.",
+		challenges: [
+			"Early on, I underestimated the complexity of sourcing reliable data.",
+			"Attempted to scrape multiple websites for stats and odds",
+			"Ran into inconsistent data formats and mismatched schemas",
+			"Faced accuracy concerns due to unreliable or partial data",
+			"Spent significant time cleaning data instead of building features"
+		],
+		task: [
+			"Design a reliable, scalable system that uses consistent and trustworthy data sources",
+			"Separate raw data from processed analytics to ensure data integrity",
+			"Automate ingestion via AWS Lambda + EventBridge to remove manual work",
+			"Enable accurate modeling for projections and Expected Value (EV) calculations"
+		],
+		implementation: "I shifted from scraping to a structured, API-driven architecture. Data Source Upgrade: Transitioned from web scraping to a paid API for consistent, structured data. Data Architecture: Designed a raw → analytics (staged) pipeline. Raw layer stores untouched API data for auditing; Analytics layer transforms data into query-ready structures. Automation: Built scheduled ingestion pipelines using AWS Lambda + EventBridge managed via Terraform CLI. Modeling: Developed baseline projection models using historical performance and calculated EV vs market odds.",
+		learnings: [
+			"Data quality > everything: Scraping introduced too much inconsistency — reliable APIs made everything downstream easier.",
+			"Schema design should come first: Planning the data model upfront saves significant time.",
+			"Separate raw and processed data: This allowed safe transformations without risking data integrity.",
+			"Trust your data pipeline before your models: Doubts in data accuracy directly impact confidence in outputs.",
+			"Real-world tooling matters: Gained hands-on experience with AWS Lambda, EventBridge, and Terraform through CLI-based workflows."
+		],
 		relatedBlogPosts: [
 			{
-				title: "Enduro Stats Refactor (Part 1)",
-				slug: "enduro-refactor",
-				description: "The complete refactor of my fitness tracking app with improved architecture"
+				title: "My NBA Analytics Journey",
+				slug: "nba-analytics",
+				description: "How I built a data pipeline to predict game outcomes and evaluate player props."
 			}
 		],
 	},
 	{
-		title: "My Personal Dev Blog",
-		description:
-			"This my personal blog where I write about my experiences and thoughts on software development.",
-		imageSrc: "/devblog2.png", // Reference the image path directly from the public folder
-		altText: "Enduro Stats project screenshot",
-		liveLink: "https://karltiama.dev",
-		githubRepo: "https://github.com/karltiama/nextjsblogapril",
-		technologies: [
-			{ icon: SiNextdotjs, name: "Next.js" },
-			{ icon: SiTypescript, name: "TypeScript" },
-			{ icon: SiTailwindcss, name: "Tailwind CSS" },
-			{ icon: SiMdx, name: "MDX" },
-		],
-		status: "Live" as const,
-		featured: false,
-		situation:"I wanted to create a portfolio websites that showcases my projects and skills as a software developer. I also wanted to share my thoughts and ideas on software development. I&apos;ve learned the best way to learn is to teach and talk about what topics that peak my interest, this blog is my way of sharing my knowledge and experiences with the world.",
-		challenges:[
-			"Finding the right balance between showcasing my projects and sharing my thoughts on software development.",
-			"Creating a system that allows me to share and manage my blog post and projects in a way that is easy to use and maintain.",
-			"Make the website look and feel professional and aesthetically pleasing."
-		],
-		task:[],
-		implementation:"I will start of by saying that creating this website was a journey, There are many ways to go about creating a blog website, from using a CMS to using a static site generator. I decided to use Next.js with Velite to create the site. I was searching for a good library to fetch my blog post from MDX and JSON/YAML files to present it in a type-safe format. I found contentlayer, however I found it to be unmaintained. Thus leading me to find Velite. It allowed me to validate my content using Zod and generate typesafe queries to fetch my blog post. It also has built-in files and images processing. ",
-		learnings:[
-			"I learned how to use Next.js with Velite to create a static site generator that allows me to fetch my blog post from MDX and JSON/YAML files to present it in a type-safe format.",
-		],
-		changes:[
-			"In the future I may add a backend to the website to further enhnace the user experience, and add features to leave comments on my blog posts."
-		],
-		screenshots:[],
-	},
-	{
-		title: "Memory Mapper",
-		description:
-			"Earlier projects like Memory Mapper gave me hands-on experience with Supabase/Mapbox. More recent work (EnduroStats, Booking System) reflects my growth into production-grade architecture and cloud integration.",
-		imageSrc: "/memorymapperss.png", // Reference the image path directly from the public folder
-		altText: "Memory Mapper project screenshot",
-		technologies: [
-			{ icon: SiNextdotjs, name: "Next.js" },
-			{ icon: SiTypescript, name: "TypeScript" },
-			{ icon: SiTailwindcss, name: "Tailwind CSS" },
-			{ icon: SiSupabase, name: "Supabase" },
-			{ icon: SiMapbox, name: "Mapbox" },
-			{ icon: SiResend, name: "Resend" }
-		],
-		liveLink: "https://memorymapper.vercel.app",
-		githubRepo: "https://github.com/karltiama/memorymap",
-		status: "Archived" as const,
-		featured: false,
-		situation:"During my recent trip to Canada, I struggled to find an app that effectively combined mapping, photo integration, and journaling to document my journey. This inspired me to create my own travel mapping app – a digital companion that plots routes and serves as an interactive journal. The app I envision would feature custom map markers, seamless photo integration, and detailed location notes, allowing travelers to capture the essence of their experiences. By developing it myself, I can tailor it to specific needs and include sharing capabilities for friends and family. This project not only allows me to expand my skills in web development and mapping technologies but could also evolve into a versatile tool for other travelers. Ultimately, it aims to transform how we remember and share travel experiences, turning each journey into a vivid, digital story.",
-		challenges: [
-			"Integrating Mapbox for interactive maps and custom markers.",
-			"Creating a seamless photo integration system.",
-			"Designing an intuitive interface for location notes and journal entries.",
-			"Developing a system for secure user authentication and data storage.",
-			"Implementing a media management system to allow users to add, edit, and delete memories and photos.",
-			"Allowing users to edit their trips and memories after they submit them."
-		],
-		task:[
-			"Develop a user-friendly interface for adding and managing trips, locations, and photos.",
-			"Implement media management to allow users to add, edit, and delete memories and photos.",
-			"Create a sharing features that allow users to easily share their trips and memories with friends and family."
-		],
-		implementation:"My first step was to research on my options for mapping, I was looking for a solution that was React friendly and cost effective. I found many options such as Google Maps, Mapbox and Leaflet. After evaluating the pros and cons of each option, I decided to use Mapbox as it has a generous free tier and is well documented.",
-		learnings:[
-			"Learned how to use Mapbox and how to implement custom markers and interactivity into the map.",
-			"Gained experience in using Supabase for authentication and data storage, and Resend for sending emails.",
-			"Enhanced my skills in media management and how to store and retrieve media from a database.",
-			"Learned how to implement a rich text editor that allows users to add and edit memories and photos."
-		],
-		changes:[
-			"I would take a different approach in the system design of the website, I would create a more modular and scalable architecture. I would also spend more time on the frontend design of the website to make it more aesthetically pleasing."
-		],
-		screenshots:[],
-	},
-	{
 		title: "Tiama Legacy",
 		description:
-			"A complete ground-up rebuild of a lodging website with integrated booking system. Featuring modern architecture, real-time availability, secure payment processing, and comprehensive admin dashboard for property management.",
-		imageSrc: "/construction.png", // You'll need to add this image
+			"A complete ground-up rebuild of a lodging website with integrated booking system. Featuring modern architecture, real-time availability, and secure payment processing.",
+		imageSrc: "/construction.png",
 		altText: "Tiama Legacy lodging website preview",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
@@ -172,102 +127,87 @@ export const projects: Project[] = [
 			{ icon: SiReactquery, name: "React Query" },
 		],
 		status: "In Development" as const,
-		featured: false,
-		situation: "Tiama Legacy is a complete overhaul of an existing lodging website, rebuilt from the ground up with modern architecture and a robust booking system. The project aims to create a seamless user experience for guests while providing powerful management tools for property owners. This represents a significant step up in complexity, incorporating real-time data, payment processing, and comprehensive admin functionality.",
+		featured: true,
+		situation: "Tiama Legacy is a complete overhaul of an existing lodging website, rebuilt from the ground up with modern architecture and a robust booking system. The project aims to create a seamless user experience for guests while providing powerful management tools for property owners.",
 		challenges: [
 			"Designing a scalable database schema for properties, bookings, and user management",
 			"Implementing real-time availability checking and booking conflict resolution",
 			"Building secure payment processing and booking confirmation workflows",
-			"Creating an intuitive admin dashboard for property and booking management",
-			"Ensuring responsive design across all devices for optimal user experience",
-			"Implementing proper authentication and authorization for different user types"
+			"Creating an intuitive admin dashboard for property management"
 		],
 		task: [
 			"Design and implement comprehensive database schema using Supabase",
-			"Build responsive frontend with modern UI/UX for property browsing and booking",
+			"Build responsive frontend with modern UI/UX for property browsing",
 			"Develop secure booking system with real-time availability checking",
-			"Integrate payment processing and booking confirmation workflows",
-			"Create admin dashboard for property and booking management",
-			"Implement user authentication and role-based access control"
+			"Create admin dashboard for property and booking management"
 		],
-		implementation: "Starting with a complete architectural redesign, I'm building the application using Next.js 14 with App Router for optimal performance and SEO. The backend leverages Supabase for database management, real-time subscriptions, and authentication. React Query handles efficient data fetching and caching for booking availability. The project emphasizes type safety with TypeScript throughout the entire stack.",
+		implementation: "Starting with a complete architectural redesign, I'm building the application using Next.js 14 with App Router. The backend leverages Supabase for database management and authentication. React Query handles efficient data fetching and caching for booking availability. The project emphasizes type safety with TypeScript throughout.",
 		learnings: [
 			"Advanced database design for complex booking and property management systems",
 			"Real-time data synchronization and conflict resolution strategies",
 			"Payment processing integration and secure transaction handling",
-			"Role-based access control and multi-tenant architecture patterns",
-			"Advanced React Query patterns for complex data relationships"
+			"Role-based access control and multi-tenant architecture patterns"
 		],
-		changes: [
-			"Complete architectural overhaul from legacy system to modern stack",
-			"Implementation of real-time booking system with conflict resolution",
-			"Integration of secure payment processing and booking workflows",
-			"Development of comprehensive admin dashboard for property management",
-			"Enhanced user experience with modern UI/UX and responsive design"
-		],
-		screenshots: [],
-		relatedBlogPosts: [],
 	},
 	{
-		title: "NBA AI Predictor",
+		title: "My Personal Dev Blog",
 		description:
-			"An AI-powered NBA betting prediction platform that leverages machine learning models and comprehensive historical data to provide confident game predictions. Features real-time data processing, advanced analytics, and intelligent betting recommendations.",
-		imageSrc: "/businessplan.png", // You'll need to add this image
-		altText: "NBA AI Predictor app preview",
+			"This my personal blog where I write about my experiences and thoughts on software development.",
+		imageSrc: "/devblog2.png",
+		altText: "Dev Blog project screenshot",
+		technologies: [
+			{ icon: SiNextdotjs, name: "Next.js" },
+			{ icon: SiTypescript, name: "TypeScript" },
+			{ icon: SiTailwindcss, name: "Tailwind CSS" },
+			{ icon: SiMdx, name: "MDX" },
+		],
+		status: "Live" as const,
+		featured: false,
+		situation: "I wanted to create a portfolio website that showcases my projects and skills. I also wanted to share my thoughts on software development. I've learned the best way to learn is to teach, and this blog is my way of sharing knowledge.",
+		challenges: [
+			"Finding the right balance between showcasing projects and sharing thoughts.",
+			"Creating a system to easily manage blog posts and projects.",
+			"Making the website look and feel professional and aesthetically pleasing."
+		],
+		task: [],
+		implementation: "I used Next.js with Velite to create the site. It allowed me to validate my content using Zod and generate typesafe queries for blog posts. It also handles built-in files and image processing.",
+		learnings: [
+			"Learned how to use Next.js with Velite as a type-safe static site generator."
+		],
+	},
+	{
+		title: "Memory Mapper",
+		description:
+			"Hands-on experience with Supabase and Mapbox. Allows travelers to capture the essence of their experiences through an interactive map journal.",
+		imageSrc: "/memorymapperss.png",
+		altText: "Memory Mapper project screenshot",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTypescript, name: "TypeScript" },
 			{ icon: SiTailwindcss, name: "Tailwind CSS" },
 			{ icon: SiSupabase, name: "Supabase" },
-			{ icon: SiPython, name: "Python" },
-			{ icon: SiTensorflow, name: "TensorFlow" },
-			{ icon: SiPandas, name: "Pandas" },
-			{ icon: SiScikitlearn, name: "Scikit-learn" },
+			{ icon: SiMapbox, name: "Mapbox" },
 		],
-		status: "In Development" as const,
+		status: "Archived" as const,
 		featured: false,
-		situation: "The NBA AI Predictor represents a significant leap into machine learning and data science, combining my web development skills with AI/ML expertise. The project aims to create a sophisticated prediction platform that processes vast amounts of NBA data to generate accurate game predictions. This involves complex data processing, model training, and real-time prediction delivery through a modern web interface.",
+		situation: "I struggled to find an app that combined mapping, photo integration, and journaling. This inspired me to create my own travel mapping app - a digital companion that plots routes and serves as an interactive journal.",
 		challenges: [
-			"Processing and cleaning large datasets of NBA historical data and player statistics",
-			"Designing and training machine learning models for accurate game outcome predictions",
-			"Implementing real-time data ingestion and model inference pipelines",
-			"Creating an intuitive interface for displaying predictions and confidence scores",
-			"Handling data quality issues and ensuring model reliability across different game scenarios",
-			"Integrating Python ML models with a TypeScript/Next.js frontend"
+			"Integrating Mapbox for interactive maps and custom markers.",
+			"Creating a seamless photo integration system.",
+			"Designing an intuitive interface for location notes.",
+			"Secure user authentication and data storage."
 		],
 		task: [
-			"Collect and preprocess comprehensive NBA datasets including player stats, team performance, and historical outcomes",
-			"Develop and train multiple ML models using Python (TensorFlow, Scikit-learn) for different prediction types",
-			"Build data pipeline for real-time data ingestion and model inference",
-			"Create responsive web interface for displaying predictions and analytics",
-			"Implement user authentication and prediction tracking system",
-			"Develop model evaluation and retraining workflows for continuous improvement"
+			"Develop a user-friendly interface for adding trips and locations.",
+			"Implement media management for memories and photos.",
 		],
-		implementation: "The project combines a Python backend for ML model training and inference with a Next.js frontend for user interaction. Data processing uses Pandas for cleaning and feature engineering, while TensorFlow and Scikit-learn handle model training. The web interface provides real-time predictions, confidence scores, and historical performance analytics. Supabase manages user data and prediction history, with real-time updates for live game predictions.",
+		implementation: "I chose Mapbox for its React-friendly integration and generous free tier. Supabase handles the authentication and data storage, while Resend handles email notifications.",
 		learnings: [
-			"Advanced machine learning techniques for sports prediction and time series analysis",
-			"Data preprocessing and feature engineering for complex sports datasets",
-			"Model evaluation and validation strategies for prediction accuracy",
-			"Integration of Python ML models with modern web applications",
-			"Real-time data processing and model inference optimization",
-			"Advanced statistical analysis and probability modeling for sports betting"
+			"Custom markers and interactivity in Mapbox.",
+			"Supabase for authentication and data management.",
+			"Implementing a rich text editor for journal entries."
 		],
-		changes: [
-			"Development of custom ML models specifically tuned for NBA game prediction",
-			"Implementation of real-time data processing and model inference pipeline",
-			"Creation of comprehensive analytics dashboard for prediction performance tracking",
-			"Integration of multiple data sources for enhanced prediction accuracy",
-		"Development of confidence scoring system for prediction reliability"
-	],
-	screenshots: [],
-	relatedBlogPosts: [
-		{
-			title: "My NBA Analytics Journey: Building an AI-Powered Prediction Platform",
-			slug: "nba-analytics",
-			description: "How I combined my passion for basketball with web development and machine learning to create an NBA analytics platform that predicts game outcomes."
-		}
-	],
-},
+	},
 	{
 		title: "Reel Ratings",
 		description:
