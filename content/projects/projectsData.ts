@@ -21,6 +21,51 @@ import { Project } from "../../lib/types";
 
 export const projects: Project[] = [
 	{
+		title: "NBA Analytics App",
+		description:
+			"A data-driven NBA analytics platform built on a custom backend pipeline that ingests real-time sports data, transforms it into structured datasets, and applies projection models to evaluate player prop opportunities.",
+		imageSrc: "/nbalandingpage.png",
+		altText: "NBA Analytics App landing page screenshot",
+		technologies: [
+			{ icon: SiNextdotjs, name: "Next.js" },
+			{ icon: SiTypescript, name: "TypeScript" },
+			{ icon: SiSupabase, name: "Supabase" },
+			{ icon: SiAmazonwebservices, name: "AWS Lambda" },
+			{ icon: SiTerraform, name: "Terraform" },
+		],
+		status: "In Development" as const,
+		featured: true,
+		situation: "The sports betting space is heavily driven by data, but most tools either rely on surface-level stats or require manual analysis. I set out to build a system that could ingest real-time National Basketball Association data and turn it into actionable insights for evaluating player prop bets.",
+		challenges: [
+			"Early on, I underestimated the complexity of sourcing reliable data.",
+			"Attempted to scrape multiple websites for stats and odds",
+			"Ran into inconsistent data formats and mismatched schemas",
+			"Faced accuracy concerns due to unreliable or partial data",
+			"Spent significant time cleaning data instead of building features"
+		],
+		task: [
+			"Design a reliable, scalable system that uses consistent and trustworthy data sources",
+			"Separate raw data from processed analytics to ensure data integrity",
+			"Automate ingestion via AWS Lambda + EventBridge to remove manual work",
+			"Enable accurate modeling for projections and Expected Value (EV) calculations"
+		],
+		implementation: "I shifted from scraping to a structured, API-driven architecture. Data Source Upgrade: Transitioned from web scraping to a paid API for consistent, structured data. Data Architecture: Designed a raw → analytics (staged) pipeline. Raw layer stores untouched API data for auditing; Analytics layer transforms data into query-ready structures. Automation: Built scheduled ingestion pipelines using AWS Lambda + EventBridge managed via Terraform CLI. Modeling: Developed baseline projection models using historical performance and calculated EV vs market odds.",
+		learnings: [
+			"Data quality > everything: Scraping introduced too much inconsistency — reliable APIs made everything downstream easier.",
+			"Schema design should come first: Planning the data model upfront saves significant time.",
+			"Separate raw and processed data: This allowed safe transformations without risking data integrity.",
+			"Trust your data pipeline before your models: Doubts in data accuracy directly impact confidence in outputs.",
+			"Real-world tooling matters: Gained hands-on experience with AWS Lambda, EventBridge, and Terraform through CLI-based workflows."
+		],
+		relatedBlogPosts: [
+			{
+				title: "My NBA Analytics Journey",
+				slug: "nba-analytics",
+				description: "How I built a data pipeline to predict game outcomes and evaluate player props."
+			}
+		],
+	},
+	{
 		title: "Enduro Stats V2",
 		description:
 			"A full-stack fitness analytics platform built to replicate and extend premium Strava insights without requiring a subscription. Originally started as a simple API wrapper, the project was later refactored from the ground up to improve data modeling, scalability, and performance.",
@@ -66,51 +111,6 @@ export const projects: Project[] = [
 			{ src: "/performance-trends.png", alt: "Performance Trends" },
 			{ src: "/activegoals.png", alt: "Active Goals" },
 			{ src: "/trainingload.png", alt: "Training Load" },
-		],
-	},
-	{
-		title: "NBA Analytics App",
-		description:
-			"A data-driven NBA analytics platform built on a custom backend pipeline that ingests real-time sports data, transforms it into structured datasets, and applies projection models to evaluate player prop opportunities.",
-		imageSrc: "/businessplan.png",
-		altText: "NBA Analytics App preview",
-		technologies: [
-			{ icon: SiNextdotjs, name: "Next.js" },
-			{ icon: SiTypescript, name: "TypeScript" },
-			{ icon: SiSupabase, name: "Supabase" },
-			{ icon: SiAmazonwebservices, name: "AWS Lambda" },
-			{ icon: SiTerraform, name: "Terraform" },
-		],
-		status: "In Development" as const,
-		featured: true,
-		situation: "The sports betting space is heavily driven by data, but most tools either rely on surface-level stats or require manual analysis. I set out to build a system that could ingest real-time National Basketball Association data and turn it into actionable insights for evaluating player prop bets.",
-		challenges: [
-			"Early on, I underestimated the complexity of sourcing reliable data.",
-			"Attempted to scrape multiple websites for stats and odds",
-			"Ran into inconsistent data formats and mismatched schemas",
-			"Faced accuracy concerns due to unreliable or partial data",
-			"Spent significant time cleaning data instead of building features"
-		],
-		task: [
-			"Design a reliable, scalable system that uses consistent and trustworthy data sources",
-			"Separate raw data from processed analytics to ensure data integrity",
-			"Automate ingestion via AWS Lambda + EventBridge to remove manual work",
-			"Enable accurate modeling for projections and Expected Value (EV) calculations"
-		],
-		implementation: "I shifted from scraping to a structured, API-driven architecture. Data Source Upgrade: Transitioned from web scraping to a paid API for consistent, structured data. Data Architecture: Designed a raw → analytics (staged) pipeline. Raw layer stores untouched API data for auditing; Analytics layer transforms data into query-ready structures. Automation: Built scheduled ingestion pipelines using AWS Lambda + EventBridge managed via Terraform CLI. Modeling: Developed baseline projection models using historical performance and calculated EV vs market odds.",
-		learnings: [
-			"Data quality > everything: Scraping introduced too much inconsistency — reliable APIs made everything downstream easier.",
-			"Schema design should come first: Planning the data model upfront saves significant time.",
-			"Separate raw and processed data: This allowed safe transformations without risking data integrity.",
-			"Trust your data pipeline before your models: Doubts in data accuracy directly impact confidence in outputs.",
-			"Real-world tooling matters: Gained hands-on experience with AWS Lambda, EventBridge, and Terraform through CLI-based workflows."
-		],
-		relatedBlogPosts: [
-			{
-				title: "My NBA Analytics Journey",
-				slug: "nba-analytics",
-				description: "How I built a data pipeline to predict game outcomes and evaluate player props."
-			}
 		],
 	},
 	{

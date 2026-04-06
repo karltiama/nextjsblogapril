@@ -125,20 +125,16 @@ export default async function AboutPage() {
 						<h3 className="text-2xl font-semibold mb-4">Professional Journey</h3>
 						<div className="prose prose-neutral dark:prose-invert max-w-none">
 							<p className="text-lg leading-relaxed">
-								With a <strong>Computer Engineering background</strong> and <strong>4+ years of web development experience</strong>,{' '}
-								I specialize in building robust, scalable applications using modern technologies. My transition{' '}
-								into web development in 2020 was driven by a passion for creating solutions that make a real impact.
+							I&apos;m a software engineer focused on building systems that turn raw data into meaningful, real-world applications. With a background in Computer Engineering and 4+ years of experience in web development, I approach projects with a strong emphasis on architecture, scalability, and long-term maintainability.
 							</p>
 							<p>
-								I&apos;ve successfully delivered projects with measurable results: <strong>built a fitness tracking application</strong>{' '}
-								that processes 100+ secure API requests through OAuth 2.0 integration, <strong>developed a mapping platform</strong>{' '}
-								handling 50+ image formats with real-time data visualization, and <strong>created full-stack applications</strong>{' '}
-								achieving 95+ Lighthouse performance scores with optimized user experiences.
+							My work goes beyond building interfaces. I design and develop full-stack systems that handle data ingestion, processing, and delivery at scale. From integrating secure OAuth workflows to building real-time analytics platforms, I care about how data flows through a system just as much as how it’s presented to the user.
 							</p>
 							<p>
-								Beyond coding, I&apos;ve established myself as a <strong>technical thought leader</strong> by publishing{' '}
-								<strong>28+ in-depth articles</strong> that reach 500+ developers monthly, helping the community{' '}
-								understand complex concepts through practical examples and clear mental models.
+							I’ve built applications that process hundreds of API requests securely, support complex data formats, and maintain high performance under real-world conditions. Whether it’s a fitness analytics platform or a data-driven dashboard, my goal is always the same: build software that is both technically sound and genuinely useful.
+							</p>
+							<p>
+							Alongside development, I write technical articles focused on breaking down complex concepts into clear mental models. My writing reaches hundreds of developers each month and reflects how I think, not just about code, but about systems as a whole.
 							</p>
 						</div>
 					</div>

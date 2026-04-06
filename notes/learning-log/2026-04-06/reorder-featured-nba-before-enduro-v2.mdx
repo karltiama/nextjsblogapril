@@ -1,0 +1,43 @@
+## Context
+
+`ProjectList` renders featured projects in `projectsData.ts` array order with alternating layout via `reverseLayout={index % 2 === 1}`.
+
+## Goal
+
+Show **NBA Analytics App** before **Enduro Stats V2** in Featured Systems.
+
+## Files Changed
+
+- `content/projects/projectsData.ts`
+
+## Implementation Notes (key logic explained)
+
+- Swapped the first two `featured: true` entries so NBA is index `0` and Enduro V2 is index `1`.
+- Layout flips accordingly: NBA uses the default column order; Enduro V2 gets `reverseLayout`.
+
+## Key Decisions (and alternatives considered)
+
+- **Data order vs. sort key:** Could add an explicit `featuredOrder` field; unnecessary for three featured items.
+
+## Assumptions
+
+- Slugs and `/projects/[projectName]` routes are derived from titles, not array index — no URL breakage.
+
+## Failure Modes
+
+- Any code assuming “first featured = Enduro” would break; none found in repo.
+
+## How to Test (commands + steps)
+
+1. `npm run dev` → open `/`, scroll to Featured Systems.
+2. Confirm first card is NBA Analytics App, second is Enduro Stats V2.
+
+## Next Steps
+
+- None unless you want Tiama Legacy in a specific position relative to these two.
+
+## Verification Checklist
+
+- [ ] NBA appears first in Featured Systems on `/`.
+- [ ] Enduro Stats V2 is second.
+- [ ] Alternating image/text layout still looks intentional.
