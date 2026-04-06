@@ -17,14 +17,16 @@ export function MainNav() {
 
 	return (
 		<nav className="flex items-center space-x-4 lg:space-x-6">
-			<Link href="/" className="mr-6 flex items-center space-x-2">
+			<Link
+				href="/"
+				className="mr-6 flex items-center space-x-2 transition-colors hover:text-blue-400">
 				<Icons.logo className="h-6 w-6" />
 				<span className="font-bold">{siteConfig.name}</span>
 			</Link>
 			<Link
 				href="/blog"
 				className={cn(
-					"text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block",
+					"text-sm font-medium transition-colors hover:text-blue-400 hidden sm:inline-block",
 					mounted && pathname === "/blog" ? "text-foreground" : "text-foreground/60"
 				)}>
 				Blog
@@ -32,7 +34,7 @@ export function MainNav() {
 			<Link
 				href="/projects"
 				className={cn(
-					"text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block",
+					"text-sm font-medium transition-colors hover:text-blue-400 hidden sm:inline-block",
 					mounted && pathname === "/projects" ? "text-foreground" : "text-foreground/60"
 				)}>
 				Projects
@@ -40,7 +42,7 @@ export function MainNav() {
 			<Link
 				href="/about"
 				className={cn(
-					"text-sm font-medium transition-colors hover:text-primary hidden sm:inline-block",
+					"text-sm font-medium transition-colors hover:text-blue-400 hidden sm:inline-block",
 					mounted && pathname === "/about" ? "text-foreground" : "text-foreground/60"
 				)}>
 				About

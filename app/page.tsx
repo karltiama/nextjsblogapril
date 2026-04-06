@@ -28,20 +28,22 @@ export default function Home() {
 				</p>
 			</HomeTerrainHero>
 
-			{/* Writing Section - Moved Up for Focus */}
-			<section
-				id="blog-section"
-				className="relative isolate overflow-hidden bg-[#0a0a0f] py-16 lg:py-24 scroll-mt-24"
-			>
+			<div className="relative isolate overflow-hidden bg-[#0a0a0f]">
 				<div
-					className="pointer-events-none absolute inset-0 opacity-[0.16]"
+					className="pointer-events-none absolute inset-0 z-0 opacity-[0.16]"
+					aria-hidden
 					style={{
 						backgroundImage:
 							'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.18) 1px, transparent 0)',
 						backgroundSize: '18px 18px',
 					}}
 				/>
-				<div className="container relative z-[3] max-w-4xl flex flex-col space-y-10">
+				{/* Writing Section - Moved Up for Focus */}
+				<section
+					id="blog-section"
+					className="relative z-[3] py-16 lg:py-24 scroll-mt-24"
+				>
+					<div className="container relative z-[3] max-w-4xl flex flex-col space-y-10">
 					<div className="flex flex-col space-y-4 text-center">
 						<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight">
 							Writing & Thinking
@@ -77,14 +79,14 @@ export default function Home() {
 							<span className="ml-2 transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
 						</Link>
 					</div>
-				</div>
-			</section>
+					</div>
+				</section>
 
-			{/* Projects Section */}
-			<section
-				id="projects-section"
-				className="container max-w-6xl py-20 lg:py-32 flex flex-col space-y-12 scroll-mt-24"
-			>
+				{/* Projects Section */}
+				<section
+					id="projects-section"
+					className="relative z-[3] container max-w-6xl py-20 lg:py-32 flex flex-col space-y-12 scroll-mt-24"
+				>
 				<div className="flex flex-col space-y-4 text-center">
 					<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight">
 						Featured Systems
@@ -97,7 +99,8 @@ export default function Home() {
 				<Suspense fallback={<div>Loading projects...</div>}>
 					<ProjectList />
 				</Suspense>
-			</section>
+				</section>
+			</div>
 		</div>
 	);
 }

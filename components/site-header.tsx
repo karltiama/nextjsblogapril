@@ -21,7 +21,7 @@ export function SiteHeader() {
 							<div
 								className={cn(
 									buttonVariants({ variant: "ghost" }),
-									"w-10 px-0 hidden sm:inline-flex"
+									"w-10 px-0 hidden sm:inline-flex hover:bg-blue-400/10 hover:text-blue-400"
 								)}>
 								<Icons.gitHub className="h-4 w-4" />
 								<span className="sr-only">GitHub</span>
@@ -34,7 +34,7 @@ export function SiteHeader() {
 							<div
 								className={cn(
 									buttonVariants({ variant: "ghost" }),
-									"w-10 px-0 hidden sm:inline-flex"
+									"w-10 px-0 hidden sm:inline-flex hover:bg-blue-400/10 hover:text-blue-400"
 								)}>
 								<Icons.twitter className="h-4 w-4" />
 								<span className="sr-only">Twitter</span>
@@ -47,7 +47,7 @@ export function SiteHeader() {
 							<div
 								className={cn(
 									buttonVariants({ variant: "ghost" }),
-									"w-10 px-0 hidden sm:inline-flex"
+									"w-10 px-0 hidden sm:inline-flex hover:bg-blue-400/10 hover:text-blue-400"
 								)}>
 								<Icons.strava className="h-4 w-4" />
 								<span className="sr-only">Strava</span>
