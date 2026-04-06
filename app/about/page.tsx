@@ -9,38 +9,39 @@ import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
 	title: "About Karl Tiama - Full-Stack Developer",
-	description: "Learn about Karl Tiama's journey from engineering to full-stack development, specializing in React, Next.js, and modern web technologies.",
+	description:
+		"Learn about Karl Tiama's journey from engineering to full-stack development, specializing in React, Next.js, and modern web technologies.",
 };
 
 const skills = {
-	"Frontend": ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],
-	"Backend": ["Node.js", "Express", "Supabase", "PostgreSQL", "REST APIs"],
+	Frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],
+	Backend: ["Node.js", "Express", "Supabase", "PostgreSQL", "REST APIs"],
 	"Tools & DevOps": ["Git", "GitHub", "Docker", "Vercel", "CI/CD"],
-	"Mobile": ["React Native", "Expo"],
-	"Other": ["Zustand", "TanStack Query", "MDX", "OAuth"]
+	Mobile: ["React Native", "Expo"],
+	Other: ["Zustand", "TanStack Query", "MDX", "OAuth"],
 };
 
 const achievements = [
 	{
 		metric: "500+",
 		label: "Monthly Blog Visitors",
-		description: "SEO-optimized content reaching developers globally"
+		description: "SEO-optimized content reaching developers globally",
 	},
 	{
 		metric: "28+",
 		label: "Technical Articles Published",
-		description: "Covering React, Next.js, and modern web development"
+		description: "Covering React, Next.js, and modern web development",
 	},
 	{
 		metric: "95+",
 		label: "Lighthouse Performance Score",
-		description: "Optimized applications with superior user experience"
+		description: "Optimized applications with superior user experience",
 	},
 	{
 		metric: "5+",
 		label: "External API Integrations",
-		description: "Including Strava, Mapbox, Supabase, and more"
-	}
+		description: "Including Strava, Mapbox, Supabase, and more",
+	},
 ];
 
 export default async function AboutPage() {
@@ -52,12 +53,13 @@ export default async function AboutPage() {
 						About Me
 					</h1>
 					<p className="text-xl text-muted-foreground mt-4">
-						Full-Stack Developer passionate about creating scalable, user-focused web applications
+						Full-Stack Developer passionate about creating scalable,
+						user-focused web applications
 					</p>
 				</div>
 			</div>
 			<hr className="my-8" />
-			
+
 			<div className="grid gap-8 md:grid-cols-3">
 				{/* Profile Section */}
 				<div className="md:col-span-1">
@@ -69,10 +71,12 @@ export default async function AboutPage() {
 									<AvatarFallback>KT</AvatarFallback>
 								</Avatar>
 								<div>
-									<h2 className="text-2xl font-bold">{siteConfig.author} Tiama</h2>
+									<h2 className="text-2xl font-bold">
+										{siteConfig.author} Tiama
+									</h2>
 									<p className="text-muted-foreground">Full-Stack Developer</p>
 								</div>
-								
+
 								<div className="flex flex-col space-y-2 text-sm text-muted-foreground">
 									<div className="flex items-center gap-2">
 										<Calendar className="w-4 h-4" />
@@ -108,9 +112,15 @@ export default async function AboutPage() {
 							<div className="space-y-4">
 								{achievements.map((achievement, index) => (
 									<div key={index} className="text-center">
-										<div className="text-2xl font-bold text-primary">{achievement.metric}</div>
-										<div className="text-sm font-medium">{achievement.label}</div>
-										<div className="text-xs text-muted-foreground">{achievement.description}</div>
+										<div className="text-2xl font-bold text-primary">
+											{achievement.metric}
+										</div>
+										<div className="text-sm font-medium">
+											{achievement.label}
+										</div>
+										<div className="text-xs text-muted-foreground">
+											{achievement.description}
+										</div>
 									</div>
 								))}
 							</div>
@@ -122,19 +132,38 @@ export default async function AboutPage() {
 				<div className="md:col-span-2 space-y-8">
 					{/* Professional Journey */}
 					<div>
-						<h3 className="text-2xl font-semibold mb-4">Professional Journey</h3>
+						<h3 className="text-2xl font-semibold mb-4">
+							Professional Journey
+						</h3>
 						<div className="prose prose-neutral dark:prose-invert max-w-none">
 							<p className="text-lg leading-relaxed">
-							I&apos;m a software engineer focused on building systems that turn raw data into meaningful, real-world applications. With a background in Computer Engineering and 4+ years of experience in web development, I approach projects with a strong emphasis on architecture, scalability, and long-term maintainability.
+								I&apos;m a software engineer focused on building systems that
+								turn raw data into meaningful, real-world applications. With a
+								background in Computer Engineering and 4+ years of experience in
+								web development, I approach projects with a strong emphasis on
+								architecture, scalability, and long-term maintainability.
 							</p>
 							<p>
-							My work goes beyond building interfaces. I design and develop full-stack systems that handle data ingestion, processing, and delivery at scale. From integrating secure OAuth workflows to building real-time analytics platforms, I care about how data flows through a system just as much as how it’s presented to the user.
+								My work goes beyond building interfaces. I design and develop
+								full-stack systems that handle data ingestion, processing, and
+								delivery at scale. From integrating secure OAuth workflows to
+								building real-time analytics platforms, I care about how data
+								flows through a system just as much as how it&apos;s presented to the
+								user.
 							</p>
 							<p>
-							I’ve built applications that process hundreds of API requests securely, support complex data formats, and maintain high performance under real-world conditions. Whether it’s a fitness analytics platform or a data-driven dashboard, my goal is always the same: build software that is both technically sound and genuinely useful.
+								I’ve built applications that process hundreds of API requests
+								securely, support complex data formats, and maintain high
+								performance under real-world conditions. Whether it&apos;s a fitness
+								analytics platform or a data-driven dashboard, my goal is always
+								the same: build software that is both technically sound and
+								genuinely useful.
 							</p>
 							<p>
-							Alongside development, I write technical articles focused on breaking down complex concepts into clear mental models. My writing reaches hundreds of developers each month and reflects how I think, not just about code, but about systems as a whole.
+								Alongside development, I write technical articles focused on
+								breaking down complex concepts into clear mental models. My
+								writing reaches hundreds of developers each month and reflects
+								how I think, not just about code, but about systems as a whole.
 							</p>
 						</div>
 					</div>
@@ -145,7 +174,9 @@ export default async function AboutPage() {
 						<div className="space-y-4">
 							{Object.entries(skills).map(([category, techList]) => (
 								<div key={category}>
-									<h4 className="font-medium mb-2 text-muted-foreground">{category}</h4>
+									<h4 className="font-medium mb-2 text-muted-foreground">
+										{category}
+									</h4>
 									<div className="flex flex-wrap gap-2">
 										{techList.map((tech) => (
 											<Badge key={tech} variant="secondary">
@@ -157,19 +188,21 @@ export default async function AboutPage() {
 							))}
 						</div>
 					</div>
-
 				</div>
 			</div>
 
 			{/* What I Bring - Full Width Section */}
 			<div className="mt-12">
-				<h3 className="text-2xl font-semibold mb-6 text-center">What I Bring to Teams</h3>
+				<h3 className="text-2xl font-semibold mb-6 text-center">
+					What I Bring to Teams
+				</h3>
 				<div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
 					<Card className="h-full">
 						<CardContent className="p-4 h-full flex flex-col">
 							<h4 className="font-semibold mb-2">🚀 Full-Stack Expertise</h4>
 							<p className="text-sm text-muted-foreground flex-1">
-								End-to-end development from UI/UX to database design and API development
+								End-to-end development from UI/UX to database design and API
+								development
 							</p>
 						</CardContent>
 					</Card>
@@ -177,7 +210,8 @@ export default async function AboutPage() {
 						<CardContent className="p-4 h-full flex flex-col">
 							<h4 className="font-semibold mb-2">📊 Data-Driven Approach</h4>
 							<p className="text-sm text-muted-foreground flex-1">
-								Experience with API integrations, data visualization, and performance optimization
+								Experience with API integrations, data visualization, and
+								performance optimization
 							</p>
 						</CardContent>
 					</Card>
@@ -185,7 +219,8 @@ export default async function AboutPage() {
 						<CardContent className="p-4 h-full flex flex-col">
 							<h4 className="font-semibold mb-2">✍️ Communication Skills</h4>
 							<p className="text-sm text-muted-foreground flex-1">
-								Strong technical writing and documentation skills, proven through published articles
+								Strong technical writing and documentation skills, proven
+								through published articles
 							</p>
 						</CardContent>
 					</Card>
@@ -204,9 +239,11 @@ export default async function AboutPage() {
 			<div className="mt-12">
 				<h3 className="text-2xl font-semibold mb-4">Beyond Coding</h3>
 				<p className="text-muted-foreground">
-					When I&apos;m not coding, you&apos;ll find me running (training for marathons), exploring new hiking trails,{' '}
-					or experimenting with the latest web technologies. I believe in maintaining a healthy work-life balance{' '}
-					and find that physical activities often lead to creative solutions for coding challenges.
+					When I&apos;m not coding, you&apos;ll find me running (training for
+					marathons), exploring new hiking trails, or experimenting with the
+					latest web technologies. I believe in maintaining a healthy work-life
+					balance and find that physical activities often lead to creative
+					solutions for coding challenges.
 				</p>
 			</div>
 
@@ -214,9 +251,12 @@ export default async function AboutPage() {
 			<div className="mt-8">
 				<Card className="bg-muted/50">
 					<CardContent className="p-6 text-center">
-						<h3 className="text-xl font-semibold mb-2">Let&apos;s Work Together</h3>
+						<h3 className="text-xl font-semibold mb-2">
+							Let&apos;s Work Together
+						</h3>
 						<p className="text-muted-foreground mb-4">
-							I&apos;m always interested in discussing new opportunities and innovative projects
+							I&apos;m always interested in discussing new opportunities and
+							innovative projects
 						</p>
 						<div className="flex gap-4 justify-center">
 							<Button asChild>
@@ -226,9 +266,7 @@ export default async function AboutPage() {
 								</Link>
 							</Button>
 							<Button asChild variant="outline">
-								<Link href="mailto:karl@karltiama.dev">
-									Get In Touch
-								</Link>
+								<Link href="mailto:karl@karltiama.dev">Get In Touch</Link>
 							</Button>
 						</div>
 					</CardContent>
