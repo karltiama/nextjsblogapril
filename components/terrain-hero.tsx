@@ -85,7 +85,7 @@ export default function TerrainHero({ children, fullHeight }: TerrainHeroProps) 
         className={`sticky top-0 z-0 w-full overflow-hidden bg-black ${heroHeightClass}`}
       >
         {/* Three.js Canvas */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none">
           <Canvas
             camera={{ position: [0, -10, 10], fov: 80 }}
             dpr={[1, 2]}

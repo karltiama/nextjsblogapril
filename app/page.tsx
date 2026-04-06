@@ -26,30 +26,13 @@ export default function Home() {
 					I build scalable systems and share the engineering trade-offs and mental models 
 					that turn complex problems into clear, structured decisions.
 				</p>
-				<div className="flex flex-col sm:flex-row gap-4 justify-center pointer-events-auto px-4">
-					<Link
-						href="/blog"
-						className={cn(
-							buttonVariants({ size: "lg" }),
-							"w-full sm:w-fit min-w-[160px] max-w-[280px] mx-auto sm:mx-0 bg-blue-400 text-black hover:bg-blue-500 border-none transition-colors"
-						)}
-					>
-						Read the Blog
-					</Link>
-					<Link
-						href="/projects"
-						className={cn(
-							buttonVariants({ variant: "outline", size: "lg" }),
-							"w-full sm:w-fit min-w-[160px] max-w-[280px] mx-auto sm:mx-0 backdrop-blur-sm bg-blue-400/5 border-blue-400 text-blue-400 hover:bg-blue-400/10 transition-colors"
-						)}
-					>
-						View Projects
-					</Link>
-				</div>
 			</HomeTerrainHero>
 
 			{/* Writing Section - Moved Up for Focus */}
-			<section className="relative isolate overflow-hidden bg-[#0a0a0f] py-16 lg:py-24">
+			<section
+				id="blog-section"
+				className="relative isolate overflow-hidden bg-[#0a0a0f] py-16 lg:py-24 scroll-mt-24"
+			>
 				<div
 					className="pointer-events-none absolute inset-0 opacity-[0.16]"
 					style={{
@@ -98,7 +81,10 @@ export default function Home() {
 			</section>
 
 			{/* Projects Section */}
-			<section className="container max-w-6xl py-20 lg:py-32 flex flex-col space-y-12">
+			<section
+				id="projects-section"
+				className="container max-w-6xl py-20 lg:py-32 flex flex-col space-y-12 scroll-mt-24"
+			>
 				<div className="flex flex-col space-y-4 text-center">
 					<h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight">
 						Featured Systems

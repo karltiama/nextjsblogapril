@@ -71,7 +71,7 @@ export const projects: Project[] = [
 	{
 		title: "NBA Analytics App",
 		description:
-			"A real-time NBA analytics platform that leverages automated data ingestion and custom projection models to provide actionable insights for evaluating player prop bets.",
+			"A data-driven NBA analytics platform built on a custom backend pipeline that ingests real-time sports data, transforms it into structured datasets, and applies projection models to evaluate player prop opportunities.",
 		imageSrc: "/businessplan.png",
 		altText: "NBA Analytics App preview",
 		technologies: [

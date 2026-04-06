@@ -1,0 +1,35 @@
+## Context
+A dedicated client CTA component was introduced to enforce deterministic section scrolling.
+
+## Goal
+Wire the new CTA component into the landing page hero so users use programmatic scroll behavior.
+
+## Files Changed
+- `app/page.tsx`
+
+## Implementation Notes (key logic explained)
+- Imported `HomeHeroCtas` from `@/components/home-hero-ctas`.
+- Replaced inline CTA markup with `<HomeHeroCtas />` in hero content.
+- Preserved existing section IDs (`blog-section`, `projects-section`) and spacing.
+
+## Key Decisions (and alternatives considered)
+- Kept server page as-is and isolated client behavior inside a small component.
+- Avoided converting `app/page.tsx` to a client component.
+
+## Assumptions
+- The CTA component is only needed on the home hero and does not need reuse elsewhere yet.
+
+## Failure Modes
+- If import path changes or component is removed, home build will fail.
+- If section IDs change, CTA buttons will not find targets.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`
+2. Open `/`
+3. Click `Read the Blog`; verify smooth scroll and hash update
+4. Click `View Projects`; verify smooth scroll and hash update
+5. Confirm behavior on mobile and desktop widths
+
+## Next Steps
+- Add component-level tests for `scrollToSection`.
+- Optionally derive offset dynamically from header height.

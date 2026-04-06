@@ -1,0 +1,39 @@
+## Context
+Hash-anchor based CTAs were still unreliable in the landing hero, likely due to layered sticky/3D composition interactions.
+
+## Goal
+Create a deterministic CTA behavior that always scrolls to the intended sections.
+
+## Files Changed
+- `components/home-hero-ctas.tsx`
+
+## Implementation Notes (key logic explained)
+- Added a new client component that renders the two hero CTA buttons.
+- Implemented `scrollToSection(sectionId)` using:
+  - `document.getElementById(sectionId)`
+  - computed `window.scrollTo` top with a fixed header offset
+  - `behavior: "smooth"` for UX
+- Updates URL hash via `window.history.replaceState` after scrolling.
+
+## Key Decisions (and alternatives considered)
+- Chose programmatic scroll to bypass potential hash/navigation edge cases.
+- Kept offset constant (`72px`) for predictable alignment under sticky header.
+- Alternative considered: IntersectionObserver and dynamic offset; rejected as over-engineered.
+
+## Assumptions
+- Header height is approximately 72px across breakpoints.
+
+## Failure Modes
+- If header height changes significantly, scroll alignment may be slightly off.
+- If target section IDs are renamed, scrolling will no-op.
+
+## How to Test (commands + steps)
+1. Run `npm run dev`
+2. Open `/`
+3. Click `Read the Blog` and verify smooth scroll to blog section
+4. Click `View Projects` and verify smooth scroll to projects section
+5. Verify hash updates in URL (`#blog-section`, `#projects-section`)
+
+## Next Steps
+- Optionally extract offset from header height at runtime for perfect alignment.
+- Add e2e tests for hero CTA interactions.
