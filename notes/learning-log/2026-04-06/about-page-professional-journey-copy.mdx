@@ -1,0 +1,55 @@
+## Context
+
+The About page “Professional Journey” section used earlier copy (meaningful applications, processing vs transformation, generic dashboard example). The author supplied updated prose that emphasizes problems over projects, data pipelines, named projects (fitness analytics, NBA data system), trade-offs, and a closing line on backend-heavy interest.
+
+## Goal
+
+- **Goal:** Replace the Professional Journey body copy on `/about` with the new five-paragraph version.
+- **Inputs:** Author-provided text (plain English).
+- **Output/Done:** Same JSX structure (`prose` + five `<p>` blocks); apostrophes escaped for JSX; Prettier applied.
+
+## Files Changed
+
+- `app/about/page.tsx` — `Professional Journey` inner `<div className="prose ...">` paragraphs only.
+
+## Implementation Notes (key logic explained)
+
+- Swapped four paragraphs for five: added explicit closing paragraph on backend-heavy, data-driven work.
+- Used `&apos;` in text nodes for contractions (`I&apos;m`, `don&apos;t`, `it&apos;s`) to match existing file conventions and avoid `react/no-unescaped-entities` issues.
+- Re-ran `npx prettier --write app/about/page.tsx` so line breaks match `.prettierrc` (`printWidth: 80`, tabs).
+
+## Key Decisions (and alternatives considered)
+
+- **No heading or layout change:** Only the copy inside the existing `prose` block changed so the rest of the About page stays the same.
+- **Keep first paragraph `text-lg leading-relaxed`:** Preserves visual hierarchy for the opening; other paragraphs use default prose sizing.
+
+## Assumptions
+
+- The user’s plain-text draft is the source of truth; minor phrasing like “I approach problems” vs earlier “projects” was kept as provided.
+
+## Failure Modes
+
+- If a future edit introduces unescaped `'` inside JSX text, ESLint may flag it; use `&apos;` or `{"don't"}` style.
+- Very narrow viewports: long sentences wrap naturally; no code change required.
+
+## How to Test (commands + steps)
+
+1. `npx prettier --check app/about/page.tsx`
+2. `npm run dev` → open `/about` → read “Professional Journey” for typos and line breaks in the browser.
+3. Optional: `npm run lint` (project uses Next lint; run if you rely on it in CI).
+
+## Next Steps
+
+- If projects pages use different naming (“NBA analytics” vs “NBA data system”), align wording across site for consistency.
+
+## Dependencies / env vars
+
+- **None.**
+
+## Verification Checklist
+
+- [ ] `/about` shows five paragraphs under Professional Journey.
+- [ ] No raw apostrophe lint issues in `app/about/page.tsx`.
+- [ ] Opening paragraph still slightly larger (`text-lg`) than the following body.
+- [ ] Prettier check passes on the file.
+- [ ] Copy matches your intended tone (direct “don’t just build interfaces” line).
