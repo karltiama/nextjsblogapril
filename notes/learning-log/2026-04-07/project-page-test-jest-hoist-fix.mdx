@@ -1,0 +1,63 @@
+## Context
+
+The project page test still failed after switching to `projectsDataV2`
+because Jest hoists `jest.mock(...)`, which referenced a
+`const mockProjects` before initialization.
+
+## Goal
+
+- **Goal:** Resolve the Jest hoisting/TDZ mock error.
+- **Inputs:** `__tests__/components/project-page.test.tsx`.
+- **Output/Done:** Mock factory no longer references an uninitialized
+  const.
+
+## Files Changed
+
+- `__tests__/components/project-page.test.tsx`
+
+## Implementation Notes (key logic explained)
+
+- Replaced top-level `const mockProjects = [...]` with
+  `function getMockProjects() { return [...] }`.
+- Updated mock factory to use `projectsV2: getMockProjects()`.
+- Updated one test assertion lookup to use
+  `getMockProjects().find(...)`.
+
+## Key Decisions (and alternatives considered)
+
+- **Function declaration approach:** function declarations are hoisted
+  safely in this pattern.
+- **Alternative considered:** inline data directly in `jest.mock`
+  factory, but this duplicates fixtures more awkwardly.
+
+## Assumptions
+
+- Re-creating fixture arrays per call is acceptable for this small
+  suite.
+
+## Failure Modes
+
+- If fixture data mutates during tests, separate instances per call
+  can hide mutation bugs (not an issue here since tests are
+  read-only).
+
+## How to Test (commands + steps)
+
+1. `npm run test -- project-page`
+2. Confirm suite initializes and runs assertions.
+
+## Next Steps
+
+- Optional: centralize mock fixture generation in a shared test
+  helper.
+
+## Dependencies / env vars
+
+- **None added.**
+
+## Verification Checklist
+
+- [ ] No `Cannot access 'mockProjects' before initialization` error.
+- [ ] Project page tests execute assertions normally.
+- [ ] Mocked `projectsV2` data still includes related blog posts
+      coverage.

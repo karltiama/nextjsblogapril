@@ -1,0 +1,67 @@
+## Context
+
+Project content currently uses legacy narrative fields (`situation`,
+`task`, `implementation`, `learnings`, `changes`). The target
+structure needs explicit main sections for project pages.
+
+## Goal
+
+- **Goal:** Extend the `Project` type to support the new section
+  structure.
+- **Inputs:** Existing `Project` interface in `lib/types.ts`.
+- **Output/Done:** A typed `sections` object with the new keys.
+
+## Files Changed
+
+- `lib/types.ts`
+
+## Implementation Notes (key logic explained)
+
+- Added optional `sections` to `Project` so migration can be
+  incremental.
+- New keys:
+  - `overview?: string`
+  - `challenges?: string[]`
+  - `implementation?: string`
+  - `keyDecisions?: string[]`
+  - `tradeoffs?: string[]`
+  - `learnings?: string[]`
+
+## Key Decisions (and alternatives considered)
+
+- **Optional `sections`:** avoids breaking existing data during
+  migration.
+- **No removal yet of legacy fields:** keeps compatibility while
+  consumer code transitions.
+
+## Assumptions
+
+- Existing pages still read legacy fields until renderer migration
+  lands.
+
+## Failure Modes
+
+- If consumers assume `sections` always exists before migration, they
+  can render empty blocks. Renderer should null-check.
+
+## How to Test (commands + steps)
+
+1. `npx tsc --noEmit` (or your standard typecheck command).
+2. Confirm no type errors around `Project` imports/usages.
+
+## Next Steps
+
+- Update project detail page to read from `sections` first with legacy
+  fallback.
+- Migrate all project entries to `sections`.
+
+## Dependencies / env vars
+
+- **None added.**
+
+## Verification Checklist
+
+- [ ] `Project` interface exposes `sections`.
+- [ ] New section keys exactly match: Overview, Challenges,
+      Implementation, Key Decisions, Tradeoffs, Learnings.
+- [ ] Existing build/typecheck remains valid.

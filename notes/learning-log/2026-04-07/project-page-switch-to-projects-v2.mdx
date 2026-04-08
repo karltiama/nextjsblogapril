@@ -1,0 +1,59 @@
+## Context
+
+Project detail page still imported legacy `projects` from
+`projectsData.ts`. To migrate to the new array structure, the consumer
+needs to read from the new file.
+
+## Goal
+
+- **Goal:** Switch project detail page data source to the new projects
+  array.
+- **Inputs:** `projectsV2` in `content/projects/projectsDataV2.ts`.
+- **Output/Done:** Detail page imports `projectsV2` (aliased as
+  `projects`).
+
+## Files Changed
+
+- `app/projects/[projectName]/page.tsx`
+
+## Implementation Notes (key logic explained)
+
+- Updated import:
+  - from `@/content/projects/projectsData`
+  - to `@/content/projects/projectsDataV2`
+- Kept local variable name `projects` to minimize downstream code
+  diff.
+
+## Key Decisions (and alternatives considered)
+
+- **Alias import to existing name:** preserves readability and avoids
+  wide refactor.
+
+## Assumptions
+
+- `projectsV2` preserves all fields needed by this page plus new
+  `sections`.
+
+## Failure Modes
+
+- If `projectsDataV2.ts` import path changes, page generation breaks.
+
+## How to Test (commands + steps)
+
+1. `npm run dev`
+2. Open any `/projects/<slug>` page and verify it loads.
+
+## Next Steps
+
+- Switch additional consumers (e.g., lists/tests) if they should also
+  use v2.
+
+## Dependencies / env vars
+
+- **None added.**
+
+## Verification Checklist
+
+- [ ] Project page imports from `projectsDataV2`.
+- [ ] Slug generation and project lookup still work.
+- [ ] Project detail pages render without runtime errors.

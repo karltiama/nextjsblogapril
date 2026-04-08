@@ -1,8 +1,8 @@
 import Project from "./project-card";
-import { projects } from "../content/projects/projectsData";
+import { projectsV2 as projects } from "../content/projects/projectsDataV2";
 
 export default function ProjectList() {
-	const featuredProjects = projects.filter(p => p.featured);
+	const featuredProjects = projects.filter((p) => p.featured);
 
 	return (
 		<section className="w-full py-12">

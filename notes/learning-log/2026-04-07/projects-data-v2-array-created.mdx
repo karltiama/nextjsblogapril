@@ -1,0 +1,65 @@
+## Context
+
+The user requested a new project data file and migration to a
+section-based structure without immediately deleting existing data.
+
+## Goal
+
+- **Goal:** Create a new projects data array using main sections.
+- **Inputs:** Existing `projects` entries in
+  `content/projects/projectsData.ts`.
+- **Output/Done:** New `projectsV2` array with `sections` mapped from
+  legacy fields.
+
+## Files Changed
+
+- `content/projects/projectsDataV2.ts`
+
+## Implementation Notes (key logic explained)
+
+- Added a new file exporting `projectsV2`.
+- `projectsV2` is derived by mapping legacy `projects` and attaching:
+  - `sections.overview` <- `situation`
+  - `sections.challenges` <- `challenges`
+  - `sections.implementation` <- `implementation`
+  - `sections.keyDecisions` <- `task`
+  - `sections.tradeoffs` <- `changes`
+  - `sections.learnings` <- `learnings`
+
+## Key Decisions (and alternatives considered)
+
+- **Map from existing file first:** faster and safer than rewriting
+  every object manually in one pass.
+- **Keep legacy source file intact:** allows rollback and side-by-side
+  validation.
+
+## Assumptions
+
+- The semantic mapping from old keys to new section keys is acceptable
+  as a first migration.
+
+## Failure Modes
+
+- Projects with empty `task`/`changes` become empty section arrays and
+  may not render depending on consumer checks.
+
+## How to Test (commands + steps)
+
+1. Import `projectsV2` in one consumer and confirm compile passes.
+2. Load project page and confirm section content still appears.
+
+## Next Steps
+
+- Point consumers to `projectsV2`.
+- Optionally rewrite `projectsDataV2.ts` as fully explicit literals
+  once content wording is refined.
+
+## Dependencies / env vars
+
+- **None added.**
+
+## Verification Checklist
+
+- [ ] `projectsDataV2.ts` exists and exports `projectsV2`.
+- [ ] Every project in `projectsV2` has a `sections` object.
+- [ ] Section keys match required six main headings.

@@ -1,0 +1,59 @@
+## Context
+
+Type-checking flagged `project-page` test calls because page params
+are typed as `Promise<{ projectName: string }>` in the route
+component.
+
+## Goal
+
+- **Goal:** Align test params with current page prop typing.
+- **Inputs:** `__tests__/components/project-page.test.tsx`.
+- **Output/Done:** Test passes a `Promise.resolve(...)` value for
+  `params`.
+
+## Files Changed
+
+- `__tests__/components/project-page.test.tsx`
+
+## Implementation Notes (key logic explained)
+
+- Replaced plain objects:
+  - `{ projectName: "enduro-stats" }`
+  - `{ projectName: "reel-ratings" }`
+- With:
+  - `Promise.resolve({ projectName: "..." })`
+
+## Key Decisions (and alternatives considered)
+
+- **Minimal type-alignment change:** avoids touching component
+  signature during this data migration task.
+
+## Assumptions
+
+- Existing test runtime setup for async server components remains
+  unchanged.
+
+## Failure Modes
+
+- Jest runtime may still fail for unrelated ESM transform
+  configuration.
+
+## How to Test (commands + steps)
+
+1. `npx tsc --noEmit` to validate these specific type errors are gone.
+2. `npm run test -- project-page` (may still hit pre-existing Jest ESM
+   config limitations).
+
+## Next Steps
+
+- If desired, modernize project-page tests for async server component
+  patterns.
+
+## Dependencies / env vars
+
+- **None added.**
+
+## Verification Checklist
+
+- [ ] No TS2739 errors about `params` in `project-page.test.tsx`.
+- [ ] Test file compiles with current route prop signature.

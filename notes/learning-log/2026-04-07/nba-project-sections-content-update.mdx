@@ -1,0 +1,77 @@
+## Context
+
+`projectsDataV2.ts` currently derives section content from legacy
+project fields. The NBA Analytics project needs curated section
+content for: Challenges, Implementation, Key Decisions, Tradeoffs, and
+Learnings.
+
+## Goal
+
+- **Goal:** Replace NBA section content with the provided narrative
+  while leaving all other projects unchanged.
+- **Inputs:** User-provided NBA project copy.
+- **Output/Done:** NBA entry in `projectsV2` uses explicit section
+  overrides.
+
+## Files Changed
+
+- `content/projects/projectsDataV2.ts`
+
+## Implementation Notes (key logic explained)
+
+- Added title-based conditional override:
+  `project.title === "NBA Analytics App"`.
+- For NBA only, replaced:
+  - `sections.challenges`
+  - `sections.implementation`
+  - `sections.keyDecisions`
+  - `sections.tradeoffs`
+  - `sections.learnings`
+- Kept `sections.overview` mapped from existing `project.situation`
+  for now.
+- All non-NBA projects still use fallback mapping from legacy fields.
+
+## Key Decisions (and alternatives considered)
+
+- **Conditional override in v2 map:** smallest safe diff without
+  rewriting the entire data file into full literals.
+- **Alternative:** convert `projectsDataV2.ts` into a full explicit
+  array; more verbose but cleaner long term.
+
+## Assumptions
+
+- Project title remains exactly `NBA Analytics App`.
+
+## Failure Modes
+
+- If the project title changes, the NBA-specific override will no
+  longer apply.
+- Long implementation text may render as a single paragraph depending
+  on UI styles unless newline handling is enabled.
+
+## How to Test (commands + steps)
+
+1. `npx prettier --check content/projects/projectsDataV2.ts`
+2. `npm run dev` and open `/projects/nba-analytics-app`.
+3. Confirm section headings and bullet content match the new
+   narrative.
+
+## Next Steps
+
+- Optional: add a stable `slug` field to avoid title-coupled
+  overrides.
+- Optional: move to a fully explicit `projectsV2` literal array for
+  easier manual editing per project.
+
+## Dependencies / env vars
+
+- **None added.**
+
+## Verification Checklist
+
+- [ ] NBA page shows new Challenges bullets.
+- [ ] NBA page shows the new Implementation narrative.
+- [ ] NBA page shows Key Decisions bullets.
+- [ ] NBA page shows Tradeoffs bullets.
+- [ ] NBA page shows Learnings bullets.
+- [ ] Other projects remain unchanged.

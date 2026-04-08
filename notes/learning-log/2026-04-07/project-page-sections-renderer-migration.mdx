@@ -1,0 +1,74 @@
+## Context
+
+Project detail UI previously rendered legacy narrative fields
+(`situation`, `task`, `changes`, etc.) with old heading names. We are
+moving to six standardized main sections.
+
+## Goal
+
+- **Goal:** Render these main sections in the project detail page:
+  Overview, Challenges, Implementation, Key Decisions, Tradeoffs,
+  Learnings.
+- **Inputs:** Existing `project` object with both legacy and new
+  fields.
+- **Output/Done:** Renderer prefers `project.sections.*` and falls
+  back to legacy fields during migration.
+
+## Files Changed
+
+- `app/projects/[projectName]/page.tsx`
+
+## Implementation Notes (key logic explained)
+
+- Added derived locals:
+  - `overview` <- `sections.overview` or `situation`
+  - `challenges` <- `sections.challenges` or `challenges`
+  - `implementation` <- `sections.implementation` or `implementation`
+  - `keyDecisions` <- `sections.keyDecisions` or `task`
+  - `tradeoffs` <- `sections.tradeoffs` or `changes`
+  - `learnings` <- `sections.learnings` or `learnings`
+- Updated heading labels to the new section names.
+- Added length checks for array sections to avoid rendering empty
+  lists.
+
+## Key Decisions (and alternatives considered)
+
+- **Use fallback mapping now:** prevents a breaking change while data
+  is still migrating.
+- **Map `task` -> Key Decisions and `changes` -> Tradeoffs:** closest
+  semantic fit from existing content.
+
+## Assumptions
+
+- Not every project has every section; missing sections should be
+  omitted.
+
+## Failure Modes
+
+- If `task` content is written like goals instead of decisions, the
+  Key Decisions heading may feel less accurate until data is refined.
+- If tradeoff notes are actually roadmap items, they may read as
+  future work.
+
+## How to Test (commands + steps)
+
+1. `npm run dev`
+2. Open a project detail page and confirm section headings appear in
+   new order.
+3. Verify older projects still show content via fallback fields.
+
+## Next Steps
+
+- Migrate `content/projects/projectsData.ts` so each project uses
+  `sections.{overview,challenges,implementation,keyDecisions,tradeoffs,learnings}`.
+
+## Dependencies / env vars
+
+- **None added.**
+
+## Verification Checklist
+
+- [ ] New heading titles render: Overview, Challenges, Implementation,
+      Key Decisions, Tradeoffs, Learnings.
+- [ ] Projects without new `sections` still render content.
+- [ ] Empty section arrays do not render empty bullets.
