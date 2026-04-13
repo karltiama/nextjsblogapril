@@ -1,94 +1,34 @@
-# 📊 Umami Analytics Dashboard Setup
+# Umami Cloud (portfolio)
 
-Your analytics dashboard now uses Umami's **Share URL** feature to display live analytics data without requiring API access!
+## Tracking script
 
-## **🎯 Current Setup: Share URL Embed**
+Page views are collected via **next/script** in `app/layout.tsx`:
 
-The analytics dashboard (`/analytics`) now embeds your Umami dashboard directly using the public share URL feature.
+- Loads `https://cloud.umami.is/script.js` after the page is interactive (`strategy="afterInteractive"`).
+- **`data-domains`** is set to `karltiama.dev,www.karltiama.dev` only on **Vercel production** (`VERCEL_ENV === "production"`) or on a **local production** server (`next start` without `VERCEL`). It is omitted during `next dev` and on **Vercel preview** deploys so those hostnames still send events (see [tracker configuration](https://umami.is/docs/tracker-configuration)).
+- **`data-exclude-search="true"`** — query strings are not stored with page paths.
+- **`data-do-not-track="true"`** — respects the browser DNT preference when set.
+- **`data-performance="true"`** — sends Core Web Vitals to Umami when supported by your Cloud script version.
 
-### **Step 1: Get Your Share URL**
+The website id is defined next to the script as `UMAMI_WEBSITE_ID` (must match the site in [Umami Cloud](https://cloud.umami.is)).
 
-1. Log into your Umami dashboard at **https://cloud.umami.is**
-2. Click on your website in the dashboard
-3. Click the **"Share"** button in the top right corner
-4. Copy the generated share URL (it looks like `https://cloud.umami.is/share/xxx-xxx-xxx`)
+## Public dashboard (share link)
 
-### **Step 2: Update the Component**
+A read-only **Share** URL is linked from the site footer (regional host such as `https://us.umami.is/share/...`). To change it:
 
-Update the `shareUrl` prop in `/app/analytics/page.tsx`:
+1. In Umami Cloud, open your site → **Share** → copy the URL.
+2. Update the `href` in `components/site-footer.tsx`.
 
-```tsx
-<AnalyticsEmbed 
-  shareUrl="YOUR_ACTUAL_SHARE_URL_HERE"
-  websiteId="3d15d7a9-0fe1-4f42-9846-8e817013dd3d"
-/>
-```
+## What to configure in Umami Cloud (your account)
 
-### **Step 3: Test the Integration**
+These are not stored in this repo:
 
-1. Run your development server:
-   ```bash
-   npm run dev
-   ```
+- **Share** visibility and regenerating the link if it leaks.
+- **Filters** / internal traffic (IPs, paths) if you see noise.
+- **Goals or custom events** for important clicks (optional; can use `umami.track` later in code).
 
-2. Visit **http://localhost:3000/analytics**
+## Troubleshooting
 
-3. You should see:
-   - ✅ Live analytics data embedded in an iframe
-   - ✅ A button to open the full dashboard
-   - ✅ Professional layout with your branding
-
-## **🎉 Benefits of This Approach**
-
-✨ **No API Costs:**
-- Works with Umami's free plan
-- No need to upgrade for API access
-
-✨ **Real-Time Data:**
-- Shows live analytics data
-- Always up-to-date with Umami's latest features
-
-✨ **Professional Presentation:**
-- Embedded within your site design
-- Maintains your branding and navigation
-
-✨ **Easy Maintenance:**
-- No API tokens to manage
-- No environment variables needed
-- Umami handles all the data processing
-
-## **🔧 Troubleshooting**
-
-**Problem:** Analytics iframe shows "Access Denied"
-
-**Solutions:**
-1. Make sure your share URL is correct
-2. Verify the website is set to "Public" in Umami settings
-3. Try regenerating the share URL
-
-**Problem:** Analytics not showing recent data
-
-**Solutions:**
-1. Check that your Umami tracking script is installed on your website
-2. Visit your site a few times to generate test data
-3. Allow time for Umami to process the data
-
-## **🚀 What This Demonstrates to Employers**
-
-✨ **Problem-Solving Skills:**
-- Identified API limitations and found alternative solution
-- Adapted approach based on service constraints
-
-✨ **User Experience Focus:**
-- Maintained clean, professional presentation
-- Ensured analytics remain accessible and functional
-
-✨ **Technical Flexibility:**
-- Used iframe embedding for data visualization
-- Integrated third-party services seamlessly
-
-✨ **Real-World Implementation:**
-- Shows actual website analytics and performance
-- Demonstrates live data integration capabilities
-
-Your portfolio now features **live analytics** that work reliably without API costs! 🎯 
+- **No hits on production** — Confirm the site id, domain in Umami, and that the live hostname is `karltiama.dev` or `www.karltiama.dev` (matches `data-domains` in production).
+- **No hits on localhost with `next start`** — A local production build applies `data-domains`, so hits from `localhost` are ignored; use `npm run dev` or test on the live domain.
+- **Share page “Access denied”** — Regenerate share URL or check site privacy settings in Umami.

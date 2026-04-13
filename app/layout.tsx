@@ -7,9 +7,22 @@ import { Providers } from "@/components/providers";
 import { SiteFooter } from "@/components/site-footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "@/config/site";
-import Script from "next/script"; // Import Script from 'next/script'
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+/** Umami Cloud website id (public; also set in Umami dashboard). */
+const UMAMI_WEBSITE_ID = "3d15d7a9-0fe1-4f42-9846-8e817013dd3d";
+/** Production hostnames only — omitted on dev and on Vercel preview. */
+const UMAMI_DATA_DOMAINS = "karltiama.dev,www.karltiama.dev";
+
+function shouldApplyUmamiDomainLock(): boolean {
+	if (process.env.VERCEL_ENV === "production") return true;
+	if (process.env.NODE_ENV === "production" && !process.env.VERCEL) {
+		return true;
+	}
+	return false;
+}
 
 export const metadata: Metadata = {
 	title: siteConfig.name,
@@ -31,14 +44,6 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className="scroll-pt-[3.5rem]" suppressHydrationWarning>
-			<head>
-				{/* Umami Tracking Script in Head */}
-				<Script
-					defer
-					src="https://cloud.umami.is/script.js"
-					data-website-id="3d15d7a9-0fe1-4f42-9846-8e817013dd3d"
-				/>
-			</head>
 			<body
 				className={cn(
 					"min-h-screen bg-background font-sans antialiased",
@@ -53,6 +58,20 @@ export default function RootLayout({
 					</div>
 					<SpeedInsights />
 				</Providers>
+				<Script
+					id="umami-analytics"
+					strategy="afterInteractive"
+					src="https://cloud.umami.is/script.js"
+					data-website-id={UMAMI_WEBSITE_ID}
+					data-domains={
+						shouldApplyUmamiDomainLock()
+							? UMAMI_DATA_DOMAINS
+							: undefined
+					}
+					data-exclude-search="true"
+					data-do-not-track="true"
+					data-performance="true"
+				/>
 			</body>
 		</html>
 	);
