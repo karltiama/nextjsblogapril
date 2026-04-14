@@ -1,0 +1,49 @@
+## Context
+
+The home page projects grid (`ProjectList` → `ProjectCard`) reads `imageSrc` from `content/projects/projectsData.ts`. The third featured card (“Tiama Legacy”) still pointed at a placeholder image.
+
+## Goal
+
+Use the asset `public/TLRS.png` as the featured image for the Tiama Legacy project card (the DOM node the user highlighted: image column with hover gradient overlay).
+
+## Files Changed
+
+- `content/projects/projectsData.ts`
+
+## Implementation Notes (key logic explained)
+
+Featured projects are filtered with `featured: true` in order: NBA Analytics App, Enduro Stats V2, Tiama Legacy. Index `2` matches `reverseLayout={false}`, so the image uses `md:order-1`—consistent with the user’s DOM path. Only `imageSrc` (and a small `altText` tweak) were updated; `projectsDataV2` re-exports mapped data from this file, so no separate v2 edit was required.
+
+## Key Decisions (and alternatives considered)
+
+- **Point at `/TLRS.png` in `public/`** — standard Next.js static path; no new dependencies or env vars.
+- **Alternative:** Import the image or use `next/image` `src` with a static import for stronger build-time checks; skipped to stay consistent with other projects that use string paths under `public/`.
+
+## Assumptions
+
+- `TLRS.png` remains in `public/` (already present in the repo).
+
+## Failure Modes
+
+- Missing or mis-cased file name on disk breaks the image at runtime (404).
+- Very large PNG could affect LCP; monitor if this becomes the LCP element.
+
+## How to Test (commands + steps)
+
+1. `npm run dev` (or your usual dev command).
+2. Open the home page, scroll to **Projects**.
+3. Confirm the **Tiama Legacy** card shows `TLRS.png` and hover overlay still works.
+
+Optional: `npm test` if you have tests that snapshot project metadata.
+
+## Next Steps
+
+- If Tiama Legacy gets a dedicated case-study hero, consider reusing the same asset or a higher-res variant for consistency.
+
+## Verification Checklist
+
+- [ ] Home → Projects → third featured row shows the new image.
+- [ ] Image is not stretched oddly (`object-cover object-top` on card unchanged).
+- [ ] No console errors for missing `/TLRS.png`.
+- [ ] Hover gradient and CTA strip still appear on image hover.
+- [ ] `/projects/tiama-legacy` (or equivalent slug) still loads if it uses the same data source for hero imagery—confirm if that page reads `imageSrc`.

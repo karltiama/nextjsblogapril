@@ -117,8 +117,8 @@ export const projects: Project[] = [
 		title: "Tiama Legacy",
 		description:
 			"A complete ground-up rebuild of a lodging website with integrated booking system. Featuring modern architecture, real-time availability, and secure payment processing.",
-		imageSrc: "/construction.png",
-		altText: "Tiama Legacy lodging website preview",
+		imageSrc: "/TLRS.png",
+		altText: "Tiama Legacy lodging website screenshot",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTypescript, name: "TypeScript" },
