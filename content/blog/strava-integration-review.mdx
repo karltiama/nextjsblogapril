@@ -1,0 +1,180 @@
+---
+title: "Strava OAuth: What I Built, What Worries Me, and What Comes Next"
+description: "A personal walkthrough of my Strava integration: how it works today, where the risks are, and the small, deliberate steps I am taking to harden it."
+date: 2026-04-15
+tags: ["strava", "oauth", "nextjs", "supabase", "security"]
+published: fasle
+---
+
+# Strava OAuth: What I Built, What Worries Me, and What Comes Next
+
+Getting something to **work** with a third-party OAuth API feels great. Getting
+it to a place where I can sleep at night is a different project entirely. This
+post is my honest review of how my Strava integration works today, what I still
+like about it, and the gaps I am closing next, with as little disruption to the
+user experience as possible.
+
+## Why I am writing this
+
+I have shipped connect, token refresh, and activity sync enough times that the
+happy path feels familiar. The part that still makes me pause is everything
+around the edges: callback handling, where tokens live, how expiry is stored, and
+whether my logs could ever become a liability. Writing it down helps me
+prioritize fixes and might help you if you are wiring Strava (or any OAuth
+provider) into a Next.js app with a hosted backend.
+
+## How my flow works today
+
+At a high level, the integration is a loop: connect on the dashboard, Strava
+sends the user back with a `code`, the server exchanges that code for tokens,
+and sync jobs pull activities when needed.
+
+**Connect.** The user starts from the dashboard. The client builds the Strava
+authorize URL (via `getStravaAuthUrl()` in `lib/strava.ts`), and the browser
+redirects to Strava. After approval, Strava redirects to `/dashboard` with query
+parameters such as `code`, `scope`, and sometimes `state` or error fields. A
+dashboard component (`StravaOAuthHandler`) reads those params and posts the
+`code` to `POST /api/auth/strava/token`.
+
+**Token exchange and storage.** That API route checks that the user is signed in
+(through Supabase auth), exchanges the `code` at Strava’s token endpoint, and
+upserts access and refresh tokens, expiry fields, and athlete profile data into a
+`strava_tokens` table.
+
+**Connection status and refresh.** Hooks such as `useStravaConnection` and
+`use-strava-auth` drive the UI. Under the hood, a `StravaAuth` helper checks
+whether the connection looks valid. When the access token is close to expiring,
+refresh can happen from the client (for example via `PUT /api/auth/strava/token`)
+or from server-side code paths such as sync.
+
+**Sync.** A route like `POST /api/strava/sync` validates the user, then
+`syncStravaActivities()` loads tokens, refreshes when needed, calls Strava’s
+activities API, and upserts rows, supporting both quick and fuller sync modes.
+
+That is the mental model: **authorize in the browser, trust the server for token
+exchange, then treat Strava as just another API behind stored credentials.**
+
+## What I still think I got right
+
+- **Token exchange and primary storage live on the server.** The browser is not
+  where I want long-lived secrets assembled; route handlers own the exchange with
+  Strava.
+- **Refresh and reconnect paths exist.** Real integrations churn tokens; having
+  refresh and a path to reconnect when things go invalid is table stakes, and I
+  am glad I did not skip that.
+- **I have already had to think about callback races.** OAuth on the dashboard
+  means re-renders, reloads, and query strings disappearing. Messy. A dedicated
+  handler and local guards helped tame some of that chaos.
+- **The sync pipeline is purpose-built.** It is not perfect, but it is oriented
+  around retries and modes that match how I actually use the data.
+
+## Where the gaps are (and how I think about severity)
+
+These are not all “CVEs waiting to happen.” Some are **design choices I would
+not repeat**, and some are **reliability landmines** that show up under load or
+bad data.
+
+### OAuth `state` is not where I want it yet
+
+The connect URL does not always carry a strong, validated `state`, and the
+callback path does not consistently verify `state` before exchanging the code.
+Logged-in users and same-site assumptions reduce some risk, but this is still
+weaker than OAuth best practices for binding the callback to the user’s intent.
+**This is high on my fix list** because it is a well-understood control with a
+clear implementation story.
+
+### Token table access from the client is too much surface area
+
+Today, `useStravaConnection` ends up using `StravaAuth`, which reads and mutates
+`strava_tokens` through the browser Supabase client. Even with row-level
+security, I do not want “token plumbing” to feel normal from client runtime: it
+raises the stakes for XSS and couples UI code to security-sensitive data paths.
+**I want the browser to ask my API for status and disconnect, not touch token
+rows directly.**
+
+### `expires_at` format drift bit me on paper
+
+Some paths persist `expires_at` as an ISO string; other paths have written raw
+epoch numbers. Anything that does `new Date(tokens.expires_at)` can behave badly
+when the shape changes. **This is the kind of bug that looks intermittent:**
+bad refresh timing, flaky “connected” status, or refresh loops. I am standardizing on
+one canonical format (ISO strings everywhere) and one small conversion helper.
+
+### Callback handling on the dashboard is workable but busy
+
+Orchestrating OAuth return on `/dashboard` means more moving parts in React
+lifecycle than I would like: cleanup, races, and error boundaries all sit in UI
+land. A dedicated server callback route would centralize checks, logging, and
+redirects. **Medium priority for maintainability and a cleaner security
+story**, not because the current approach is inherently broken.
+
+### Logging needs a hygiene pass
+
+When debugging OAuth, it is tempting to log everything. I have had patterns
+that log request bodies or fragments of authorization codes. That makes
+incidents harder, not easier. **Structured, non-sensitive diagnostics only** is
+the bar for production.
+
+### Refresh logic is duplicated
+
+Refresh appears in more than one place (`lib/strava/auth.ts`, the token route,
+and `lib/strava/sync-activities.ts`), with small behavioral differences. That
+invites drift. **I want one server-side refresh service** that every path calls.
+
+## What I am doing about it (in two phases)
+
+**Phase 1: security baseline with minimal churn**
+
+1. Add proper OAuth `state`: generate server-side, stash in a short-lived
+   httpOnly cookie, validate and invalidate on return.
+2. Stop direct client access to `strava_tokens`: expose connection metadata
+   through API responses only (never raw tokens to the browser).
+3. Normalize `expires_at` writes to a single ISO representation everywhere.
+4. Trim sensitive logs: no body dumps, no code snippets.
+
+**Phase 2: reliability and maintainability**
+
+1. Introduce dedicated routes, for example `/api/auth/strava/start` and
+   `/api/auth/strava/callback`, so the callback is not owned by dashboard UI
+   state.
+2. Consolidate refresh into one module used by APIs and sync.
+3. Add focused tests: `state` mismatch rejection, happy callback, consistent
+   expiry storage, and no client dependency on the token table.
+
+Principles for all of it: **small diffs**, **no big-bang refactors while
+hardening**, and **preserve connect, sync, and status** for anyone already using
+the integration.
+
+## Tradeoffs I considered
+
+- **Patch only `state` and keep the dashboard callback.** Fastest, but I still
+  own OAuth return in client lifecycle.
+- **Move the full callback to a server route (my preference).** More moving
+  pieces up front, stronger boundary for validation and auditing.
+- **Encrypt tokens at rest immediately.** Nice defense in depth, but key
+  management and rollout cost are real; I am treating that as a later layer after
+  the baseline fixes.
+
+## What could go wrong while migrating
+
+Reconnect prompts if redirect URLs and query cleanup fall out of sync. Legacy
+rows with mixed `expires_at` shapes may need a one-time cleanup. Tests that
+assumed the old callback behavior will need updates. I am planning for that
+instead of pretending the migration is invisible.
+
+## My personal bar for “done”
+
+When I can check these off, I will call this chapter closed:
+
+- Callbacks reject missing or invalid `state`.
+- The browser no longer reads or writes `strava_tokens` directly.
+- `expires_at` is stored consistently (ISO strings in every path).
+- Logs never contain sensitive auth payloads.
+- Connect, refresh, and sync still feel the same from the user’s perspective.
+
+---
+
+If you are integrating Strava, or any OAuth provider, into a full-stack app, the
+pattern is familiar: **ship the happy path, then tighten the edges.** This post
+is my snapshot of where I am on that second part. I will be glad if it saves you
+a detour or validates something you were already feeling in your own codebase.
