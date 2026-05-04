@@ -1,7 +1,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, MapPin, Mail, Github, ExternalLink } from "lucide-react";
+import {
+	Calendar,
+	MapPin,
+	Mail,
+	Github,
+	ExternalLink,
+	Layers,
+	Wrench,
+	Sparkles,
+} from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -13,13 +22,50 @@ export const metadata: Metadata = {
 		"Learn about Karl Tiama's journey from engineering to full-stack development, specializing in React, Next.js, and modern web technologies.",
 };
 
-const skills = {
-	Frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],
-	Backend: ["Node.js", "Express", "Supabase", "PostgreSQL", "REST APIs"],
-	"Tools & DevOps": ["Git", "GitHub", "Docker", "Vercel", "CI/CD"],
-	Mobile: ["React Native", "Expo"],
-	Other: ["Zustand", "TanStack Query", "MDX", "OAuth"],
-};
+const skillGroups = [
+	{
+		title: "Core Stack",
+		icon: Layers,
+		items: [
+			"React",
+			"Next.js",
+			"TypeScript",
+			"Node.js",
+			"PostgreSQL",
+			"Supabase",
+			"Tailwind CSS",
+			"REST APIs",
+		],
+	},
+	{
+		title: "Working Knowledge",
+		icon: Wrench,
+		items: [
+			"Express",
+			"TanStack Query",
+			"Zustand",
+			"Docker",
+			"Vercel",
+			"CI/CD",
+			"MDX",
+			"OAuth",
+			"React Native",
+			"Expo",
+		],
+	},
+	{
+		title: "Currently Exploring",
+		icon: Sparkles,
+		items: ["Advanced system design", "Distributed data workflows", "Cloud ops depth"],
+	},
+];
+
+const thinkingPrinciples = [
+	"Start with system boundaries, data flow, and clear failure points before writing code.",
+	"Make trade-offs explicit early (speed, maintainability, and complexity) to guide implementation decisions.",
+	"Ship in small increments, measure behavior in real use, then iterate based on signal.",
+	"Prefer robust defaults and observability so systems stay understandable as they scale.",
+];
 
 const achievements = [
 	{
@@ -89,13 +135,22 @@ export default async function AboutPage() {
 								</div>
 
 								<div className="flex gap-2 w-full">
-									<Button asChild className="flex-1" size="sm">
+									<Button
+										asChild
+										className="flex-1 bg-blue-500 text-white hover:bg-blue-400"
+										size="sm"
+									>
 										<Link href="mailto:karl@karltiama.dev">
 											<Mail className="w-4 h-4 mr-2" />
 											Contact
 										</Link>
 									</Button>
-									<Button asChild variant="outline" size="sm">
+									<Button
+										asChild
+										variant="outline"
+										size="sm"
+										className="border-blue-400/40 text-blue-300 hover:bg-blue-500/10 hover:text-blue-200"
+									>
 										<Link href={siteConfig.links.github} target="_blank">
 											<Github className="w-4 h-4" />
 										</Link>
@@ -112,7 +167,7 @@ export default async function AboutPage() {
 							<div className="space-y-4">
 								{achievements.map((achievement, index) => (
 									<div key={index} className="text-center">
-										<div className="text-2xl font-bold text-primary">
+										<div className="text-2xl font-bold text-blue-400">
 											{achievement.metric}
 										</div>
 										<div className="text-sm font-medium">
@@ -178,21 +233,38 @@ export default async function AboutPage() {
 					<div>
 						<h3 className="text-2xl font-semibold mb-4">Technical Skills</h3>
 						<div className="space-y-4">
-							{Object.entries(skills).map(([category, techList]) => (
-								<div key={category}>
-									<h4 className="font-medium mb-2 text-muted-foreground">
-										{category}
+							{skillGroups.map((group) => {
+								const Icon = group.icon;
+								return (
+								<div key={group.title}>
+									<h4 className="font-medium mb-2 text-muted-foreground flex items-center gap-2">
+										<Icon className="h-4 w-4 text-blue-400" />
+										{group.title}
 									</h4>
 									<div className="flex flex-wrap gap-2">
-										{techList.map((tech) => (
+										{group.items.map((tech) => (
 											<Badge key={tech} variant="secondary">
 												{tech}
 											</Badge>
 										))}
 									</div>
 								</div>
-							))}
+								);
+							})}
 						</div>
+					</div>
+
+					{/* How I Think */}
+					<div>
+						<h3 className="text-2xl font-semibold mb-4">How I Think</h3>
+						<ul className="space-y-3 text-muted-foreground">
+							{thinkingPrinciples.map((principle) => (
+								<li key={principle} className="leading-relaxed">
+									<span className="text-blue-400 mr-2">•</span>
+									{principle}
+								</li>
+							))}
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -265,13 +337,17 @@ export default async function AboutPage() {
 							innovative projects
 						</p>
 						<div className="flex gap-4 justify-center">
-							<Button asChild>
+							<Button asChild className="bg-blue-500 text-white hover:bg-blue-400">
 								<Link href="/projects">
 									View My Projects
 									<ExternalLink className="w-4 h-4 ml-2" />
 								</Link>
 							</Button>
-							<Button asChild variant="outline">
+							<Button
+								asChild
+								variant="outline"
+								className="border-blue-400/40 text-blue-300 hover:bg-blue-500/10 hover:text-blue-200"
+							>
 								<Link href="mailto:karl@karltiama.dev">Get In Touch</Link>
 							</Button>
 						</div>

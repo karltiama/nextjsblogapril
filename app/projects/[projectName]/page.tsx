@@ -44,6 +44,7 @@ export default async function ProjectPage({
 	const keyDecisions = project.sections?.keyDecisions ?? project.task;
 	const tradeoffs = project.sections?.tradeoffs ?? project.changes;
 	const learnings = project.sections?.learnings ?? project.learnings;
+	const researchBacktesting = project.sections?.researchBacktesting;
 	const implementationParagraphs = implementation
 		? implementation
 				.split("\n\n")
@@ -150,6 +151,30 @@ export default async function ProjectPage({
 							))
 						) : (
 							<p>{implementation}</p>
+						)}
+					</div>
+				</>
+			)}
+
+			{researchBacktesting && (
+				<>
+					<h2 className="text-2xl font-semibold mb-2">
+						{researchBacktesting.title}
+					</h2>
+					<div className="text-lg mb-4 space-y-4">
+						{researchBacktesting.paragraphs.map((paragraph, index) => (
+							<p key={index}>{paragraph}</p>
+						))}
+						{researchBacktesting.blogCta && (
+							<p>
+								{researchBacktesting.blogCta.leadIn}{" "}
+								<Link
+									href={researchBacktesting.blogCta.href}
+									className="text-primary font-medium underline-offset-4 hover:underline"
+								>
+									{researchBacktesting.blogCta.linkText}
+								</Link>
+							</p>
 						)}
 					</div>
 				</>

@@ -43,6 +43,16 @@ export interface Project {
 		overview?: string;
 		challenges?: string[];
 		implementation?: string;
+		/** Optional narrative block (e.g. NBA research layer) rendered after Implementation. */
+		researchBacktesting?: {
+			title: string;
+			paragraphs: string[];
+			blogCta?: {
+				leadIn: string;
+				href: string;
+				linkText: string;
+			};
+		};
 		keyDecisions?: string[];
 		tradeoffs?: string[];
 		learnings?: string[];

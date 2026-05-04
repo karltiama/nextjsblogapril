@@ -1,0 +1,268 @@
+---
+title: "Building a Backtesting System for My NBA Analytics App"
+description: "How I turned a stats dashboard into a research platform: pure strategies, point-in-time features, S3 and Parquet, DuckDB, and an odds-aware EV layer—so I can ask whether an idea would have worked, not just what the numbers look like."
+date: 2026-05-02
+tags:
+  [
+    "nba",
+    "backtesting",
+    "analytics",
+    "data-engineering",
+    "duckdb",
+    "supabase",
+    "typescript",
+  ]
+published: true
+---
+
+When I first started building my NBA analytics app, the goal was straightforward: analyze player and team data in a way that could surface useful betting insights.
+
+As the project grew, one limitation became obvious. **Showing stats is not the same as supporting decisions.** If I wanted the platform to actually help with choices under uncertainty, I needed a way to test whether an idea would have worked in the past before trusting it in the future.
+
+That is what led me to build a **backtesting system**—a research layer that replays strategies against historical data and measures whether the logic produces useful signals.
+
+Instead of stopping at “Does this player look hot recently?” I can ask:
+
+> If I had followed this rule across an entire season, how often would it have been right?
+
+That shift turned the app from a dashboard into something much closer to a real analytics platform.
+
+## Why I built it
+
+Early on, the app was oriented around collecting and displaying data: games, players, logs, team stats, odds, and props. That was valuable, but it did not answer the harder question:
+
+**Which patterns are actually predictive?**
+
+For example, a player averaging more points over their last five games than their season average might feel like a signal. Without a historical test, it is still an assumption.
+
+The backtester lets me interrogate ideas like:
+
+- Does recent form matter?
+- Do increased minutes lead to better scoring opportunities?
+- Does a last-five-game average outperform a season-to-date average in a way that generalizes?
+- How do different EV model calibrations behave over time?
+- Can a strategy hold up across multiple seasons?
+
+The goal is not to “predict every game.” The goal is a **repeatable research loop**: test, measure, adjust, and improve.
+
+## Architecture at a glance
+
+The system has three main execution paths:
+
+1. **Postgres / Supabase player game logs** — raw historical, game-by-game strategies.
+2. **S3 Parquet feature files** — precomputed, **point-in-time** features (season average *before* the game, last-five *before* the game, last-ten, minutes trends, outcomes).
+3. **Odds-aware prop EV backtest** — replays model decisions against historical lines and settled outcomes.
+
+At a high level:
+
+```text
+Historical NBA Data
+        |
+        v
+Postgres / Supabase + S3 Parquet (features)
+        |
+        v
+Backtesting strategy layer
+        |
+        v
+Signals, graded results, reports, manifests
+        |
+        v
+Research dashboard / CLI reports
+```
+
+The design choice that paid off most was **layering**:
+
+- Data fetching  
+- Strategy logic  
+- Grading logic  
+- Persistence  
+- Reporting  
+- UI / API consumption  
+
+That separation keeps strategy code **clean and testable**. A strategy should not care whether a row came from S3, Postgres, or a fixture in a unit test. It receives historical rows, applies rules, and returns results.
+
+## Keeping strategy logic pure
+
+One of the biggest lessons was to keep core strategy functions **pure**.
+
+Strategies like “recent form” or “points last-five vs season” do not open database connections, call S3, or hit API routes. They take data in and return signals (and metadata) out.
+
+That makes the same code usable from:
+
+- a CLI runner  
+- an API route  
+- automated tests  
+- (eventually) a dashboard-triggered workflow  
+
+When a result looks wrong, I can debug the pure function without simultaneously worrying about connection pools, IAM policies, or frontend state.
+
+### Example: points L5 vs season average
+
+One of the first strategies I exercised was intentionally simple:
+
+> If a player’s last-five-game points average is meaningfully **higher** than their **season average before the game**, emit an OVER-style signal.
+
+It relies on point-in-time fields such as:
+
+- `points_l5_avg_before_game`  
+- `points_season_avg_before_game`  
+- `actual_points`  
+- `prior_games` (for sanity checks on sample size)
+
+The “edge” is something like:
+
+```text
+edge = points_l5_avg_before_game - points_season_avg_before_game
+```
+
+If the edge clears a threshold, the system records a signal. For grading in this research track, I might use a **synthetic line** derived from the player’s season average *before* that game—not a perfect stand-in for a sportsbook, but a controlled way to ask whether recent scoring form carries signal **before** wiring in full historical odds.
+
+This is **research scaffolding**, not a claim of production-grade simulation. I am building in layers on purpose.
+
+## Avoiding lookahead bias
+
+The fastest way to lie to yourself in a backtest is **lookahead bias**: using information that would not have existed at decision time.
+
+If I am evaluating a game on January 15, nothing from January 16 or later belongs in the feature row.
+
+Rolling averages must be computed from **games strictly before** the target contest. Hence column names like:
+
+- `points_season_avg_before_game`  
+- `points_l5_avg_before_game`  
+- `points_l10_avg_before_game`  
+- `minutes_l5_avg_before_game`  
+
+That “before game” suffix is not pedantry. It encodes a **point-in-time dataset**: the question is not “What do we know now?” but “What would we have known **then**?”
+
+That is the difference between a misleading backtest and a useful one.
+
+## S3, Parquet, and DuckDB
+
+As volume grew, I moved historical and feature data toward **S3 in Parquet**. That scales multi-season datasets without turning the app database into a warehouse.
+
+The pipeline, in short:
+
+```text
+Raw NBA API data
+        |
+        v
+Curated player game logs
+        |
+        v
+Feature builder (point-in-time)
+        |
+        v
+S3 Parquet datasets
+        |
+        v
+Backtest runner (DuckDB over local Parquet after download)
+        |
+        v
+Results, manifests, summaries (often back to S3)
+```
+
+For the runner, **DuckDB** over Parquet gives columnar analytics ergonomics without standing up a separate heavy warehouse for every iteration.
+
+Outputs tend to include things like:
+
+- `results.jsonl`  
+- `_manifest.json` (what ran, which season, thresholds, output locations)  
+- summary and threshold-sweep reports  
+
+Manifests matter because they make research **auditable and repeatable**. Six months later, I can tell exactly which configuration produced a given artifact.
+
+## From raw results to dashboard-ready reports
+
+A giant JSONL file is honest, but not actionable on its own.
+
+I added **report builders** that aggregate into hit rates, signal counts, threshold comparisons, buckets, player samples, and season-by-season views—questions such as:
+
+- Overall hit rate and sample size  
+- Which threshold looked best in-sample (with humility about overfitting)  
+- Whether behavior differs by season or by minimum prior games  
+- Whether results look like signal or noise at current N  
+
+The split I want long term is clear:
+
+**Heavy computation offline. The UI reads prepared outputs.**
+
+I do not want a browser tab to accidentally become a distributed backtest cluster every refresh.
+
+## Odds-aware EV backtest
+
+The next layer is the **prop EV** path. Unlike the synthetic-line research strategies, this one replays decisions against **historical prop evaluation units** from the database: lines, model probability, implied probability, expected value, and settled results.
+
+It targets a more product-shaped question:
+
+> When my model flagged positive EV, how did those positions actually perform historically?
+
+That unlocks metrics closer to what matters in production research: ROI, win rate, Brier score, slices by prop type, slices by EV bucket, and comparisons across calibration tracks.
+
+This is the bridge between “interesting stat exploration” and “does this betting model deserve trust?”—with all the usual caveats about regime change, liquidity, and line availability, which belong in interpretation, not in silent assumptions.
+
+## Testing the backtester
+
+Because the domain is historical logic, **small bugs invalidate entire conclusions**.
+
+Examples that will quietly wreck you:
+
+- Including the target game in a rolling window  
+- Sorting games incorrectly across season boundaries  
+- Mishandling incomplete lookbacks or nulls  
+- Grading pushes wrong  
+- Leaking rows from the wrong season  
+
+So I invest tests in:
+
+- pure strategy functions  
+- report aggregations  
+- service helpers that assemble windows and joins  
+
+Pure logic tests run **without network or database**, which keeps the signal on the rules themselves—exactly where leakage tends to hide.
+
+## What I learned
+
+Analytics apps are not “just charts.” The hard part is a **trustworthy pipeline**:
+
+- clean historical inputs  
+- point-in-time features  
+- repeatable runners  
+- explicit artifacts and manifests  
+- summarized reports  
+- tests that encode the invariants you care about  
+- a UI that consumes stable outputs  
+
+I also learned to **stage ambition**. Simple strategies (“does recent form beat season average?”, “do minutes trends matter?”, “how sensitive is quality to threshold?”) earn the right to more realistic odds-aware work later.
+
+## Why this matters for the product
+
+The backtester gives the app a **research engine**.
+
+The product story shifts from:
+
+> A dashboard that displays NBA stats  
+
+to:
+
+> A platform for testing NBA betting hypotheses—with evidence.  
+
+Long term, I want this loop to power better props tooling, smarter signals, and workflows where strategies are compared across seasons **before** they influence live decisions.
+
+For me, the project is not only about sports betting. It is about building a **real data product**: backend architecture, data engineering, cloud storage, TypeScript, SQL, testing, analytics, and product judgment in one loop.
+
+Most importantly, it keeps nudging the questions upward.
+
+Not only:
+
+> What does the data show?  
+
+But:
+
+> **Would this idea have actually worked?**  
+
+That is the question the backtesting system was built to answer.
+
+---
+
+_Disclaimer: This post describes a personal research system. Past backtest performance does not guarantee future results; sports markets change, and nothing here is financial or betting advice._

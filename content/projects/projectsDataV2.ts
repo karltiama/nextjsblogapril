@@ -18,6 +18,25 @@ export const projectsV2: Project[] = legacyProjects.map((project) => ({
 			project.title === "NBA Analytics App"
 				? "To address these issues, I redesigned the system around a more robust, API-driven architecture.\n\nData Source and Ingestion: Transitioned from web scraping to a paid API to ensure structured, reliable data. Built automated ingestion pipelines using AWS Lambda triggered by EventBridge schedules. Managed infrastructure and scheduling through Terraform using CLI-based workflows.\n\nData Architecture: Implemented a dual-layer data model where the Raw Layer stores unmodified API responses for auditing and reprocessing, while the Analytics Layer transforms data into clean, query-optimized tables. This separation allowed safe transformations while preserving data integrity and traceability.\n\nModeling and Analysis: Developed baseline projection models using historical player performance, then calculated expected value (EV) by comparing model outputs against market odds. Structured the system to support future enhancements such as more advanced models and feature engineering."
 				: project.implementation,
+		...(project.title === "NBA Analytics App"
+			? {
+					researchBacktesting: {
+						title: "Research & Backtesting System",
+						paragraphs: [
+							"As the project matured, I expanded it from a real-time stats and props dashboard into a research platform for testing NBA betting hypotheses against historical data.",
+							"I built a backtesting layer that replays strategy ideas against historical player game logs and point-in-time feature datasets. The system supports pure TypeScript strategy functions, S3-hosted Parquet feature files, DuckDB-powered research runners, JSONL result artifacts, manifests, and dashboard-ready summary reports.",
+							"This lets me evaluate questions like whether recent scoring form, minutes trends, or role changes would have produced useful signals across a full season before trusting those ideas in a live props workflow.",
+						],
+						blogCta: {
+							leadIn:
+								"For a deeper technical breakdown, I wrote about the full progression here:",
+							href: "/blog/nba-backtesting-research-layer",
+							linkText:
+								"Building a Backtesting System for My NBA Analytics App",
+						},
+					},
+				}
+			: {}),
 		keyDecisions:
 			project.title === "NBA Analytics App"
 				? [

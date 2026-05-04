@@ -51,10 +51,23 @@ export default function RootLayout({
 				)}
 				suppressHydrationWarning>
 				<Providers>
-					<div className="relative flex min-h-dvh flex-col bg-background">
-						<SiteHeader />
-						<main className="flex-1">{children}</main>
-						<SiteFooter />
+					<div className="relative flex min-h-dvh flex-col overflow-hidden bg-[#0a0f1f]">
+						<div
+							className="pointer-events-none absolute inset-0 z-0 opacity-[0.16]"
+							aria-hidden
+							style={{
+								backgroundImage:
+									"radial-gradient(circle at 1px 1px, rgba(255,255,255,0.18) 1px, transparent 0)",
+								backgroundSize: "18px 18px",
+							}}
+						/>
+						<div className="relative z-[1]">
+							<SiteHeader />
+						</div>
+						<main className="relative z-[1] flex-1">{children}</main>
+						<div className="relative z-[1]">
+							<SiteFooter />
+						</div>
 					</div>
 					<SpeedInsights />
 				</Providers>

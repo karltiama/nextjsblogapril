@@ -62,6 +62,11 @@ export const projects: Project[] = [
 				title: "My NBA Analytics Journey",
 				slug: "nba-analytics",
 				description: "How I built a data pipeline to predict game outcomes and evaluate player props."
+			},
+			{
+				title: "Building a Backtesting System for My NBA Analytics App",
+				slug: "nba-backtesting-research-layer",
+				description: "How I added a research layer—point-in-time features, DuckDB, and an odds-aware EV stack—to test ideas against history instead of only showing stats."
 			}
 		],
 	},
