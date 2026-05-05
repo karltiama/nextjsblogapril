@@ -1,6 +1,6 @@
 ---
 title: "Building a Backtesting System for My NBA Analytics App"
-description: "How I turned a stats dashboard into a research platform: pure strategies, point-in-time features, S3 and Parquet, DuckDB, and an odds-aware EV layer—so I can ask whether an idea would have worked, not just what the numbers look like."
+description: "How I turned a stats dashboard into a research platform: pure strategies, point-in-time features, S3 and Parquet, DuckDB, and an odds-aware EV layer, so I can ask whether an idea would have worked, not just what the numbers look like."
 date: 2026-05-02
 tags:
   [
@@ -55,21 +55,15 @@ The system has three main execution paths:
 
 At a high level:
 
-```text
-Historical NBA Data
-        |
-        v
-Postgres / Supabase + S3 Parquet (features)
-        |
-        v
-Backtesting strategy layer
-        |
-        v
-Signals, graded results, reports, manifests
-        |
-        v
-Research dashboard / CLI reports
-```
+<Mermaid
+	chart={`
+flowchart TB
+    A["Historical NBA Data"] --> B["Postgres / Supabase + S3 Parquet (features)"]
+    B --> C["Backtesting strategy layer"]
+    C --> D["Signals, graded results, reports, manifests"]
+    D --> E["Research dashboard / CLI reports"]
+`}
+/>
 
 The design choice that paid off most was **layering**:
 
@@ -143,24 +137,16 @@ As volume grew, I moved historical and feature data toward **S3 in Parquet**. Th
 
 The pipeline, in short:
 
-```text
-Raw NBA API data
-        |
-        v
-Curated player game logs
-        |
-        v
-Feature builder (point-in-time)
-        |
-        v
-S3 Parquet datasets
-        |
-        v
-Backtest runner (DuckDB over local Parquet after download)
-        |
-        v
-Results, manifests, summaries (often back to S3)
-```
+<Mermaid
+	chart={`
+flowchart TB
+    A["Raw NBA API data"] --> B["Curated player game logs"]
+    B --> C["Feature builder (point-in-time)"]
+    C --> D["S3 Parquet datasets"]
+    D --> E["Backtest runner (DuckDB over local Parquet after download)"]
+    E --> F["Results, manifests, summaries (often back to S3)"]
+`}
+/>
 
 For the runner, **DuckDB** over Parquet gives columnar analytics ergonomics without standing up a separate heavy warehouse for every iteration.
 
