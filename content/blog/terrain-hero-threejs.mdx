@@ -1,0 +1,339 @@
+---
+title: "Building an Animated Terrain Hero with Three.js and React"
+description: "How I built the wireframe flying-terrain hero on my portfolio homepage: Perlin noise on a plane mesh, sticky scroll overlap with the about section, and the performance trade-offs worth knowing before you ship WebGL to every visitor."
+date: 2026-07-03
+tags:
+  [
+    "threejs",
+    "react-three-fiber",
+    "webgl",
+    "nextjs",
+    "performance",
+    "css",
+  ]
+published: true
+---
+
+When I redesigned my portfolio homepage, I wanted the first screen to feel like motion and depth, not a static gradient. The reference in my head was the classic **flying wireframe terrain** from creative-coding demos: hills rolling toward you, fog fading into black, headline text floating on top.
+
+That effect lives in `TerrainHero`, a client component that combines **Three.js** (via **React Three Fiber**), **Perlin noise**, and a **sticky scroll layout** so the about section scrolls up over the canvas without a hard cut.
+
+This post walks through how it works, then a dedicated section on **how to keep it fast** on mid-range phones and older laptops.
+
+## What we're building
+
+At a high level, the hero has three layers:
+
+1. **WebGL canvas**: animated wireframe terrain (background)
+2. **Text overlay**: headline and subcopy passed in as `children`
+3. **Scroll bridge**: about section that overlaps the hero as you scroll
+
+<Mermaid
+	chart={`
+flowchart TB
+    A["HomeTerrainHero (dynamic import, no SSR)"] --> B["TerrainHero"]
+    B --> C["Sticky viewport canvas + Three.js Terrain"]
+    B --> D["Text overlay (children)"]
+    B --> E["AboutSection with negative margin overlap"]
+    C --> F["useFrame: noise → vertex heights every frame"]
+`}
+/>
+
+The live version is on my homepage. The core files are:
+
+- `terrain-hero.tsx`: canvas, mesh, layout
+- `home-terrain-hero.tsx`: lazy-load wrapper for Next.js
+- `page.tsx`: passes hero copy as children
+
+## Stack choices
+
+| Piece | Why |
+|-------|-----|
+| **Three.js** | Mature WebGL abstraction; huge ecosystem |
+| **@react-three/fiber** | Declarative React bindings; `useFrame` for animation loop |
+| **ImprovedNoise** | Three's built-in Perlin noise module from the Three.js examples folder |
+| **next/dynamic + `ssr: false`** | WebGL needs `window`; avoids hydration mismatch and keeps Three off the server bundle path |
+
+Three.js comes with a real bundle and runtime cost. It adds meaningful JavaScript to the home route. I only load it on pages that use the hero, via dynamic import:
+
+```typescript
+const TerrainHero = dynamic(() => import("@/components/terrain-hero"), {
+  ssr: false,
+});
+```
+
+That pattern is the first performance decision: **don't pay for WebGL until the hero actually mounts.**
+
+## The terrain mesh
+
+The visual is a `PlaneGeometry` rotated to look like a floor receding into the distance. It is not a heightmap texture, but **live vertex displacement** every frame.
+
+```typescript
+const geom = new THREE.PlaneGeometry(80, 60, 120, 90)
+geom.rotateX(-Math.PI / 2.6)
+
+const originalPositions = new Float32Array(geom.attributes.position.array)
+```
+
+Breaking that down:
+
+- **`PlaneGeometry(width, height, widthSegments, heightSegments)`**: a grid of vertices. `120 × 90` segments ≈ **11,000 vertices** (down from an earlier `200 × 150` version).
+- **`rotateX(-Math.PI / 2.6)`**: tilts the plane so the camera looks across it, similar to old **p5.js** terrain sketches.
+- **`originalPositions`**: a frozen copy of the flat grid. Animation always samples noise from these base `(x, y)` values so the landscape doesn't "crawl" sideways as heights change.
+
+## Animating with Perlin noise
+
+The first version updated every vertex on the CPU inside `useFrame`. The current version moves that work into a **vertex shader**: the CPU only increments a `uTime` uniform each frame.
+
+```typescript
+useFrame(() => {
+  if (!animate || !materialRef.current) return
+  materialRef.current.uniforms.uTime.value += 0.01
+})
+```
+
+The GLSL vertex shader samples 3D simplex noise and displaces height on the GPU:
+
+```glsl
+float noiseValue = snoise(vec3(pos.x * 0.2, pos.y * 0.2 + uTime, 0.0));
+float sharpened = sign(noiseValue) * pow(abs(noiseValue), 0.5);
+pos.z = sharpened * 4.0;
+```
+
+What's happening:
+
+1. **`uTime`**: increments each frame. Adding it to the noise `y` sample makes the field scroll forward, like flying over infinite hills.
+2. **`snoise`**: 3D simplex noise in GLSL (close to the old `ImprovedNoise` look).
+3. **Power curve (`pow(abs, 0.5)`)**: sharpens peaks and deepens valleys without changing the overall scale.
+4. **`pos.z`**: writes height into the third component of each vertex (the plane's local "up" after rotation).
+
+The material is a wireframe `shaderMaterial` (no lighting needed):
+
+```typescript
+<shaderMaterial
+  uniforms={uniforms}
+  vertexShader={TERRAIN_VERTEX_SHADER}
+  fragmentShader={TERRAIN_FRAGMENT_SHADER}
+  wireframe
+  transparent
+/>
+```
+
+Fog sells depth; lights are optional with `meshBasicMaterial`:
+
+```typescript
+<fog attach="fog" args={['#000000', 8, 28]} />
+```
+
+Camera, pixel density, and frame loop:
+
+```typescript
+<Canvas
+  camera={{ position: [0, -10, 10], fov: 80 }}
+  dpr={dpr}
+  frameloop={animate ? 'always' : 'never'}
+>
+```
+
+`dpr` is `[1, 2]` on desktop and `[1, 1]` on mobile or low-core devices. `frameloop` pauses the render loop when the hero scrolls off-screen.
+
+## Layout: sticky hero + scroll overlap
+
+The DOM structure is what makes the about section feel connected to the terrain instead of appearing below a dead black bar.
+
+```typescript
+<div className="relative w-full">
+  <div className={`sticky top-0 z-0 w-full overflow-hidden bg-black ${heroHeightClass}`}>
+    {/* Canvas + text overlay */}
+  </div>
+
+  <div className={`relative z-10 ${scrollBridgeClass}`}>
+    <AboutSection />
+  </div>
+</div>
+```
+
+With `fullHeight`, the classes are:
+
+- Hero: `h-[100svh] min-h-[100svh]`: full small viewport height (respects mobile browser chrome better than `vh`).
+- Bridge: `-mt-[100svh] pt-[84svh]`: pulls the about block **up** by one viewport, then pads content down so it starts around 84% down the hero.
+
+Effect while scrolling:
+
+1. Hero **sticks** to the top (`sticky top-0`).
+2. About content rises **over** the still-visible canvas.
+3. A small gradient (`transparent → #0a0a0f`) softens the handoff into the rest of the page.
+
+This is mostly **CSS compositing**, not WebGL magic. The expensive part is still the canvas loop, not the negative margin trick.
+
+## Wiring it into Next.js
+
+`page.tsx` is a Server Component. It imports `HomeTerrainHero`, which client-bounds the Three.js tree:
+
+```typescript
+<HomeTerrainHero>
+  <h1>Architecting Mental Models</h1>
+  <p>I build scalable systems and share the engineering trade-offs…</p>
+</HomeTerrainHero>
+```
+
+Children render in the overlay `div` with `pointer-events-auto` so links and buttons still work; the canvas wrapper uses `pointer-events-none`.
+
+---
+
+## Improving performance
+
+After shipping the first version, I profiled it on a mid-range phone and asked: *what actually costs?* The layout was fine. The animation loop was where CPU time went. I then shipped the optimizations below (all except the vertex shader).
+
+### Where time was spent (before optimization)
+
+Rough order of cost in the original implementation:
+
+| Work | Impact | Status |
+|------|--------|--------|
+| ~11k `ImprovedNoise` calls on CPU | High | Still the main loop; fewer verts on mobile |
+| `computeVertexNormals()` on full mesh | **Very high** | **Removed** |
+| Wireframe draw + fog | Moderate GPU | Unchanged |
+| `meshStandardMaterial` lighting | Unnecessary for flat gray wireframe | **Removed** (`meshBasicMaterial`) |
+| Animation while off-screen | Wasted; component stays mounted | **Fixed** (`frameloop` + `IntersectionObserver`) |
+
+At 60fps, the original version ran hundreds of thousands of noise evaluations per second **plus** a full normal recompute on the **main thread**. Removing normals and pausing off-screen cut that load sharply.
+
+### Quick wins (minimal visual change)
+
+These are the changes I shipped. Most did not alter the look.
+
+#### 1. Drop `computeVertexNormals()` for wireframe (Done)
+
+Wireframe mode draws edges, not shaded surfaces. Normals mainly matter for lit solid meshes. Removing per-frame normal recomputation was the **single biggest CPU win**.
+
+If you switch to a solid mesh later, recompute normals, or better, compute them in a shader.
+
+#### 2. Use `meshBasicMaterial` instead of `meshStandardMaterial` (Done)
+
+A uniform gray wireframe doesn't need Phong-style lighting. `meshBasicMaterial` skips lighting calculations entirely:
+
+```typescript
+<meshBasicMaterial wireframe transparent opacity={0.75} color="#c8c8c8" />
+```
+
+Ambient and directional lights were removed since nothing in the scene needs them.
+
+#### 3. Pause when off-screen (Done)
+
+`useFrame` used to run whenever the canvas was mounted, even if the user scrolled to the blog section and the hero was pixels above the viewport.
+
+The fix is an `IntersectionObserver` on the sticky container plus R3F's `frameloop`:
+
+```typescript
+const [visible, setVisible] = useState(true)
+
+useEffect(() => {
+  const el = containerRef.current
+  if (!el) return
+  const io = new IntersectionObserver(
+    ([entry]) => setVisible(entry.isIntersecting),
+    { threshold: 0 }
+  )
+  io.observe(el)
+  return () => io.disconnect()
+}, [])
+
+// In Canvas:
+<Canvas frameloop={visible ? 'always' : 'never'} />
+```
+
+Battery life improves noticeably for anyone who doesn't linger on the hero.
+
+#### 4. Respect `prefers-reduced-motion` (Done)
+
+Users who enable reduced motion in OS settings should not get a nauseating infinite flyover. I skip the `Canvas` entirely when reduced motion is on, same pattern as my `AboutHeadline` component:
+
+```typescript
+const reduceMotion = useReducedMotion() // framer-motion
+
+{!reduceMotion ? (
+  <Canvas frameloop={animate ? 'always' : 'never'}>
+    <Terrain segments={segments} animate={animate} />
+  </Canvas>
+) : null}
+```
+
+The hero keeps its black background and text overlay; WebGL never mounts.
+
+#### 5. Adaptive quality by device (Done)
+
+Not every visitor needs 11k vertices. A `useTerrainQuality()` hook picks settings on mount:
+
+```typescript
+const mobile = window.innerWidth < 768
+const lowCore = navigator.hardwareConcurrency <= 4
+
+setSegments(mobile ? [60, 45] : [120, 90])
+setDpr(mobile || lowCore ? [1, 1] : [1, 2])
+```
+
+Mobile gets ~75% fewer vertices; low-core devices cap pixel ratio at 1×.
+
+#### 6. Lower flying speed option
+
+The comment in source already documents speed tiers: `0.01` (default), `0.005`, `0.002`. Slower motion means less perceived stutter when frames drop, even if it doesn't reduce work per frame.
+
+### Bigger win: move noise to the GPU (Done)
+
+The structural fix is a **vertex shader** in `terrain-shaders.ts` that displaces height from simplex noise using a `uTime` uniform. The CPU no longer touches every vertex; the GPU parallelizes displacement.
+
+```glsl
+uniform float uTime;
+
+void main() {
+  vec3 pos = position;
+  float noiseValue = snoise(vec3(pos.x * 0.2, pos.y * 0.2 + uTime, 0.0));
+  float sharpened = sign(noiseValue) * pow(abs(noiseValue), 0.5);
+  pos.z = sharpened * 4.0;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+}
+```
+
+Trade-offs in practice:
+
+- More setup (custom `shaderMaterial`, GLSL noise function, uniform wiring)
+- Slightly different noise character than `ImprovedNoise` (simplex vs Perlin), tunable with the same power curve
+- Much less main-thread work per frame
+
+### What I'd measure
+
+Before and after each change:
+
+1. **Chrome Performance**: main-thread time in `useFrame` / `computeVertexNormals`
+2. **Rendering tab**: confirm frame time stays under ~16ms on target hardware
+3. **Lighthouse**: TBT and main-thread work on mobile emulation
+4. **Real device**: mid-range Android, older MacBook; thermal throttling shows up quickly on continuous WebGL
+
+### Performance checklist
+
+| Technique | Effort | Impact | Status |
+|-----------|--------|--------|--------|
+| Dynamic import, no SSR | Low | Keeps Three off server / initial HTML | Done |
+| Reduced segment count (120×90 desktop) | Low | ~63% fewer verts vs 200×150 | Done |
+| `dpr` cap at 2 (desktop) | Low | Avoids 3× retina renders | Done |
+| Remove per-frame normals | Low | Large CPU savings | Done |
+| `meshBasicMaterial` | Low | Less GPU shader work | Done |
+| Pause off-screen | Medium | Saves battery after scroll | Done |
+| `prefers-reduced-motion` | Medium | Accessibility + CPU | Done |
+| Adaptive segments / `dpr` | Medium | Targets weak GPUs | Done |
+| Vertex shader displacement | High | Best sustained performance | Done |
+
+## Takeaways
+
+The terrain hero is three ideas glued together:
+
+1. **Procedural height**: Perlin noise + scrolling offset on a plane mesh
+2. **React Three Fiber**: `useFrame` as your game loop inside React
+3. **Scroll choreography**: sticky full-viewport hero with negative margin so content floats over the canvas
+
+It looks like a shader demo from 2012 because it *is* that idea, just wired into a modern Next.js portfolio.
+
+The lesson I took from profiling: **decorative WebGL is easy to ship and hard to keep cheap.** The defaults (recompute normals every frame, always-on render loop, standard materials) are fine for a CodePen. For a homepage every visitor loads, you want explicit budgets and a plan to degrade gracefully on weaker hardware.
+
+The quick wins and the vertex shader are now live in production. Main-thread work per frame is essentially a single uniform update plus the GPU draw call.

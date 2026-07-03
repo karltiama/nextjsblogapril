@@ -46,8 +46,7 @@ export function CommentSection({ postSlug, postTitle }: CommentSectionProps) {
 					repoId="784028516"
 					category="Announcements"
 					categoryId="45742932"
-					mapping="specific"
-					term={postSlug}
+					mapping="pathname"
 					strict="0"
 					reactionsEnabled="1"
 					emitMetadata="0"
