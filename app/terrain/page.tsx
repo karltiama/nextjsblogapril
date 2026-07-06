@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import HomeTerrainHero from "@/components/home-terrain-hero";
+import TerrainHero from "@/components/terrain-hero";
 import ProjectList from "@/components/project-list";
 import { PostItem } from "@/components/post-item";
 import { cn, sortPosts } from "@/components/lib/utils";
@@ -18,7 +18,7 @@ export default function TerrainPage() {
 
 	return (
 		<div className="relative min-h-screen bg-[#0a0a0f]">
-			<HomeTerrainHero>
+			<TerrainHero fullHeight>
 				<h1 className="text-5xl md:text-7xl font-black text-blue-400 mb-6 drop-shadow-lg tracking-tight">
 					Architecting Mental Models
 				</h1>
@@ -43,7 +43,7 @@ export default function TerrainPage() {
 						View Projects
 					</Link>
 				</div>
-			</HomeTerrainHero>
+			</TerrainHero>
 
 			<div className="relative isolate overflow-hidden bg-[#0a0a0f]">
 				<div
