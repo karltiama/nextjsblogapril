@@ -51,7 +51,7 @@ export default function RootLayout({
 				)}
 				suppressHydrationWarning>
 				<Providers>
-					<div className="relative flex min-h-dvh flex-col overflow-hidden bg-[#0a0a0f]">
+					<div className="relative flex min-h-dvh flex-col bg-[#0a0a0f]">
 						<div
 							className="pointer-events-none absolute inset-0 z-0 opacity-[0.16]"
 							aria-hidden
