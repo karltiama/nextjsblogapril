@@ -6,7 +6,7 @@ export const projectsV2: Project[] = legacyProjects.map((project) => ({
 	sections: {
 		overview: project.situation,
 		challenges:
-			project.title === "NBA Analytics App"
+			project.title === "Court Context"
 				? [
 						"Inconsistent data formats across different websites.",
 						"Mismatched schemas and missing fields.",
@@ -15,10 +15,10 @@ export const projectsV2: Project[] = legacyProjects.map((project) => ({
 					]
 				: project.challenges,
 		implementation:
-			project.title === "NBA Analytics App"
+			project.title === "Court Context"
 				? "To address these issues, I redesigned the system around a more robust, API-driven architecture.\n\nData Source and Ingestion: Transitioned from web scraping to a paid API to ensure structured, reliable data. Built automated ingestion pipelines using AWS Lambda triggered by EventBridge schedules. Managed infrastructure and scheduling through Terraform using CLI-based workflows.\n\nData Architecture: Implemented a dual-layer data model where the Raw Layer stores unmodified API responses for auditing and reprocessing, while the Analytics Layer transforms data into clean, query-optimized tables. This separation allowed safe transformations while preserving data integrity and traceability.\n\nModeling and Analysis: Developed baseline projection models using historical player performance, then calculated expected value (EV) by comparing model outputs against market odds. Structured the system to support future enhancements such as more advanced models and feature engineering."
 				: project.implementation,
-		...(project.title === "NBA Analytics App"
+		...(project.title === "Court Context"
 			? {
 					researchBacktesting: {
 						title: "Research & Backtesting System",
@@ -38,7 +38,7 @@ export const projectsV2: Project[] = legacyProjects.map((project) => ({
 				}
 			: {}),
 		keyDecisions:
-			project.title === "NBA Analytics App"
+			project.title === "Court Context"
 				? [
 						"API over scraping: prioritized reliability and consistency over cost savings.",
 						"Raw to analytics pipeline: enabled safer transformations and easier debugging.",
@@ -47,7 +47,7 @@ export const projectsV2: Project[] = legacyProjects.map((project) => ({
 					]
 				: project.task,
 		tradeoffs:
-			project.title === "NBA Analytics App"
+			project.title === "Court Context"
 				? [
 						"Using a paid API increased operational cost but significantly improved data quality.",
 						"Serverless ingestion with Lambda simplified scaling but introduced complexity in debugging and observability.",
@@ -55,7 +55,7 @@ export const projectsV2: Project[] = legacyProjects.map((project) => ({
 					]
 				: project.changes,
 		learnings:
-			project.title === "NBA Analytics App"
+			project.title === "Court Context"
 				? [
 						"Data quality is foundational: unreliable inputs make all downstream analysis questionable.",
 						"Schema design should come first: investing early in data modeling prevents costly refactors.",

@@ -19,6 +19,18 @@ const posts = defineCollection({
 			date: s.isodate(),
 			published: s.boolean().default(true),
 			tags: s.array(s.string()).optional(),
+			relatedContent: s
+				.array(
+					s.object({
+						type: s.enum(["article", "project", "lab"]),
+						slug: s.string().optional(),
+						href: s.string().optional(),
+						title: s.string().max(99).optional(),
+						description: s.string().max(999).optional(),
+					})
+				)
+				.max(3)
+				.optional(),
 			body: s.mdx(),
 		})
 		.transform(computedFields),

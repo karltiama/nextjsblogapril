@@ -36,7 +36,7 @@ function Project({
 				{/* Image "Card" */}
 				<div 
 					className={cn(
-						"relative aspect-[16/10] w-full rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 group-hover:shadow-[0_20px_50px_rgba(59,130,246,0.15)] transition-shadow duration-500",
+						"relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-[#0f0f14] shadow-2xl ring-1 ring-white/10 group-hover:shadow-[0_20px_50px_rgba(59,130,246,0.15)] transition-shadow duration-500",
 						reverseLayout ? "md:order-2" : "md:order-1"
 					)}
 				>
@@ -44,7 +44,7 @@ function Project({
 						src={imageSrc}
 						alt={altText}
 						fill
-						className="object-cover object-top"
+						className="object-contain object-center"
 						sizes="(max-width: 768px) 100vw, 50vw"
 						priority={featured}
 					/>

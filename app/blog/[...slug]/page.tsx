@@ -9,6 +9,8 @@ import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Tag } from "@/components/tag";
 import { CommentSection } from "@/components/comment-section";
+import { ContinueExploring } from "@/components/continue-exploring";
+import { resolveRelatedContent } from "@/lib/related-content";
 
 interface PostPageProps {
 	params: Promise<{
@@ -76,12 +78,15 @@ export default async function PostPage({ params }: PostPageProps) {
 		notFound();
 	}
 
+	const relatedItems = resolveRelatedContent(post);
+
 	return (
 		<div className="container py-6 max-w-7xl mx-auto">
 			{/* Article Section with Sidebar */}
 			<div className="flex gap-8 mb-16">
 				{/* Main Content */}
-				<article className="flex-1 prose dark:prose-invert max-w-4xl">
+				<div className="flex-1 max-w-4xl">
+					<article className="prose dark:prose-invert max-w-none">
 					<h1 className="mb-2">{post.title}</h1>
 					<div className="flex gap-2 mb-2">
 						{post.tags?.map((tag) => (
@@ -98,6 +103,12 @@ export default async function PostPage({ params }: PostPageProps) {
 					<hr className="my-4" />
 					<MDXContent code={post.body} />
 				</article>
+
+				<ContinueExploring
+					sourceArticle={post.slugAsParams}
+					items={relatedItems}
+				/>
+				</div>
 
 				{/* Sidebar - Table of Contents only for article */}
 				<aside className="hidden lg:block w-64 shrink-0">

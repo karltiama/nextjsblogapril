@@ -21,11 +21,11 @@ import { Project } from "../../lib/types";
 
 export const projects: Project[] = [
 	{
-		title: "NBA Analytics App",
+		title: "Court Context",
 		description:
 			"A data-driven NBA analytics platform built on a custom backend pipeline that ingests real-time sports data, transforms it into structured datasets, and applies projection models to evaluate player prop opportunities.",
-		imageSrc: "/nbalandingpage.png",
-		altText: "NBA Analytics App landing page screenshot",
+		imageSrc: "/court-context-landing.png",
+		altText: "Court Context landing page showing hero and sample matchups",
 		technologies: [
 			{ icon: SiNextdotjs, name: "Next.js" },
 			{ icon: SiTypescript, name: "TypeScript" },
