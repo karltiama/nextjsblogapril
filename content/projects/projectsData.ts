@@ -33,6 +33,7 @@ export const projects: Project[] = [
 			{ icon: SiAmazonwebservices, name: "AWS Lambda" },
 			{ icon: SiTerraform, name: "Terraform" },
 		],
+		liveLink: "https://www.courtcontext.com",
 		status: "In Development" as const,
 		featured: true,
 		situation: "The sports betting space is heavily driven by data, but most tools either rely on surface-level stats or require manual analysis. I set out to build a system that could ingest real-time National Basketball Association data and turn it into actionable insights for evaluating player prop bets.",
